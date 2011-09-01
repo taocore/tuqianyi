@@ -1,0 +1,28 @@
+<?xml version="1.0"?> 
+
+<project name="tuqianyi" default="deploy"> 
+
+	<!-- properies --> 
+
+	<property name="tomcat" value="D:/apache-tomcat-6.0.29" /> 
+	<!--property name="tomcat" value="D:/green/apache-tomcat-6.0.26" /--> 
+	
+	<!-- 编译--> 
+	
+	<target name="jar">
+		<jar destfile="WebContent/WEB-INF/lib/tuqianyi.jar"
+		       basedir="build/classes"
+		  />
+	</target>
+	
+	<target name="deploy" depends="jar"> 
+		<copy todir="${tomcat}/webapps/tuqianyi" overwrite="true">
+			<fileset dir="WebContent"/>
+		</copy>
+	</target> 
+
+	<target name="clean">
+		<delete dir="${tomcat}/webapps/tuqianyi"/>
+	</target>
+
+</project> 
