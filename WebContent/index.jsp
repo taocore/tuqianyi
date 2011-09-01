@@ -55,7 +55,7 @@
 	</div>
 	<div id="tabs" class="span-24 last">
 		<ul>
-			<li><a href="items_selector.action">促销易</a></li>
+			<li><a href="items_selector.action">图签易</a></li>
 			<li><a href="faq.html">常见问题</a></li>
 			<li><a href="about.html">服务信息</a></li>
 		</ul>
