@@ -42,8 +42,8 @@
 	<div id="pager" class="pager span-16 separator"></div>
 </div>
 
-<div id="promote-dialog" title="促销">
-	<s:include value="promotion.jsp"/>
+<div id="label-dialog" title="加标签">
+	暂无
 </div>
 
 <div id="processing-dialog" title="正在处理...">
