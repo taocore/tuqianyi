@@ -43,7 +43,7 @@
 </div>
 
 <div id="label-dialog" title="加标签">
-	暂无
+	<s:include value="merge.jsp"/>
 </div>
 
 <div id="processing-dialog" title="正在处理...">
@@ -56,11 +56,12 @@
 	$(".selection").tooltip();
 	$("button").button();
 	$("#clear-selection").click(clearSelection);
-	$("#promote-dialog").dialog({
+	$("#label-dialog").dialog({
 		autoOpen: false,
+		modal: true,
+		width: 700,
 		show: "blind",
-		hide: "explode",
-		modal: true
+		hide: "explode"
 	});
 	$("#processing-dialog").dialog({
 		autoOpen: false,
@@ -77,7 +78,7 @@
 			alert("未选中宝贝。");
 			return false;
 		}
-		var $dialog = $("#promote-dialog");
+		var $dialog = $("#label-dialog");
 		$dialog.dialog("option", "buttons", {
 			确定: function() {
 				if (!validatePromotionForm())
@@ -132,7 +133,7 @@
 			alert("未选中宝贝。");
 			return false;
 		}
-		var $dialog = $("#promote-dialog");
+		var $dialog = $("#label-dialog");
 		$dialog.dialog("option", "buttons", {
 			确定: function() {
 				if (!validatePromotionForm())

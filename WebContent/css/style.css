@@ -4,15 +4,16 @@ body {background-color:rgb(195, 217, 255);}
 tbody tr.row-selected, tbody tr.row-selected td {background:rgb(255, 255, 150);}
 .ui-widget-content a {color:#06C;text-decoration:underline;}
 .selection {background:rgb(255, 255, 150);}
-#promotion-form {text-align:left;}
-#promotion-form input[type='text'] {width:200px;}
-.origin-price {text-decoration:line-through;}
-.promotion-price {font-weight:bold;}
+#label-form {text-align:left;}
+#label-form input[type='text'] {width:200px;}
+#fixed-tools {position:fixed;right:50px;top:300px;cursor:pointer}
+#top {margin-bottom:5px;}
+#image-wrapper {display:table-cell;width:310px;height:310px;text-align:center;border:1px solid lightblue;overflow:hidden;}
+#image-wrapper td {padding:0;}
+#main-pic {margin:auto;}
+#labels {width:350px;}
+.labels-panel {height:200px;}
+.label-item {float:left;margin:5px;}
 #faq ul {list-style-type:none;width:550px;}
 #faq li {font-size:1.1em;font-weight:bold;color:blue;margin-bottom:5px;}
 #faq p {color:#666}
-#fixed-tools {position:fixed;right:50px;top:300px;cursor:pointer}
-#top {margin-bottom:5px;}
-td.promotion-time[status='1'] {color:#666;}
-td.promotion-time[status='2'] {color:#264409;font-weight:bold;}
-td.promotion-time[status='3'] {color:#8a1f11;}

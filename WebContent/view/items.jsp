@@ -60,10 +60,10 @@
 				</td>
 				<td class="op">
 					<s:if test="%{promoted}">
-						<div><a class="cancel-promotion-link" href="#">恢复</a></div>
+						<div><a class="cancel-promotion-link" href="#">还原</a></div>
 					</s:if>
 					<s:else>
-	    				<a class="promote-link" href="#">加标签</a>
+	    				<a class="add-label-link" href="#">贴标签</a>
 					</s:else>
 				</td>
 			</tr>
@@ -74,35 +74,28 @@
 <script type="text/javascript">
 	$("#items-table").selectable({selectionChanged: selectionChanged});
 	$(".promotion-details").tooltip();
-	$(".promote-link").click(function(){
+	$(".add-label-link").click(function(){
 		var currentItem = $(this).closest("tr").attr("num_iid");
-		var $dialog = $("#promote-dialog");
-		$dialog.dialog("option", "buttons", {
-			确定: function() {
-				if (!validatePromotionForm())
-				{
-					return false;
-				}
-				showProcessingDialog();
-				var url = "add_promotion.action";
-				var q = getPromotionParameter() + "&promotionAddRequest.numIids=" + currentItem;
-				$.ajax({
-					url: url,
-					data: q,
-					type: 'POST',
-					success: function(data) {
-						hideProcessingDialog();
-						$dialog.dialog( "close" );
-						reload(clearSelection);
+		var $dialog = $("#label-dialog");
+		var url = "merging.action";
+		var q = "numIids=" + currentItem;
+		$.ajax({
+			url: url,
+			data: q,
+			type: 'POST',
+			success: function(data) {
+				$dialog.html(data);
+				$dialog.dialog("option", "buttons", {
+					确定: function() {
+						return false;
+					},
+					取消: function() {
+						$(this).dialog( "close" );
 					}
 				});
-				return false;
-			},
-			取消: function() {
-				$(this).dialog( "close" );
+				$dialog.dialog("open");
 			}
 		});
-		$dialog.dialog("open");
 		return false;
 	});
 	
@@ -120,7 +113,7 @@
 	
 	$(".update-promotion-link").click(function(){
 		var currentItem = $(this).closest("tr").attr("num_iid");
-		var $dialog = $("#promote-dialog");
+		var $dialog = $("#label-dialog");
 		$dialog.dialog("option", "buttons", {
 			确定: function() {
 				if (!validatePromotionForm())
