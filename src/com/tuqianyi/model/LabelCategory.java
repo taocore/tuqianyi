@@ -1,6 +1,9 @@
 package com.tuqianyi.model;
 
 import java.io.Serializable;
+import java.util.List;
+
+import com.tuqianyi.model.ImageLabel;
 
 public class LabelCategory implements Serializable{
 	
@@ -38,7 +41,19 @@ public class LabelCategory implements Serializable{
 
 	private long categoryID;
 	private String name;
+	private List<ImageLabel> labels;
+	
+	public LabelCategory()
+	{
+		
+	}
 
+	public LabelCategory(LabelCategory c)
+	{
+		this.categoryID = c.getCategoryID();
+		this.name = c.getName();
+	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -53,5 +68,13 @@ public class LabelCategory implements Serializable{
 
 	public long getCategoryID() {
 		return categoryID;
+	}
+
+	public void setLabels(List<ImageLabel> labels) {
+		this.labels = labels;
+	}
+
+	public List<ImageLabel> getLabels() {
+		return labels;
 	}
 }

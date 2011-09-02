@@ -1,6 +1,7 @@
 package com.tuqianyi.action;
 
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -15,6 +16,11 @@ public class ActionBase extends ActionSupport implements Constants{
 	protected void error(TaobaoResponse rsp)
 	{
 		_log.info(rsp.getErrorCode() + " - " + rsp.getMsg() + " - " + rsp.getSubCode() + " - " + rsp.getSubMsg());
+	}
+	
+	protected void error(Throwable e)
+	{
+		_log.log(Level.SEVERE, "", e);
 	}
 	
 	protected String getSessionId()
