@@ -33,6 +33,7 @@
 			<a href="#" id="clear-selection">清除重选</a>
 			<button id='batch-promote'>批量加标签</button>
 			<button id='batch-cancel'>批量恢复</button>
+			<button id='batch-promote'>批量换标签</button>
 		</div>
 		<div class="clear"></div>
 	</div>
@@ -59,7 +60,7 @@
 	$("#label-dialog").dialog({
 		autoOpen: false,
 		modal: true,
-		width: 800,
+		width: 850,
 		show: "blind"
 	});
 	$("#processing-dialog").dialog({

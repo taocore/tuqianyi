@@ -12,18 +12,44 @@
 				</div>
 				</td></tr>
 			</table>
-			<div id="options"></div>
+			<div>
+				<fieldset id="options">
+					<legend>标签选项</legend>
+					<label>缩放时保持长宽比：</label>
+					<input type='checkbox'/><br/>
+					<label>透明度：</label>
+					<div id="opacity"></div>
+				</fieldset>
+			</div>
 		</div>
 		<div class="right">
 			<div id="labels">
 				<s:iterator value="labelCategories">
-						<h3><a href="#"><s:property value="name"/></a></h3>
-						<div class="labels-panel">
-							<s:iterator value="labels">
-								<div class="label-item" title="双击将标签添加到主图"><img src='<s:property value="src"/>' width="100%" height="100%"/></div>
-							</s:iterator>
-						</div>
+					<h3><a href="#"><s:property value="name"/></a></h3>
+					<div class="labels-panel">
+						<s:iterator value="labels">
+							<div class="label-item" title="双击将标签添加到主图"><img src='<s:property value="src"/>' width="100%" height="100%"/></div>
+						</s:iterator>
+					</div>
 				</s:iterator>
+				<h3><a href="#">自定义标签</a></h3>
+				<div class="labels-panel">
+					<s:iterator value="customLabels">
+						<div class="label-item" title="双击将标签添加到主图"><img src='<s:property value="src"/>' width="100%" height="100%"/></div>
+					</s:iterator>
+				</div>
+				<h3><a href="#">文字</a></h3>
+				<div class="labels-panel">
+					<s:iterator value="text">
+						<div class="label-item" title="双击将标签添加到主图"><img src='<s:property value="src"/>' width="100%" height="100%"/></div>
+					</s:iterator>
+				</div>
+				<h3><a href="#">边框</a></h3>
+				<div class="labels-panel">
+					<s:iterator value="frames">
+						<div class="frame-item" title="双击将边框添加到主图"><img src='<s:property value="src"/>' width="100%" height="100%"/></div>
+					</s:iterator>
+				</div>
 			</div>
 		</div>
 	</form>
@@ -73,4 +99,5 @@
 				maxHeight : 310
 			});
 		});
+	$("#opacity").slider();
 </script>
