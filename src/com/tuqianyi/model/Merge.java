@@ -8,8 +8,8 @@ public class Merge implements Serializable{
 	private int x;
 	private int y;
 	private int z;
-	private int width = 80;
-	private int height = 80;
+	private int width = 100;
+	private int height = 100;
 	
 	public void setLabel(Label label) {
 		this.label = label;

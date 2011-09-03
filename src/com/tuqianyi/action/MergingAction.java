@@ -33,11 +33,6 @@ public class MergingAction extends ActionBase{
 					if (rsp.isSuccess())
 					{
 						item = rsp.getItem();
-						_log.info("item: " + item);
-						if (item != null)
-						{
-							_log.info("pic_url: " + item.getPicUrl());
-						}
 					}
 					else
 					{
