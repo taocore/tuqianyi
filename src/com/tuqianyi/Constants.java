@@ -26,4 +26,8 @@ public interface Constants {
 	String USER = "USER";
 	
 	String VERSION = "VERSION";
+	
+	String TOTAL = "TOTAL";
+	
+	String PROCESSED = "PROCESSED";
 }

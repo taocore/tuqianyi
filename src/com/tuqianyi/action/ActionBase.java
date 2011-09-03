@@ -45,4 +45,14 @@ public class ActionBase extends ActionSupport implements Constants{
 		Map<String, Object> session = ActionContext.getContext().getSession();
 		return (String)session.get(USER);
 	}
+	
+	public void updateProgress(int total, int processed)
+	{
+		Map<String, Object> session = ActionContext.getContext().getSession();
+		if (session != null)
+		{
+			session.put(TOTAL, total);
+			session.put(PROCESSED, processed);
+		}
+	}
 }
