@@ -60,8 +60,7 @@
 		autoOpen: false,
 		modal: true,
 		width: 800,
-		show: "blind",
-		hide: "explode"
+		show: "blind"
 	});
 	$("#processing-dialog").dialog({
 		autoOpen: false,

@@ -32,13 +32,31 @@
 
 <script type="text/javascript">
 	$("#labels").accordion();
+	
 	$(".label-item").dblclick(
 		function() {
-			var src = $("img", this).attr("src");
+			var $label = $("img", this);
+			var src = $label.attr('src');
+			$label.removeAttr('width').removeAttr('height');
+			var w = $label.width();
+			var h = $label.height();
+			$label.attr('width', '100%').attr('height', '100%');
+			var width;
+			var height;
+			if (w >= h)
+			{
+				width = 100;
+				height = h * 100 / w;
+			}
+			else
+			{
+				height = 100;
+				width = w * 100 / h;
+			}
 			$("<div><img src='" + src + "' width='100%' height='100%'/></div>").appendTo("#main-pic")
 			.css({
-				width: 80,
-				height: 80,
+				width: width,
+				height: height,
 				border: '1px solid lightblue',
 				position: 'absolute',
 				top: 0,
@@ -48,6 +66,7 @@
 				scroll : false
 			}).resizable({
 				containment : "#main-pic",
+				aspectRatio : true,
 				minWidth : 20,
 				minHeight : 20,
 				maxWidth : 310,
