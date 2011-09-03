@@ -59,7 +59,7 @@
 	$("#label-dialog").dialog({
 		autoOpen: false,
 		modal: true,
-		width: 700,
+		width: 800,
 		show: "blind",
 		hide: "explode"
 	});

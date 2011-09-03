@@ -20,7 +20,7 @@
 						<h3><a href="#"><s:property value="name"/></a></h3>
 						<div class="labels-panel">
 							<s:iterator value="labels">
-								<div class="label-item" title="双击将标签添加到主图"><img src='<s:property value="src"/>' width="40" height="40"/></div>
+								<div class="label-item" title="双击将标签添加到主图"><img src='<s:property value="src"/>' width="100%" height="100%"/></div>
 							</s:iterator>
 						</div>
 					
