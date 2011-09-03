@@ -9,7 +9,7 @@
 			<th><input type="checkbox" class="selector"></input>
 			</th>
 			<th>主图</th>
-			<th>宝贝详情</th>
+			<th>基本信息</th>
 			<th>状态</th>
 			<th>操作</th>
 		</tr>
@@ -39,12 +39,12 @@
 					</s:elseif>
 					<s:elseif test="%{status == 2}">
     					<div><img src='images/go.png'/></div>
-	    				<div>失败</div>
+	    				<div>处理中</div>
 					</s:elseif>
 				</td>
 				<td class="op">
 					<s:if test="%{merged}">
-						<div><a class="cancel-promotion-link" href="#">还原</a></div>
+						<div><a class="recover-link" href="#">还原</a></div>
 					</s:if>
 					<s:else>
 	    				<a class="add-label-link" href="#">贴标签</a>
@@ -83,12 +83,14 @@
 		return false;
 	});
 	
-	$(".cancel-promotion-link").click(function(){
-		var promotionId = $(this).closest("tr").attr("promotion_id");
-		var url = "delete_promotion.action?promotionDeleteRequest.promotionId=" + promotionId;
+	$(".recover-link").click(function(){
+		showProcessingDialog();
+		var numIid = $(this).closest("tr").attr("num_iid");
+		var url = "recover.action?numIids=" + numIid;
 		$.ajax({
 			url: url,
 			success: function(data) {
+				hideProcessingDialog();
 				reload();
 			}
 		});

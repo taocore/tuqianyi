@@ -24,6 +24,10 @@
         <action name="merging" class="com.tuqianyi.action.MergingAction" method="execute">
             <result name="success">/view/merge.jsp</result>
         </action>
+        
+        <action name="recover" class="com.tuqianyi.action.RecoverAction" method="execute">
+            <result name="success">/view/ok.jsp</result>
+        </action>
 
 	</package>
 

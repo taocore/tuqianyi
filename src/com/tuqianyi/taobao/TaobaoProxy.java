@@ -7,6 +7,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 import com.taobao.api.ApiException;
 import com.taobao.api.DefaultTaobaoClient;
+import com.taobao.api.FileItem;
 import com.taobao.api.TaobaoClient;
 import com.taobao.api.domain.ArticleUserSubscribe;
 import com.taobao.api.domain.User;
@@ -128,14 +129,6 @@ public class TaobaoProxy implements Constants
 		ItemsInventoryGetResponse rsp = taobaoClient.execute(req, sessionKey);
 		return rsp;
 	}
-
-	public static ItemUpdateResponse updateItem(String sessionKey, long numIid) throws ApiException
-	{
-		ItemUpdateRequest req = new ItemUpdateRequest();
-		req.setNumIid(numIid);
-		ItemUpdateResponse rsp = taobaoClient.execute(req, sessionKey);
-		return rsp;
-	}
 	
 	public static SellercatsListGetResponse getSellerCategories(String nick) throws ApiException
 	{
@@ -144,6 +137,27 @@ public class TaobaoProxy implements Constants
 		req.setFields("cid, parent_cid, name, pic_url, sort_order");
 
 		SellercatsListGetResponse rsp = taobaoClient.execute(req);
+		return rsp;
+	}
+	
+	public static ItemUpdateResponse updateMainPic(String sessionKey, long numIid, byte[] data) throws ApiException
+	{
+		ItemUpdateRequest req = new ItemUpdateRequest();
+		req.setNumIid(numIid);
+		FileItem image = new FileItem(numIid + ".jpg", data);
+		req.setImage(image);
+		 
+		ItemUpdateResponse rsp = taobaoClient.execute(req, sessionKey);
+		return rsp;
+	}
+	
+	public static ItemUpdateResponse updateMainPic(String sessionKey, long numIid, String newUrl) throws ApiException
+	{
+		ItemUpdateRequest req = new ItemUpdateRequest();
+		req.setNumIid(numIid);
+		req.setPicPath(newUrl);
+
+		ItemUpdateResponse rsp = taobaoClient.execute(req, sessionKey);
 		return rsp;
 	}
 	

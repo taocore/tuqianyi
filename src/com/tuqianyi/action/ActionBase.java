@@ -13,12 +13,12 @@ public class ActionBase extends ActionSupport implements Constants{
 	
 	static Logger _log = Logger.getLogger(ActionBase.class.getName());
 	
-	protected void error(TaobaoResponse rsp)
+	protected static void error(TaobaoResponse rsp)
 	{
 		_log.info(rsp.getErrorCode() + " - " + rsp.getMsg() + " - " + rsp.getSubCode() + " - " + rsp.getSubMsg());
 	}
 	
-	protected void error(Throwable e)
+	protected static void error(Throwable e)
 	{
 		_log.log(Level.SEVERE, "", e);
 	}

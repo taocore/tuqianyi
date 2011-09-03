@@ -401,6 +401,29 @@ public class Dao {
 		}
 	}
 	
+	public com.tuqianyi.model.Item getMergedItem(long numIid, Connection conn) throws Exception
+	{
+		conn = DBUtils.getConnection();
+		String sql = "select * from merged_item_t where num_iid_c=?";
+		PreparedStatement statement = conn.prepareStatement(sql);
+		statement.setLong(1, numIid);
+		ResultSet rs = statement.executeQuery();
+		if (rs.next())
+		{
+			Item item = new Item();
+			item.setNumIid(rs.getLong("num_iid_c"));
+			item.setOldPicUrl(rs.getString("old_pic_url_c"));
+			item.setPicUrl(rs.getString("new_pic_url_c"));
+			item.setStatus(rs.getShort("status_c"));
+			item.setAction(rs.getShort("action_c"));
+			item.setErrorMsg(rs.getString("msg_c"));
+			item.setErrorCode(rs.getString("error_code_c"));
+			DBUtils.close(null, statement, rs);
+			return item;
+		}
+		return null;
+	}
+	
 	public void addNotify(long userId, long leaseId, String nick, Date validateDate, Date invalidateDate, double factMoney, 
 			long subscType, int version, int oldVersion, long status, Date gmtCreateDate) throws SQLException, NamingException
 	{
