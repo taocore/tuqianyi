@@ -23,7 +23,6 @@
 								<div class="label-item" title="双击将标签添加到主图"><img src='<s:property value="src"/>' width="100%" height="100%"/></div>
 							</s:iterator>
 						</div>
-					
 				</s:iterator>
 			</div>
 		</div>
@@ -60,7 +59,8 @@
 				border: '1px solid lightblue',
 				position: 'absolute',
 				top: 0,
-				left: 0
+				left: 0,
+				cursor: 'move'
 			}).draggable({
 				containment : "#main-pic",
 				scroll : false
