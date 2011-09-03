@@ -10,8 +10,7 @@
 			</th>
 			<th>主图</th>
 			<th>宝贝详情</th>
-			<th>促销详情</th>
-			<th>活动时间</th>
+			<th>状态</th>
 			<th>操作</th>
 		</tr>
 	</thead>
@@ -27,39 +26,24 @@
 				</td>
 				<td class="item-details">
 					<div><s:property value="title"/></div>
-					<s:if test="%{promoted}">
-						<div class="origin-price quiet">原价：<s:property value="price"/>元</div>
-	    				<div class="promotion-price">促销价：<s:property value="promotionPrice"/>元</div>
-					</s:if>
-					<s:else>
-	    				<div>价格：<s:property value="price"/>元</div>
-					</s:else>
+					<div>价格：<s:property value="price"/>元</div>
 				</td>
-				<td class="promotion-details" title="<s:property value="promotionDescription"/>">
-					
-					<s:if test="%{promoted}">
-						<span class="notice">
-						<s:property value="promotionTitle"/>
-	    				<s:if test='%{"PRICE".equals(discountType)}'>
-	    					减<s:property value="discountValue"/>元
-						</s:if>
-						<s:else>
-		    				<s:property value="discountValue"/>折
-						</s:else>
-						</span>
+				<td class="status" status='<s:property value="status"/>'>
+					<s:if test="%{status == 4}">
+	    				<div><img src='images/tick_32.png'/></div>
+	    				<div>成功</div>
 					</s:if>
-					<s:else>
-	    				<span class="quiet">未参加促销</span>
-					</s:else>
-				</td>
-				<td class="promotion-time" status='<s:property value="status"/>'>
-					<s:if test="%{promoted}">
-	    				<div>开始：<s:property value="startDate"/></div>
-	    				<div>结束：<s:property value="endDate"/></div>
-					</s:if>
+					<s:elseif test="%{status == 3}">
+    					<div><img src='images/warning_32.png'/></div>
+	    				<div>失败</div>
+					</s:elseif>
+					<s:elseif test="%{status == 2}">
+    					<div><img src='images/go.png'/></div>
+	    				<div>失败</div>
+					</s:elseif>
 				</td>
 				<td class="op">
-					<s:if test="%{promoted}">
+					<s:if test="%{merged}">
 						<div><a class="cancel-promotion-link" href="#">还原</a></div>
 					</s:if>
 					<s:else>
