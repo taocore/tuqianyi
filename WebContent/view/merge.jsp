@@ -6,17 +6,22 @@
 	<form id="label-form">
 		<div class="left">
 			<table id="image-wrapper" cellpadding="0" cellspacing="0">
-				<tr><td>
+			<tr><td>
 				<div id="main-pic">
-				<img src='<s:property value="item.picUrl"/>_310x310.jpg'/>
+				<s:if test="%{item == null}">
+						<img src='images/unknown.jpg'/>
+				</s:if>
+				<s:else>
+	    				<img src='<s:property value="item.picUrl"/>_310x310.jpg'/>
+				</s:else>
 				</div>
-				</td></tr>
+			</td></tr>
 			</table>
 			<div>
 				<fieldset id="options">
 					<legend>标签选项</legend>
 					<label>缩放时保持长宽比：</label>
-					<input type='checkbox'/><br/>
+					<input type='checkbox' checked='checked'/><br/>
 					<label>透明度：</label>
 					<div id="opacity"></div>
 				</fieldset>
@@ -58,7 +63,7 @@
 <script type="text/javascript">
 	$("#labels").accordion();
 	
-	$(".label-item").dblclick(
+	$(".label-item").click(
 		function() {
 			var $label = $("img", this);
 			var src = $label.attr('src');
@@ -97,6 +102,9 @@
 				minHeight : 20,
 				maxWidth : 310,
 				maxHeight : 310
+			}).dblclick(function(){
+				var pos = $(this).position();
+				alert(pos.left + ", " + pos.top);
 			});
 		});
 	$("#opacity").slider();

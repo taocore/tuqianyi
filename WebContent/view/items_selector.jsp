@@ -43,7 +43,7 @@
 	<div id="pager" class="pager span-16 separator"></div>
 </div>
 
-<div id="label-dialog" title="加标签">
+<div id="label-dialog" title="贴标签">
 	<s:include value="merge.jsp"/>
 </div>
 

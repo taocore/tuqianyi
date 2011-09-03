@@ -71,10 +71,12 @@
 				$dialog.html(data);
 				$dialog.dialog("option", "buttons", {
 					确定: function() {
+						
 						return false;
 					},
 					取消: function() {
 						$(this).dialog( "close" );
+						return false;
 					}
 				});
 				$dialog.dialog("open");
@@ -150,5 +152,19 @@
 			}, true);
 		}
 		$(".selection").text("已选中 " + selectedItems.length + " 项");
+	}
+	
+	function merge(callback)
+	{
+		var url = "merge.action";
+		var q = "numIids=";
+		$.ajax({
+			url: url,
+			data: q,
+			type: 'POST',
+			success: function(data) {
+				callback();
+			}
+		});
 	}
 </script>
