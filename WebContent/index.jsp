@@ -41,7 +41,7 @@
 	</script>     
 </head>
 
-<body>
+<body oncontextmenu="return false;">
 <div class="container">
 	<div id="header" class="span-24 last append-bottom">
 		<div class="left">
