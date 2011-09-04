@@ -60,7 +60,7 @@
 	$("#label-dialog").dialog({
 		autoOpen: false,
 		modal: true,
-		width: 850,
+		width: 860,
 		show: "blind"
 	});
 	$("#processing-dialog").dialog({

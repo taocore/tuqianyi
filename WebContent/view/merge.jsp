@@ -27,40 +27,42 @@
 				</fieldset>
 			</div>
 		</div>
-		<div class="right">
-			<div id="labels">
-				<s:iterator value="labelCategories">
-					<h3><a href="#"><s:property value="name"/></a></h3>
+		<div id="ctabs" class="right">
+
+				<ul>
+					<li><a href="#labels">标签</a></li>
+					<li><a href="#text">文字</a></li>
+					<li><a href="#frames">边框</a></li>
+				</ul>
+				<div id="labels">
+					<s:iterator value="labelCategories">
+						<h3><a href="#"><s:property value="name"/></a></h3>
+						<div class="labels-panel">
+							<s:iterator value="labels">
+								<div class="label-item" title="单击将标签添加到主图"><img src='<s:property value="src"/>' width="100%" height="100%"/></div>
+							</s:iterator>
+						</div>
+					</s:iterator>
+					<h3><a href="#">自定义标签</a></h3>
 					<div class="labels-panel">
-						<s:iterator value="labels">
-							<div class="label-item" title="双击将标签添加到主图"><img src='<s:property value="src"/>' width="100%" height="100%"/></div>
+						<s:iterator value="customLabels">
+							<div class="label-item" title="单击将标签添加到主图"><img src='<s:property value="src"/>' width="100%" height="100%"/></div>
 						</s:iterator>
 					</div>
-				</s:iterator>
-				<h3><a href="#">自定义标签</a></h3>
-				<div class="labels-panel">
-					<s:iterator value="customLabels">
-						<div class="label-item" title="双击将标签添加到主图"><img src='<s:property value="src"/>' width="100%" height="100%"/></div>
-					</s:iterator>
 				</div>
-				<h3><a href="#">文字</a></h3>
-				<div class="labels-panel">
-					<s:iterator value="text">
-						<div class="label-item" title="双击将标签添加到主图"><img src='<s:property value="src"/>' width="100%" height="100%"/></div>
-					</s:iterator>
+				<div id="text">
+					文字
 				</div>
-				<h3><a href="#">边框</a></h3>
-				<div class="labels-panel">
-					<s:iterator value="frames">
-						<div class="frame-item" title="双击将边框添加到主图"><img src='<s:property value="src"/>' width="100%" height="100%"/></div>
-					</s:iterator>
+				<div id="frames">
+					边框
 				</div>
-			</div>
+			
 		</div>
 	</form>
 </div>
 
 <script type="text/javascript">
+	$("#ctabs").tabs();
 	$("#labels").accordion();
 	
 	$(".label-item").click(
