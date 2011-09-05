@@ -2,7 +2,7 @@ package com.tuqianyi.model;
 
 
 public class TextLabel extends Label{
-	private String text = "卖疯了！";
+	private String text = "狂卖";
 	private String font = "黑体";
 	private int fontSize = 18; //normal font size = 16px = 12pt
 	private String color = "#ff0000";

@@ -28,6 +28,14 @@
         <action name="recover" class="com.tuqianyi.action.RecoverAction" method="execute">
             <result name="success">/view/ok.jsp</result>
         </action>
+        
+        <action name="font" class="com.tuqianyi.action.FontAction" method="execute">
+            <result name="success" type="stream">
+            	<param name="contentType">image/png</param>
+            	<param name="inputName">stream</param>
+            	<param name="bufferSize">1024</param>
+            </result>
+        </action>
 
 	</package>
 

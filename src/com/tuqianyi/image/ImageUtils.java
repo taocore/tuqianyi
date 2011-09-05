@@ -131,6 +131,23 @@ public class ImageUtils {
 			return image;
 	}
 
+	public static BufferedImage resize(BufferedImage image, int width, int height)
+	{
+		BufferedImage target = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g = target.createGraphics();
+		g.drawImage(image, 0, 0, width, height, null);
+		return target;
+	}
+	
+	public static BufferedImage resize2(BufferedImage image, int width, int height)
+	{
+		double rw = (double)width / image.getWidth();
+		double rh = (double)height /image.getHeight();
+		AffineTransform transform = AffineTransform.getScaleInstance(rw, rh);
+		AffineTransformOp op = new AffineTransformOp(transform, null);
+		return (BufferedImage)op.filter(image, null);
+	}
+	
 	/**
 	 * 缩放
 	 * 
@@ -143,46 +160,40 @@ public class ImageUtils {
 	 * @param bb
 	 *            比例不对时是否需要补�?
 	 */
-	public static void resize(String filePath, int height, int width, boolean bb) {
-		try {
-			double ratio = 0.0; // 缩放比例
-			File f = new File(filePath);
-			BufferedImage bi = ImageIO.read(f);
-			Image itemp = bi.getScaledInstance(width, height,
-					BufferedImage.SCALE_SMOOTH);
-			// 计算比例
-			if ((bi.getHeight() > height) || (bi.getWidth() > width)) {
-				if (bi.getHeight() > bi.getWidth()) {
-					ratio = (new Integer(height)).doubleValue()
-							/ bi.getHeight();
-				} else {
-					ratio = (new Integer(width)).doubleValue() / bi.getWidth();
-				}
-				AffineTransformOp op = new AffineTransformOp(AffineTransform
-						.getScaleInstance(ratio, ratio), null);
-				itemp = op.filter(bi, null);
+	public static BufferedImage resize(BufferedImage bi, int height, int width, boolean bb) {
+		double ratio = 0.0; // 缩放比例
+		Image itemp = bi.getScaledInstance(width, height,
+				BufferedImage.SCALE_SMOOTH);
+		// 计算比例
+		if ((bi.getHeight() > height) || (bi.getWidth() > width)) {
+			if (bi.getHeight() > bi.getWidth()) {
+				ratio = (new Integer(height)).doubleValue()
+						/ bi.getHeight();
+			} else {
+				ratio = (new Integer(width)).doubleValue() / bi.getWidth();
 			}
-			if (bb) {
-				BufferedImage image = new BufferedImage(width, height,
-						BufferedImage.TYPE_INT_RGB);
-				Graphics2D g = image.createGraphics();
-				g.setColor(Color.white);
-				g.fillRect(0, 0, width, height);
-				if (width == itemp.getWidth(null))
-					g.drawImage(itemp, 0, (height - itemp.getHeight(null)) / 2,
-							itemp.getWidth(null), itemp.getHeight(null),
-							Color.white, null);
-				else
-					g.drawImage(itemp, (width - itemp.getWidth(null)) / 2, 0,
-							itemp.getWidth(null), itemp.getHeight(null),
-							Color.white, null);
-				g.dispose();
-				itemp = image;
-			}
-			ImageIO.write((BufferedImage) itemp, "jpg", f);
-		} catch (IOException e) {
-			e.printStackTrace();
+			AffineTransformOp op = new AffineTransformOp(AffineTransform
+					.getScaleInstance(ratio, ratio), null);
+			itemp = op.filter(bi, null);
 		}
+		if (bb) {
+			BufferedImage image = new BufferedImage(width, height,
+					BufferedImage.TYPE_INT_RGB);
+			Graphics2D g = image.createGraphics();
+			g.setColor(Color.white);
+			g.fillRect(0, 0, width, height);
+			if (width == itemp.getWidth(null))
+				g.drawImage(itemp, 0, (height - itemp.getHeight(null)) / 2,
+						itemp.getWidth(null), itemp.getHeight(null),
+						Color.white, null);
+			else
+				g.drawImage(itemp, (width - itemp.getWidth(null)) / 2, 0,
+						itemp.getWidth(null), itemp.getHeight(null),
+						Color.white, null);
+			g.dispose();
+			itemp = image;
+		}
+		return (BufferedImage) itemp;
 	}
 
 	public static int getLength(String text) {
