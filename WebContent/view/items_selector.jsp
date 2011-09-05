@@ -60,8 +60,13 @@
 	$("#label-dialog").dialog({
 		autoOpen: false,
 		modal: true,
-		width: 860,
-		show: "blind"
+		width: 870,
+		open: function(event, ui) {
+			$("#search-form select").hide();
+		},
+		close: function(event, ui){
+			$("#search-form select").show();
+		}
 	});
 	$("#processing-dialog").dialog({
 		autoOpen: false,

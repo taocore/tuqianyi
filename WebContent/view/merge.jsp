@@ -4,7 +4,7 @@
 
 <div>
 	<form id="label-form">
-		<div class="left">
+		<div id="merging-left" class="left">
 			<table id="image-wrapper" cellpadding="0" cellspacing="0">
 			<tr><td>
 				<div id="main-pic">
@@ -14,6 +14,7 @@
 				<s:else>
 	    				<img src='<s:property value="item.picUrl"/>_310x310.jpg'/>
 				</s:else>
+				<div id="frame"></div>
 				</div>
 			</td></tr>
 			</table>
@@ -28,7 +29,6 @@
 			</div>
 		</div>
 		<div id="ctabs" class="right">
-
 				<ul>
 					<li><a href="#labels">标签</a></li>
 					<li><a href="#text">文字</a></li>
@@ -54,9 +54,11 @@
 					文字
 				</div>
 				<div id="frames">
-					边框
+					<div class="frame-item" title="单击将边框应用到主图">无</div>
+					<s:iterator value="frameLabels">
+							<div class="frame-item" title="单击将边框应用到主图"><img src='<s:property value="src"/>' width="100%" height="100%"/></div>
+					</s:iterator>
 				</div>
-			
 		</div>
 	</form>
 </div>
@@ -110,4 +112,16 @@
 			});
 		});
 	$("#opacity").slider();
+	$(".frame-item").click(
+		function() {
+			var src = $("img", this).attr('src');
+			if (src)
+			{
+				$("#frame").html("<img src='" + src + "' width='100%' height='100%'/>");
+			}
+			else
+			{
+				$("#frame").empty();
+			}
+	});
 </script>

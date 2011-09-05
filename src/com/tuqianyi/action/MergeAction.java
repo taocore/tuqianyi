@@ -14,7 +14,6 @@ import java.util.logging.Level;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.util.ServletContextAware;
 
