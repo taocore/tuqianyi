@@ -51,7 +51,7 @@
 					</div>
 				</div>
 				<div id="text">
-					文字
+					<div class="text-item"><img src="font.action?label.font=simhei"/></div>
 				</div>
 				<div id="frames">
 					<div class="frame-item" title="单击将边框应用到主图">无</div>
