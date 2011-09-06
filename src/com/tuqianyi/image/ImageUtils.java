@@ -1,18 +1,21 @@
 package com.tuqianyi.image;
 
 import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.Transparency;
+import java.awt.font.TextAttribute;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.AttributedString;
 import java.util.Iterator;
 
 import javax.imageio.IIOImage;
@@ -55,91 +58,37 @@ public class ImageUtils {
 		return result;
 	}
 
-	/**
-	 * 文字水印
-	 * 
-	 * @param text
-	 *            水印文字
-	 * @param targetImg
-	 *            目标图片
-	 * @param fontName
-	 *            字体名称
-	 * @param fontStyle
-	 *            字体样式
-	 * @param color
-	 *            字体颜色
-	 * @param fontSize
-	 *            字体大小
-	 * @param x
-	 *            修正�?
-	 * @param y
-	 *            修正�?
-	 * @param alpha
-	 *            透明�?
-	 */
 	public static BufferedImage pressText(BufferedImage image, String text, 
-			Font font, Color color, Color backColor, int x, int y, int angle, float alpha) {
-			Graphics2D g = image.createGraphics();
-			FontMetrics metrics = g.getFontMetrics(font);
-			int textLength = metrics.stringWidth(text);
-			int textHeight = metrics.getHeight();
-			if (x + textLength > image.getWidth())
-			{
-				x = image.getWidth() - textLength;
-			}
-			if (y + textHeight > image.getHeight())
-			{
-				y = image.getHeight() - textHeight;
-			}
-//			g.drawImage(src, 0, 0, width, height, null);
-			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP,
-					alpha));
-			g.setFont(font);			
-			
-			System.out.println("color: " + color);
-			System.out.println("backcolor: " + backColor);
-			if (angle != 0)
-			{
-				boolean rotated = false;
-				if (backColor != null)
-				{
-					g.setColor(backColor);
-					g.translate(x, y + metrics.getAscent());
-					g.rotate(angle * Math.PI / 180);
-					g.fillRect(0, -metrics.getAscent(), textLength, textHeight);
-					rotated = true;
-				}
-				if (!rotated)
-				{
-					g.translate(x, y + metrics.getAscent());
-					g.rotate(angle * Math.PI / 180);
-				}
-				g.setColor(color);
-				g.drawString(text, 0, 0);
-			}
-			else
-			{
-				if (backColor != null)
-				{
-					g.setColor(backColor);
-					g.fillRect(x, y, textLength, textHeight);
-				}
-				g.setColor(color);
-				g.drawString(text, x, y + metrics.getAscent());
-			}
-			g.dispose();
-			return image;
-	}
+			Font font, Color color, Color backColor, Color borderColor, int borderWidth, 
+			int x, int y, float alpha) {
+		Graphics2D g = image.createGraphics();
+		FontMetrics metrics = g.getFontMetrics(font);
+		int width = metrics.stringWidth(text);
+		int height = metrics.getHeight();
+		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
+				alpha));
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+	              RenderingHints.VALUE_ANTIALIAS_ON);
 
-	public static BufferedImage resize(BufferedImage image, int width, int height)
-	{
-		BufferedImage target = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-		Graphics2D g = target.createGraphics();
-		g.drawImage(image, 0, 0, width, height, null);
-		return target;
+		AttributedString as = new AttributedString(text);
+		as.addAttribute(TextAttribute.FONT, font);
+		as.addAttribute(TextAttribute.FOREGROUND, color);
+		if (backColor != null)
+		{
+			as.addAttribute(TextAttribute.BACKGROUND, backColor);
+		}
+		g.drawString(as.getIterator(), 0, metrics.getAscent());
+		if (borderColor != null)
+		{
+			g.setColor(borderColor);
+			g.setStroke(new BasicStroke(borderWidth));
+			g.drawRect(0, 0, width, height);
+		}
+		g.dispose();
+		return image;
 	}
 	
-	public static BufferedImage resize2(BufferedImage image, int width, int height)
+	public static BufferedImage resize(BufferedImage image, int width, int height)
 	{
 		double rw = (double)width / image.getWidth();
 		double rh = (double)height /image.getHeight();

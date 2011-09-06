@@ -282,8 +282,8 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 		Font font = fontProvider.getFont(label.getFont()).deriveFont(Font.BOLD, fontSize);
 //		Font font = new Font(label.getFont(), Font.BOLD, label.getFontSize());
 		Color color = Color.decode(label.getColor());
-		image = ImageUtils.pressText(image, item.parseToken(text), font, 
-				color, label.getBackground() == null ? null : Color.decode(label.getBackground()), newX, newY, label.getAngle(), 1F);
+//		image = ImageUtils.pressText(image, item.parseToken(text), font, 
+//				color, label.getBackground() == null ? null : Color.decode(label.getBackground()), newX, newY, label.getAngle(), 1F);
 		return image;
 	}
 	
