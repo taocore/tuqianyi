@@ -51,14 +51,14 @@
 					</div>
 				</div>
 				<div id="text">
-					<div class="text-item"><img src="font.action?label.font=simhei"/></div>
-					<div class="text-item"><img src="font.action?label.font=simkai"/></div>
-					<div class="text-item"><img src="font.action?label.font=simsun"/></div>
-					<div class="text-item"><img src="font.action?label.font=msyh"/></div>
-					<div class="text-item"><img src="font.action?label.font=hkst"/></div>
-					<div class="text-item"><img src="font.action?label.font=mnjccy"/></div>
-					<div class="text-item"><img src="font.action?label.font=mnjdh"/></div>
-					<div class="text-item"><img src="font.action?label.font=mnxf"/></div>
+					<div class="text-item"><img src="font.action?label.font=simhei" width="100%" height="100%"/></div>
+					<div class="text-item"><img src="font.action?label.font=simkai" width="100%" height="100%"/></div>
+					<div class="text-item"><img src="font.action?label.font=simsun" width="100%" height="100%"/></div>
+					<div class="text-item"><img src="font.action?label.font=msyh" width="100%" height="100%"/></div>
+					<div class="text-item"><img src="font.action?label.font=hkst" width="100%" height="100%"/></div>
+					<div class="text-item"><img src="font.action?label.font=mnjccy" width="100%" height="100%"/></div>
+					<div class="text-item"><img src="font.action?label.font=mnjdh" width="100%" height="100%"/></div>
+					<div class="text-item"><img src="font.action?label.font=mnxf" width="100%" height="100%"/></div>
 				</div>
 				<div id="frames">
 					<div class="frame-item" title="单击将边框应用到主图">无</div>
@@ -144,8 +144,8 @@
 			function() {
 				var $label = $("img", this);
 				var src = $label.attr('src');
-				var w = $label.width();
-				var h = $label.height();
+				var w = $(this).width();
+				var h = $(this).height();
 				var width;
 				var height;
 				if (w >= h)
