@@ -63,6 +63,9 @@
 		width: 870,
 		open: function(event, ui) {
 			$("#search-form select").hide();
+			$("#ctabs").tabs({
+				cache: true
+			});
 		},
 		close: function(event, ui){
 			$("#search-form select").show();
