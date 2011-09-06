@@ -52,6 +52,13 @@
 				</div>
 				<div id="text">
 					<div class="text-item"><img src="font.action?label.font=simhei"/></div>
+					<div class="text-item"><img src="font.action?label.font=simkai"/></div>
+					<div class="text-item"><img src="font.action?label.font=simsun"/></div>
+					<div class="text-item"><img src="font.action?label.font=msyh"/></div>
+					<div class="text-item"><img src="font.action?label.font=hkst"/></div>
+					<div class="text-item"><img src="font.action?label.font=mnjccy"/></div>
+					<div class="text-item"><img src="font.action?label.font=mnjdh"/></div>
+					<div class="text-item"><img src="font.action?label.font=mnxf"/></div>
 				</div>
 				<div id="frames">
 					<div class="frame-item" title="单击将边框应用到主图">无</div>
