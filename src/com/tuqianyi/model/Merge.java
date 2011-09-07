@@ -5,8 +5,8 @@ import java.io.Serializable;
 public class Merge implements Serializable{
 	
 	private ImageLabel label;
-	private int x;
-	private int y;
+	private float x;
+	private float y;
 	private int z;
 	private int width = 100;
 	private int height = 100;
@@ -19,19 +19,19 @@ public class Merge implements Serializable{
 		return label;
 	}
 
-	public void setX(int x) {
+	public void setX(float x) {
 		this.x = x;
 	}
 
-	public int getX() {
+	public float getX() {
 		return x;
 	}
 
-	public void setY(int y) {
+	public void setY(float y) {
 		this.y = y;
 	}
 
-	public int getY() {
+	public float getY() {
 		return y;
 	}
 
