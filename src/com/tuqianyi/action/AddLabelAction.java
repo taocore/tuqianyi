@@ -1,5 +1,6 @@
 package com.tuqianyi.action;
 
+import java.util.List;
 import java.util.logging.Level;
 
 import com.tuqianyi.db.Dao;
@@ -8,6 +9,7 @@ import com.tuqianyi.model.ImageLabel;
 public class AddLabelAction extends ActionBase{
 
 	private ImageLabel label;
+	private List<ImageLabel> customLabels;
 	
 	public String execute()
 	{
@@ -15,6 +17,7 @@ public class AddLabelAction extends ActionBase{
 		{
 			long id = Dao.INSTANCE.addLabel(label, getUser());
 			label.setId(id);
+			setCustomLabels(Dao.INSTANCE.getCustomLabels(getUser()));
 		}
 		catch (Exception e)
 		{
@@ -29,5 +32,13 @@ public class AddLabelAction extends ActionBase{
 
 	public ImageLabel getLabel() {
 		return label;
+	}
+
+	public void setCustomLabels(List<ImageLabel> customLabels) {
+		this.customLabels = customLabels;
+	}
+
+	public List<ImageLabel> getCustomLabels() {
+		return customLabels;
 	}
 }

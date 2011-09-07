@@ -50,7 +50,7 @@
         </action>
         
         <action name="add_label" class="com.tuqianyi.action.AddLabelAction" method="execute">
-            <result name="success">/view/ok.jsp</result>
+            <result name="success">/view/custom_labels.jsp</result>
         </action>
         
         <action name="delete_label" class="com.tuqianyi.action.DeleteLabelAction" method="execute">
