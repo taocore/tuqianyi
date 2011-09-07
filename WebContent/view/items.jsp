@@ -19,9 +19,9 @@
 			<tr class="drow" num_iid='<s:property value="numIid"/>'>
 				<td><input type="checkbox" class="selector"></input>
 				</td>
-				<td class="pic">
+				<td>
 					<a href='http://item.taobao.com/item.htm?id=<s:property value="numIid"/>' target="_blank">
-						<img src='<s:property value="picUrl"/>_80x80.jpg'/>
+						<img class="pic" src='<s:property value="picUrl"/>_80x80.jpg' src_310='<s:property value="picUrl"/>_310x310.jpg' />
 					</a>
 				</td>
 				<td class="item-details">
@@ -57,7 +57,12 @@
 
 <script type="text/javascript">
 	$("#items-table").selectable({selectionChanged: selectionChanged});
-	$(".promotion-details").tooltip();
+	$(".pic").tooltip({
+		showURL: false,
+		bodyHandler: function() { 
+	        return $("<img/>").attr("src", $(this).attr('src_310')); 
+	    } 
+	});
 	$(".add-label-link").click(function(){
 		var currentItem = $(this).closest("tr").attr("num_iid");
 		var $dialog = $("#label-dialog");
@@ -82,6 +87,10 @@
 								{
 									$dialog.dialog('close');
 									reload();
+								}
+								else
+								{
+									alert(data);
 								}
 							}
 						});
