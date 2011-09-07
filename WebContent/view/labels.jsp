@@ -46,7 +46,7 @@
 				height = 100;
 				width = w * 100 / h;
 			}
-			var $labelItem = $("<div><img src='" + src + "' width='100%' height='100%'/></div>");
+			var $labelItem = $("<div class='merge'><img src='" + src + "' width='100%' height='100%'/></div>");
 			$labelItem.appendTo("#main-pic")
 			.css({
 				width: width,

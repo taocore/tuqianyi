@@ -39,7 +39,20 @@
 </div>
 
 <script type="text/javascript">
-	
-	
 	$("#opacity").slider();
+	
+	function getMerges()
+	{
+		var q = '';
+		$("#main-pic div.merge").each(function(i){
+			var m = '&merges[' + i + '].';
+			var pos = $(this).position();
+			q = q + m + 'x=' + pos.left
+			 + m + 'y=' + pos.top
+			 + m + 'width=' + $(this).width()
+			 + m + 'height=' + $(this).height()
+			 + m + 'label.src=' + $("img", $(this)).attr("src");
+		});
+		return q;
+	}
 </script>

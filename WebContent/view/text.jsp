@@ -48,7 +48,7 @@
 					height = 100;
 					width = w * 100 / h;
 				}
-				$("<div><img src='" + src + "' width='100%' height='100%'/></div>").appendTo("#main-pic")
+				$("<div class='merge'><img src='" + src + "' width='100%' height='100%'/></div>").appendTo("#main-pic")
 				.css({
 					width: width,
 					height: height,

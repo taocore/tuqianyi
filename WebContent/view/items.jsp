@@ -71,7 +71,20 @@
 				$dialog.html(data);
 				$dialog.dialog("option", "buttons", {
 					确定: function() {
-						
+						var url = 'merge.action';
+						var q = 'numIids=' + currentItem + getMerges();
+						$.ajax({
+							url: url,
+							data: q,
+							type: 'POST',
+							success: function(data){
+								if ((data == 'ok'))
+								{
+									$dialog.dialog('close');
+									reload();
+								}
+							}
+						});
 						return false;
 					},
 					取消: function() {
