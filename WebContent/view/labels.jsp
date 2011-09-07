@@ -176,6 +176,7 @@
 		{
 			var url = "delete_label.action";
 			var q = "label.id=" + $(this).closest('.custom-label-item').attr('label_id');
+			var $label = $(this);
 			$.ajax({
 				url: url,
 				data: q,
@@ -184,8 +185,7 @@
 					if (data == 'ok')
 					{
 						hideProcessingDialog();
-						$('.custom-label-tool').closest('custom-label-item').remove();
-						//reload(clearSelection);
+						$label.closest('.custom-label-item').remove();
 					}
 					else
 					{
