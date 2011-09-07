@@ -48,6 +48,14 @@
             	<param name="bufferSize">1024</param>
             </result>
         </action>
+        
+        <action name="add_label" class="com.tuqianyi.action.AddLabelAction" method="execute">
+            <result name="success">/view/ok.jsp</result>
+        </action>
+        
+        <action name="delete_label" class="com.tuqianyi.action.DeleteLabelAction" method="execute">
+            <result name="success">/view/ok.jsp</result>
+        </action>
 
 	</package>
 

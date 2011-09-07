@@ -35,7 +35,6 @@ public class LabelsAction extends ActionBase {
 		{
 			error(e);
 		}
-		_log.info("categories: " + labelCategories);
 		return SUCCESS;
 	}
 
