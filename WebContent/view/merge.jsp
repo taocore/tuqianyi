@@ -53,6 +53,7 @@
 			 + m + 'height=' + $(this).height()
 			 + m + 'label.src=' + $("img", $(this)).attr("src");
 		});
+		q += '&frame.src=' + $("#frame img").attr('src');
 		return q;
 	}
 </script>

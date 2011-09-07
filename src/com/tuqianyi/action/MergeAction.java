@@ -24,7 +24,6 @@ import com.tuqianyi.Constants;
 import com.tuqianyi.db.DBUtils;
 import com.tuqianyi.db.Dao;
 import com.tuqianyi.image.ImageUtils;
-import com.tuqianyi.model.FrameLabel;
 import com.tuqianyi.model.ImageLabel;
 import com.tuqianyi.model.Item;
 import com.tuqianyi.model.Label;
@@ -37,9 +36,9 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 	private ServletContext context;
 	private String numIids;
 	private List<Merge> merges;
+	private ImageLabel frame;
 	
 	public String execute() throws Exception {
-		_log.info("nnnnnnnnnn: " + numIids);
 		List<Item> items = getItems(numIids);
 		merge(items, merges);
 		return SUCCESS;
@@ -132,31 +131,34 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 			_log.info("merging..." + item.getNumIid());
 			BufferedImage image = ImageIO.read(new URL(item.getPicUrl()));
 			String rootPath = context.getRealPath("/");
-			for (Merge m : merges)
+			if (merges != null)
 			{
-				Label label = m.getLabel();
-				if (label instanceof ImageLabel)
+				for (Merge m : merges)
 				{
-					image = mergeImage(image, m, rootPath);
-				}
-				else if(label instanceof TextLabel)
-				{
-//					image = drawText(item, image, m);
+					Label label = m.getLabel();
+					if (label instanceof ImageLabel)
+					{
+						image = mergeImage(image, m, rootPath);
+					}
+					else if(label instanceof TextLabel)
+					{
+	//					image = drawText(item, image, m);
+					}
 				}
 			}
-//				FileOutputStream out = new FileOutputStream(rootPath + "result.jpg");
+			if (frame != null)
+			{
+				image = addFrame(image, rootPath);
+			}
 			ByteArrayOutputStream out2 = new ByteArrayOutputStream();
 			try
 			{
-//					ImageUtils.writeImage(image, "jpg", 1, out);
 				ImageUtils.writeImage(image, "jpg", 1, out2);
 				int size = out2.size();
 				if (size > 512000)
 				{
 					out2 = new ByteArrayOutputStream();
 					ImageUtils.writeImage(image, "jpg", 512000F/size, out2);
-//						out = new FileOutputStream(rootPath + "result.jpg");
-//						ImageUtils.writeImage(image, "jpg", 512000F/size, out);
 				}
 				_log.info("size: " + out2.size());
 				ItemUpdateResponse response = TaobaoProxy.updateMainPic(topSession, item.getNumIid(), out2.toByteArray());
@@ -186,7 +188,6 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 			} 
 			catch (ApiException e) {
 				_log.log(Level.SEVERE, "", e);
-//					throw new Exception(Constants.API_EXCEPTION);
 			}
 			catch (Exception e)
 			{
@@ -199,7 +200,6 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 			}
 			finally
 			{
-//					out.close();
 				out2.close();
 			}
 		} catch (MalformedURLException e) {
@@ -241,10 +241,6 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 	private BufferedImage mergeImage(BufferedImage image, Merge m, String rootPath) throws IOException
 	{
 		ImageLabel label = (ImageLabel)m.getLabel();
-		if (label instanceof FrameLabel)
-		{
-			return addFrame(image, (FrameLabel)label, rootPath);
-		}
 		BufferedImage labelImage;
 		_log.info("label id: " + label.getId());
 		if (ImageLabel.isLocal(label.getSrc()))
@@ -282,12 +278,11 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 		return image;
 	}
 	
-	private BufferedImage addFrame(BufferedImage image, FrameLabel label, String rootPath) throws IOException
+	private BufferedImage addFrame(BufferedImage image, String rootPath) throws IOException
 	{
-		_log.info("frame path: " + label.getSrc());
-		URL labelUrl = new URL(label.getSrc());
-		BufferedImage labelImage = ImageIO.read(labelUrl);
-		return ImageUtils.composite(image, labelImage, 0, 0, image.getWidth(), image.getHeight(), label.getOpacity()/100F);
+		File f = new File(rootPath + frame.getSrc());
+		BufferedImage frameImage = ImageIO.read(f);
+		return ImageUtils.composite(image, frameImage, 0, 0, image.getWidth(), image.getHeight(), frame.getOpacity()/100F);
 	}
 	
 	private float getOriginal2PreviewRatio(BufferedImage originalImage)
@@ -353,5 +348,13 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 
 	public List<Merge> getMerges() {
 		return merges;
+	}
+
+	public void setFrame(ImageLabel frame) {
+		this.frame = frame;
+	}
+
+	public ImageLabel getFrame() {
+		return frame;
 	}
 }

@@ -10,6 +10,7 @@
 			</th>
 			<th>主图</th>
 			<th>基本信息</th>
+			<th>出错原因</th>
 			<th>状态</th>
 			<th>操作</th>
 		</tr>
@@ -27,6 +28,11 @@
 				<td class="item-details">
 					<div><s:property value="title"/></div>
 					<div>价格：<s:property value="price"/>元</div>
+				</td>
+				<td>
+					<s:if test="%{status == 3}">
+	    				<div class='error'><s:property value="errorMsg"/></div>
+					</s:if>
 				</td>
 				<td class="status" status='<s:property value="status"/>'>
 					<s:if test="%{status == 4}">
