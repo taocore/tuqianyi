@@ -160,9 +160,9 @@ public class ImageUtils {
 	public static BufferedImage composite(BufferedImage backImage, BufferedImage frontImage, 
 			int x, int y, int frontWidth, int frontHeight, float alpha) {
 		Graphics2D g = backImage.createGraphics();
-//		int frontWidth = frontImage.getWidth();
-//		int frontHeight = frontImage.getHeight();
-		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, alpha));
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+	              RenderingHints.VALUE_ANTIALIAS_ON);
+		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
 		g.drawImage(frontImage, x, y, frontWidth, frontHeight, null);
 		g.dispose();
 		return backImage;
