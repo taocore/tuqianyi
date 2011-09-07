@@ -1,7 +1,5 @@
 package com.tuqianyi.action;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -9,20 +7,22 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.util.ServletContextAware;
 
 import com.taobao.api.ApiException;
 import com.taobao.api.response.ItemGetResponse;
 import com.taobao.api.response.ItemUpdateResponse;
+import com.tuqianyi.Constants;
 import com.tuqianyi.db.DBUtils;
 import com.tuqianyi.db.Dao;
-import com.tuqianyi.font.FontProvider;
 import com.tuqianyi.image.ImageUtils;
 import com.tuqianyi.model.FrameLabel;
 import com.tuqianyi.model.ImageLabel;
@@ -34,17 +34,44 @@ import com.tuqianyi.taobao.TaobaoProxy;
 
 public class MergeAction extends ActionBase implements ServletContextAware{
 
-	private static FontProvider fontProvider;
 	private ServletContext context;
+	private String numIids;
+	private List<Merge> merges;
 	
 	public String execute() throws Exception {
-		if (fontProvider == null)
-		{
-			String fontDir = context.getRealPath("/") + "fonts/";
-			fontProvider = new FontProvider(fontDir);
-		}
-
+		_log.info("nnnnnnnnnn: " + numIids);
+		List<Item> items = getItems(numIids);
+		merge(items, merges);
 		return SUCCESS;
+	}
+	
+	private List<Item> getItems(String numIids)
+	{
+		List<Item> items = new ArrayList<Item>();
+		if (numIids != null)
+		{
+			String[] iids = StringUtils.split(numIids, ',');
+			for (String numIid : iids)
+			{
+				try {
+					ItemGetResponse rsp = TaobaoProxy.getItem(getSessionId(), Long.parseLong(numIid));
+					if (rsp.isSuccess())
+					{
+						com.taobao.api.domain.Item item = rsp.getItem();
+						items.add(new Item(item));
+					}
+					else
+					{
+						error(rsp);
+					}
+				} catch (NumberFormatException e) {
+					error(e);
+				} catch (ApiException e) {
+					error(e);
+				}
+			}
+		}
+		return items;
 	}
 	
 	public String merge(List<Item> items, List<Merge> merges)
@@ -52,8 +79,7 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 		String topSession = getSessionId();
 		if (!checkItemsCount(items.size()))
 		{
-			//todo
-//			return Constants.OUT_OF_ALLOWED_ITEMS;
+			return Constants.OUT_OF_ALLOWED_ITEMS;
 		}
 		Connection conn = null;
 		try
@@ -115,7 +141,7 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 				}
 				else if(label instanceof TextLabel)
 				{
-					image = drawText(item, image, m);
+//					image = drawText(item, image, m);
 				}
 			}
 //				FileOutputStream out = new FileOutputStream(rootPath + "result.jpg");
@@ -264,29 +290,6 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 		return ImageUtils.composite(image, labelImage, 0, 0, image.getWidth(), image.getHeight(), label.getOpacity()/100F);
 	}
 	
-	private BufferedImage drawText(Item item, BufferedImage image, Merge m)
-	{
-		TextLabel label = (TextLabel)m.getLabel();
-		String text = label.getText();
-		if (text == null || text.length() == 0)
-		{
-			return image;
-		}
-		float original2PreviewRatio = getOriginal2PreviewRatio(image);
-		int newX = Math.round(m.getX() * original2PreviewRatio);
-		int newY = Math.round(m.getY() * original2PreviewRatio);
-		_log.info("new x: " + newX + ", new y: " + newY);
-//				resizedLabel.resize(newWidth, newHeight);
-//				label = resizedLabel.getAsBufferedImage();
-		int fontSize = Math.round((label.getFontSize() + 4) * original2PreviewRatio);
-		Font font = fontProvider.getFont(label.getFont()).deriveFont(Font.BOLD, fontSize);
-//		Font font = new Font(label.getFont(), Font.BOLD, label.getFontSize());
-		Color color = Color.decode(label.getColor());
-//		image = ImageUtils.pressText(image, item.parseToken(text), font, 
-//				color, label.getBackground() == null ? null : Color.decode(label.getBackground()), newX, newY, label.getAngle(), 1F);
-		return image;
-	}
-	
 	private float getOriginal2PreviewRatio(BufferedImage originalImage)
 	{
 		if (originalImage.getWidth() >= originalImage.getHeight() && originalImage.getWidth() > 310)
@@ -334,5 +337,21 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 
 	public void setServletContext(ServletContext context) {
 		this.context = context;
+	}
+
+	public void setNumIids(String numIids) {
+		this.numIids = numIids;
+	}
+
+	public String getNumIids() {
+		return numIids;
+	}
+
+	public void setMerges(List<Merge> merges) {
+		this.merges = merges;
+	}
+
+	public List<Merge> getMerges() {
+		return merges;
 	}
 }

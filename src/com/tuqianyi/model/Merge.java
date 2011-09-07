@@ -4,18 +4,18 @@ import java.io.Serializable;
 
 public class Merge implements Serializable{
 	
-	private Label label;
+	private ImageLabel label;
 	private int x;
 	private int y;
 	private int z;
 	private int width = 100;
 	private int height = 100;
 	
-	public void setLabel(Label label) {
+	public void setLabel(ImageLabel label) {
 		this.label = label;
 	}
 	
-	public Label getLabel() {
+	public ImageLabel getLabel() {
 		return label;
 	}
 

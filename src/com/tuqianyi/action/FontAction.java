@@ -17,15 +17,12 @@ public class FontAction extends ActionBase {
 	
 	public String execute() throws Exception
 	{
-		_log.info("font: " + label.getFont());
 		try
 		{
-		BufferedImage image = FontsServlet.getFontProvider().getFontImage(label.getFont());
-		_log.info("image: " + image);
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ImageIO.write(image, "png", out);
-        stream = new ByteArrayInputStream(out.toByteArray());
-        _log.info("done. ");
+			BufferedImage image = FontsServlet.getFontProvider().getFontImage(label.getFont());
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+	        ImageIO.write(image, "png", out);
+	        stream = new ByteArrayInputStream(out.toByteArray());
 		}
 		catch (Exception e)
 		{

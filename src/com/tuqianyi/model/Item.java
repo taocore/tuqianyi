@@ -21,6 +21,19 @@ public class Item extends com.taobao.api.domain.Item{
 	private String errorMsg;
 	private String errorCode;
 	
+	public Item()
+	{
+		
+	}
+	
+	public Item(com.taobao.api.domain.Item item)
+	{
+		this.setNumIid(item.getNumIid());
+		this.setTitle(item.getTitle());
+		this.setPrice(item.getPrice());
+		this.setPicUrl(item.getPicUrl());
+	}
+	
 	public void setDetailUrl(String detailUrl) {
 		this.detailUrl = detailUrl;
 	}

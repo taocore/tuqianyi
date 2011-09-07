@@ -33,6 +33,10 @@
             <result name="success">/view/merge.jsp</result>
         </action>
         
+        <action name="merge" class="com.tuqianyi.action.MergeAction" method="execute">
+            <result name="success">/view/ok.jsp</result>
+        </action>
+        
         <action name="recover" class="com.tuqianyi.action.RecoverAction" method="execute">
             <result name="success">/view/ok.jsp</result>
         </action>
