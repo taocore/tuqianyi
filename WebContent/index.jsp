@@ -49,7 +49,7 @@
 		</div>
 		<div class="right" style="margin-top: 5px;">
 			您好，<span id="nick"><s:property value="#session.USER"/></span><span class="quiet separator">|</span>
-			<span><a href="#">升级</a></span><span class="quiet separator">|</span>
+			<span id='upgrade'><a href="http://fuwu.taobao.com/using/serv_upgrade.htm?service_id=6371" target="_blank">升级</a></span><span class="quiet separator">|</span>
 			<span><a target='_blank' href='http://amos.im.alisoft.com/msg.aw?v=2&uid=%E8%B5%A4%E7%8F%A0%E5%AD%90&site=cntaobao&s=1&charset=utf-8'><img border='0' src='http://amos.im.alisoft.com/online.aw?v=2&uid=%E8%B5%A4%E7%8F%A0%E5%AD%90&site=cntaobao&s=1&charset=utf-8' alt='联系作者' /></a></span>
 		</div>
 	</div>
