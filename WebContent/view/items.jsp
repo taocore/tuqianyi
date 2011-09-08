@@ -62,7 +62,7 @@
 </table>
 
 <script type="text/javascript">
-	$("#items-table").selectable({selectionChanged: selectionChanged});
+	$("#items-table").mytable({selectionChanged: selectionChanged});
 	$(".pic").tooltip({
 		showURL: false,
 		bodyHandler: function() { 
