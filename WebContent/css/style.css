@@ -21,6 +21,8 @@ tbody tr.row-selected, tbody tr.row-selected td {background:rgb(255, 255, 150);}
 .custom-label-item {position:relative;}
 .custom-label-tool {position:absolute;top:0;right:0;}
 .text-item {width:78px;height:43px;float:left;margin:10px;border:1px solid lightblue;cursor:pointer;}
+.merge {border:1px dotted lightblue;cursor:move;}
+#main-pic .ui-selected {border:1px solid blue;}
 #options {height:150px;overflow:auto;}
 .border {border:1px solid lightblue;}
 #faq ul {list-style-type:none;width:550px;}

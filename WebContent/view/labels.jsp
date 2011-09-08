@@ -58,11 +58,9 @@
 			.css({
 				width: width,
 				height: height,
-				border: '1px solid lightblue',
 				position: 'absolute',
 				top: 0,
-				left: 0,
-				cursor: 'move'
+				left: 0
 			}).draggable({
 				containment : "#main-pic",
 				scroll : false
@@ -72,7 +70,9 @@
 				minWidth : 20,
 				minHeight : 20,
 				maxWidth : 310,
-				maxHeight : 310
+				maxHeight : 310,
+				autoHide: true,
+				handles: 'n, e, s, w, ne, se, sw, nw'
 			}).hover(
 				function()
 				{
@@ -82,7 +82,16 @@
 				{
 					$(".label-tool", $labelItem).hide();
 				}
-			);
+			).data('option', {
+				aspectRatio: true, 
+				opacity: 100
+			}).mousedown(function(){
+				$(this).addClass('ui-selected');
+				$('#main-pic .merge').not(this).removeClass('ui-selected');
+				$('#image-label-options').show();
+				var opacity = $(this).data('option').opacity;
+				$('#opacity').slider('value', opacity);
+			}).trigger('mousedown');
 			
 			$("<div class='label-tool hide'><img src='images/cross_small.png'/></div>")
 			.appendTo($labelItem)
@@ -90,7 +99,6 @@
 				position: 'absolute',
 				top: '0',
 				right: '0',
-				display: 'none',
 				cursor: 'pointer'
 			}).click(function(){
 				$labelItem.remove();

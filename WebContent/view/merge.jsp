@@ -18,13 +18,23 @@
 				</div>
 			</td></tr>
 			</table>
-			<div>
-				<fieldset id="options">
+			<div id='options'>
+				<fieldset id="image-label-options" class='hide'>
 					<legend>标签选项</legend>
-					<label>缩放时保持长宽比：</label>
-					<input type='checkbox' checked='checked'/><br/>
+					<!-- label>缩放时保持长宽比：</label> 
+					<input id='keep-ratio' type='checkbox' checked='checked' /><br /-->
 					<label>透明度：</label>
 					<div id="opacity"></div>
+				</fieldset>
+				
+				<fieldset id="text-label-options" class='hide'>
+					<legend>标签选项</legend>
+					<label>文字：</label> 
+					<input type='text' class='text' /><br />
+					<label>文字颜色：</label>
+					<input type='text' class='text' /><br />
+					<label>背景颜色：</label>
+					<input type='text' class='text' /><br />
 				</fieldset>
 			</div>
 		</div>
@@ -39,7 +49,18 @@
 </div>
 
 <script type="text/javascript">
-	$("#opacity").slider();
+	$("#opacity").slider({
+		value: 100,
+		change: function(event, ui) {
+			var value = $(this).slider('value');
+			var $label = $( "#main-pic .ui-selected" );
+			$label.data('option').opacity = value;
+			$label.css({
+				'opacity': value/100,
+				'filter': 'alpha(opacity = ' + value + ')'
+			});
+		}
+	});
 	
 	function getMerges()
 	{
@@ -51,9 +72,14 @@
 			 + m + 'y=' + pos.top
 			 + m + 'width=' + $(this).width()
 			 + m + 'height=' + $(this).height()
-			 + m + 'label.src=' + $("img", $(this)).attr("src");
+			 + m + 'label.src=' + $("img", $(this)).attr("src")
+			 + m + 'label.opacity=' + $(this).data('option').opacity;
 		});
-		q += '&frame.src=' + $("#frame img").attr('src');
+		var frameSrc = $("#frame img").attr('src');
+		if (frameSrc)
+		{
+			q += '&frame.src=' + frameSrc;
+		}
 		return q;
 	}
 </script>
