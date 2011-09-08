@@ -23,7 +23,7 @@
 	<script type="text/javascript" src="js/jquery-ui-timepicker-addon.js"></script>
 	<script type="text/javascript" src="js/jquery-ui-timepicker-zh-CN.js"></script>
 	<script type="text/javascript" src="js/jquery.pager.js" ></script>
-	<script type="text/javascript" src="js/jquery.selectable.js" ></script> 
+	<script type="text/javascript" src="js/jquery.mytable.js" ></script> 
 
 	<script type="text/javascript">
 		$(function() {
@@ -41,7 +41,7 @@
 	</script>     
 </head>
 
-<body oncontextmenu="return false;">
+<body>
 <div class="container">
 	<div id="header" class="span-24 last append-bottom">
 		<div class="left">
