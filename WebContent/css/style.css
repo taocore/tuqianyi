@@ -29,3 +29,4 @@ tbody tr.row-selected, tbody tr.row-selected td {background:rgb(255, 255, 150);}
 #faq ul {list-style-type:none;width:550px;}
 #faq li {font-size:1.1em;font-weight:bold;color:blue;margin-bottom:5px;}
 #faq p {color:#666}
+.red {color:red;}
