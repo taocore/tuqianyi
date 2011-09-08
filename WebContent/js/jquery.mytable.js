@@ -1,10 +1,7 @@
 ﻿(function($) {
-	$.fn.selectable.defaults = {
-			
-    };
 
-    $.fn.selectable = function(options) {
-        var opts = $.extend({}, $.fn.selectable.defaults, options);
+    $.fn.mytable = function(options) {
+        var opts = $.extend({}, $.fn.mytable.defaults, options);
         this.each(function() {
             apply($(this), options);
         });
@@ -39,5 +36,8 @@
     		$("tbody input.selector", table).trigger('change');
     	});
     }
-
+    
+    $.fn.mytable.defaults = {
+			
+    };
 })(jQuery);
