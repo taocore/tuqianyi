@@ -5,7 +5,7 @@
 <s:iterator value="customLabels">
 	<div class="label-item custom-label-item" title="单击将标签添加到主图"
 		label_id='<s:property value="id"/>'>
-		<img src='<s:property value="src"/>' width="100%" height="100%" />
+		<img class='label' src='<s:property value="src"/>' width="100%" height="100%" />
 		<div class='custom-label-tool hide'>
 			<img src='images/cross_small.png' />
 		</div>

@@ -8,7 +8,7 @@
 		<div class="labels-panel">
 			<s:iterator value="labels">
 				<div class="label-item" title="单击将标签添加到主图">
-					<img src='<s:property value="src"/>' width="100%" height="100%" />
+					<img class='label' src='<s:property value="src"/>' width="100%" height="100%" />
 				</div>
 			</s:iterator>
 		</div>
@@ -34,8 +34,8 @@
 <script type="text/javascript">
 	$("#labels").accordion();
 	
-	$(".label-item").live('click', function() {
-			var $label = $("img", this);
+	$(".label-item").die().live('click', function() {
+			var $label = $(".label", this);
 			var src = $label.attr('src');
 			$label.removeAttr('width').removeAttr('height');
 			var w = $label.width();
@@ -88,6 +88,7 @@
 			}).mousedown(function(){
 				$(this).addClass('ui-selected');
 				$('#main-pic .merge').not(this).removeClass('ui-selected');
+				$('#text-label-options').hide();
 				$('#image-label-options').show();
 				var opacity = $(this).data('option').opacity;
 				$('#opacity').slider('value', opacity);
@@ -95,13 +96,9 @@
 			
 			$("<div class='label-tool hide'><img src='images/cross_small.png'/></div>")
 			.appendTo($labelItem)
-			.css({
-				position: 'absolute',
-				top: '0',
-				right: '0',
-				cursor: 'pointer'
-			}).click(function(){
+			.click(function(){
 				$labelItem.remove();
+				$('#image-label-options').hide();
 			});
 	});
 	

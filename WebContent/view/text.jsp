@@ -48,15 +48,14 @@
 					height = 100;
 					width = w * 100 / h;
 				}
-				$("<div class='merge'><img src='" + src + "' width='100%' height='100%'/></div>").appendTo("#main-pic")
+				var $textMerge = $("<div class='merge'><img src='" + src + "' width='100%' height='100%'/></div>");
+				$textMerge.appendTo("#main-pic")
 				.css({
 					width: width,
 					height: height,
-					border: '1px solid lightblue',
 					position: 'absolute',
 					top: 0,
-					left: 0,
-					cursor: 'move'
+					left: 0
 				}).draggable({
 					containment : "#main-pic",
 					scroll : false
@@ -66,10 +65,35 @@
 					minWidth : 20,
 					minHeight : 20,
 					maxWidth : 310,
-					maxHeight : 310
-				}).dblclick(function(){
-					var pos = $(this).position();
-					alert(pos.left + ", " + pos.top);
+					maxHeight : 310,
+					autoHide: true,
+					handles: 'n, e, s, w, ne, se, sw, nw'
+				}).hover(
+					function()
+					{
+						$(".label-tool", this).show();
+					},
+					function()
+					{
+						$(".label-tool", this).hide();
+					}
+				).data('option', {
+					aspectRatio: true, 
+					opacity: 100
+				}).mousedown(function(){
+					$(this).addClass('ui-selected');
+					$('#main-pic .merge').not(this).removeClass('ui-selected');
+					$('#image-label-options').hide();
+					$('#text-label-options').show();
+					var opacity = $(this).data('option').opacity;
+					$('#opacity').slider('value', opacity);
+				}).trigger('mousedown');
+				
+				$("<div class='label-tool hide'><img src='images/cross_small.png'/></div>")
+				.appendTo($textMerge)
+				.click(function(){
+					$textMerge.remove();
+					$('#text-label-options').hide();
 				});
 			});
 </script>
