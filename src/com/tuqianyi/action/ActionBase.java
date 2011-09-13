@@ -40,7 +40,7 @@ public class ActionBase extends ActionSupport implements Constants{
 		return -1;
 	}
 	
-	protected String getUser()
+	protected static String getUser()
 	{
 		Map<String, Object> session = ActionContext.getContext().getSession();
 		return (String)session.get(USER);

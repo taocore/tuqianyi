@@ -54,6 +54,7 @@ public class RecoverAction extends ActionBase{
 		try {
 			if (item.getOldPicUrl() != null)
 			{
+				_log.info("nick: " + getUser() + " num_iid:" + item.getNumIid() + " old: " + item.getOldPicUrl());
 				URL oldUrl = new URL(item.getOldPicUrl());
 				byte[] data = IOUtils.toByteArray(oldUrl.openStream());
 				ItemUpdateResponse response = TaobaoProxy.updateMainPic(topSession, item.getNumIid(), data);
