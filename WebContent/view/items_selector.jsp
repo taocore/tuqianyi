@@ -5,6 +5,7 @@
 
 <script type="text/javascript">
 	var selectedItems = new Array();
+	var mid = 0;
 </script>
 
 <div>

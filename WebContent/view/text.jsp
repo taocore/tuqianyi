@@ -3,28 +3,28 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <div id="text">
-	<div class="text-item">
+	<div class="text-item" f='simhei'>
 		<img src="font.action?label.font=simhei" width="100%" height="100%" />
 	</div>
-	<div class="text-item">
+	<div class="text-item" f='simkai'>
 		<img src="font.action?label.font=simkai" width="100%" height="100%" />
 	</div>
-	<div class="text-item">
+	<div class="text-item" f='simsun'>
 		<img src="font.action?label.font=simsun" width="100%" height="100%" />
 	</div>
-	<div class="text-item">
+	<div class="text-item" f='msyh'>
 		<img src="font.action?label.font=msyh" width="100%" height="100%" />
 	</div>
-	<div class="text-item">
+	<div class="text-item" f='hkst'>
 		<img src="font.action?label.font=hkst" width="100%" height="100%" />
 	</div>
-	<div class="text-item">
+	<div class="text-item" f='mnjccy'>
 		<img src="font.action?label.font=mnjccy" width="100%" height="100%" />
 	</div>
-	<div class="text-item">
+	<div class="text-item" f='mnjdh'>
 		<img src="font.action?label.font=mnjdh" width="100%" height="100%" />
 	</div>
-	<div class="text-item">
+	<div class="text-item" f='mnxf'>
 		<img src="font.action?label.font=mnxf" width="100%" height="100%" />
 	</div>
 </div>
@@ -32,8 +32,8 @@
 <script type="text/javascript">
 	$(".text-item").click(
 			function() {
+				var mergeId = 'm_' + mid++;
 				var $label = $("img", this);
-				var src = $label.attr('src');
 				var w = $(this).width();
 				var h = $(this).height();
 				var width;
@@ -48,8 +48,10 @@
 					height = 100;
 					width = w * 100 / h;
 				}
-				var $textMerge = $("<div class='merge'><img src='" + src + "' width='100%' height='100%'/></div>");
-				$textMerge.appendTo("#main-pic")
+				
+				var $textMerge = $("<div class='merge loading'></div>");
+				$textMerge.attr('mid', mergeId)
+				.appendTo("#main-pic")
 				.css({
 					width: width,
 					height: height,
@@ -88,6 +90,15 @@
 					var opacity = $(this).data('option').opacity;
 					$('#opacity').slider('value', opacity);
 				}).trigger('mousedown');
+				
+				var font = $(this).attr('f');
+				var src = "text.action?label.id=" + mergeId + "&label.font=" + font;
+				$("<img class='hide' src='" + src + "' width='100%' height='100%'/>")
+				.appendTo($textMerge)
+				.load(function(){
+					$(this).parent().removeClass('loading');
+					$(this).show();
+				});
 				
 				$("<div class='label-tool hide'><img src='images/cross_small.png'/></div>")
 				.appendTo($textMerge)
