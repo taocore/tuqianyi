@@ -58,7 +58,7 @@ public class FontProvider {
 	private BufferedImage createText(String text, Font font) throws IOException
 	{
 		BufferedImage image = ImageIO.read(new File(root + "images/clear.png"));
-		font = font.deriveFont(Font.BOLD, 72);
+		font = font.deriveFont(Font.PLAIN, 36);
 		
 		Graphics2D g = image.createGraphics();
 		FontMetrics metrics = g.getFontMetrics(font);
