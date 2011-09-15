@@ -2,8 +2,9 @@ package com.tuqianyi.model;
 
 
 public class TextLabel extends Label{
-	private String text = "狂卖";
-	private String font = "黑体";
+	private String id;
+	private String text = "热卖";
+	private String font = "simhei";
 	private int fontSize = 18; //normal font size = 16px = 12pt
 	private String color = "#ff0000";
 	private String background;
@@ -55,5 +56,13 @@ public class TextLabel extends Label{
 
 	public int getAngle() {
 		return angle;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getId() {
+		return id;
 	}
 }
