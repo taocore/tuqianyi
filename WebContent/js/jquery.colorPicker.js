@@ -10,7 +10,8 @@
   $.fn.colorPicker = function(){    
     if(this.length > 0) buildSelector();
     return this.each(function(i) { 
-      buildPicker(this)}); 
+      buildPicker(this);
+      }); 
   };
   
   var selectorOwner;
@@ -18,7 +19,7 @@
   
   buildPicker = function(element){
     //build color picker
-    control = $("<div class='color_picker'>&nbsp;</div>")
+    control = $("<div class='color_picker'>&nbsp;</div>");
     control.css('background-color', $(element).val());
     
     //bind click event to color picker
@@ -43,9 +44,9 @@
 
      //add color pallete
      $.each($.fn.colorPicker.defaultColors, function(i){
-      swatch = $("<div class='color_swatch'>&nbsp;</div>")
+      swatch = $("<div class='color_swatch'>&nbsp;</div>");
       swatch.css("background-color", "#" + this);
-      swatch.bind("click", function(e){ changeColor($(this).css("background-color")) });
+      swatch.bind("click", function(e){ changeColor($(this).css("background-color")); });
       swatch.bind("mouseover", function(e){ 
         $(this).css("border-color", "#598FEF"); 
         $("input#color_value").val(toHex($(this).css("background-color")));    
@@ -62,7 +63,7 @@
      hex_field = $("<label for='color_value'>Hex</label><input type='text' size='8' id='color_value'/>");
      hex_field.bind("keydown", function(event){
       if(event.keyCode == 13) {changeColor($(this).val());}
-      if(event.keyCode == 27) {toggleSelector()}
+      if(event.keyCode == 27) {toggleSelector();}
      });
      
      $("<div id='color_custom'></div>").append(hex_field).appendTo(selector);
@@ -78,15 +79,15 @@
     if(event.target == $(selector)[0] || event.target == selectorOwner || selectorParent > 0) return
     
     hideSelector();   
-  }
+  };
   
   hideSelector = function(){
     var selector = $("div#color_selector");
     
     $(document).unbind("mousedown", checkMouse);
     selector.hide();
-    selectorShowing = false
-  }
+    selectorShowing = false;
+  };
   
   showSelector = function(){
     var selector = $("div#color_selector");
@@ -103,13 +104,13 @@
     
     //bind close event handler
     $(document).bind("mousedown", checkMouse);
-    selectorShowing = true 
-   }
+    selectorShowing = true; 
+   };
   
   toggleSelector = function(event){
     selectorOwner = this; 
     selectorShowing ? hideSelector() : showSelector();
-  }
+  };
   
   changeColor = function(value){
     if(selectedValue = toHex(value)){
@@ -138,7 +139,7 @@
               }
             }
             return str;
-      }
+      };
 
       if(c.length == 3){
         var r = pad(c[0].toString(16)),g = pad(c[1].toString(16)),b= pad(c[2].toString(16));
@@ -147,8 +148,8 @@
     }
     else color = false;
     
-    return color
-  }
+    return color;
+  };
 
   
   //public methods
