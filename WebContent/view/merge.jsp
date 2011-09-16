@@ -29,12 +29,24 @@
 				
 				<fieldset id="text-label-options" class='hide'>
 					<legend>标签选项</legend>
-					<label>文字：</label> 
-					<input type='text' class='text' /><br />
-					<label>文字颜色：</label>
-					<input type='text' class='text' /><br />
-					<label>背景颜色：</label>
-					<input type='text' class='text' /><br />
+					<table>
+					<tr>
+					<td><label>文字：</label></td> 
+					<td><input type='text' class='short-field'/></td>
+					</tr>
+					<tr>
+					<td><label>文字颜色：</label></td>
+					<td>
+					<input id='fore-color' type='text' class='color' value='#ff0000'/>
+					</td>
+					</tr>
+					<tr>
+					<td><label>背景颜色：</label></td>
+					<td>
+					<input id='back-color' type='text' class='color'/>
+					</td>
+					</tr>
+					</table>
 				</fieldset>
 			</div>
 		</div>
@@ -61,6 +73,8 @@
 			});
 		}
 	});
+	
+	$('.color').colorPicker();
 	
 	function getMerges()
 	{

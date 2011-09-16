@@ -6,8 +6,10 @@ body {background-color:rgb(195, 217, 255);}
 tbody tr.row-selected, tbody tr.row-selected td {background:rgb(255, 255, 150);}
 .ui-widget-content a {color:#06C;text-decoration:underline;}
 .selection {background:rgb(255, 255, 150);}
-#label-form {text-align:left;}
-#label-form input[type='text'] {width:200px;}
+#label-form {text-align:left;background-color:white;}
+#label-form table tr td {background-color:white;}
+#label-form table tr td:first-child {width:70px;}
+#label-form input[type='text'] {width:150px;}
 #fixed-tools {position:fixed;right:50px;top:300px;cursor:pointer}
 #top {margin-bottom:5px;}
 #merging-left {width:310px;}
