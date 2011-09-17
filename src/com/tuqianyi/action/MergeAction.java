@@ -9,6 +9,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 
 import javax.imageio.ImageIO;
@@ -17,6 +18,7 @@ import javax.servlet.ServletContext;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.util.ServletContextAware;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.taobao.api.ApiException;
 import com.taobao.api.response.ItemGetResponse;
 import com.taobao.api.response.ItemUpdateResponse;
@@ -26,7 +28,6 @@ import com.tuqianyi.db.Dao;
 import com.tuqianyi.image.ImageUtils;
 import com.tuqianyi.model.ImageLabel;
 import com.tuqianyi.model.Item;
-import com.tuqianyi.model.Label;
 import com.tuqianyi.model.Merge;
 import com.tuqianyi.model.TextLabel;
 import com.tuqianyi.taobao.TaobaoProxy;
@@ -135,15 +136,11 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 			{
 				for (Merge m : merges)
 				{
-					Label label = m.getLabel();
-					if (label instanceof ImageLabel)
+					if (m.getImage() == null)
 					{
-						image = mergeImage(image, m, rootPath);
+						setupMerge(m, rootPath);
 					}
-					else if(label instanceof TextLabel)
-					{
-	//					image = drawText(item, image, m);
-					}
+					image = mergeImage(image, m);
 				}
 			}
 			if (frame != null)
@@ -219,6 +216,34 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 		}
 	}
 	
+	public void setupMerge(Merge m, String rootPath) throws IOException
+	{
+		BufferedImage labelImage = null;
+		ImageLabel imageLabel = m.getImageLabel();
+		TextLabel textLabel = m.getTextLabel();
+		if (imageLabel != null)
+		{
+			_log.info("label id: " + imageLabel.getId());
+			if (ImageLabel.isLocal(imageLabel.getSrc()))
+			{
+				_log.info("label file path: " + rootPath + imageLabel.getSrc());
+				File f = new File(rootPath + imageLabel.getSrc());
+				labelImage = ImageIO.read(f);
+			}
+			else
+			{
+				URL labelUrl = new URL(imageLabel.getSrc());
+				labelImage = ImageIO.read(labelUrl);
+			}
+		}
+		else if (textLabel != null)
+		{
+			Map<String, Object> session = ActionContext.getContext().getSession();
+			labelImage = (BufferedImage)session.remove(textLabel.getId());
+		}
+		m.setImage(labelImage);
+	}
+	
 	private String getNewPicUrl(String topSession, long numIid)
 	{
 		try {
@@ -238,23 +263,15 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 		return null;
 	}
 	
-	private BufferedImage mergeImage(BufferedImage image, Merge m, String rootPath) throws IOException
+	private BufferedImage mergeImage(BufferedImage image, Merge m) throws IOException
 	{
-		ImageLabel label = (ImageLabel)m.getLabel();
-		BufferedImage labelImage;
-		_log.info("label id: " + label.getId());
-		if (ImageLabel.isLocal(label.getSrc()))
+		BufferedImage labelImage = m.getImage();
+		if (labelImage == null)
 		{
-			_log.info("label file path: " + rootPath + label.getSrc());
-			File f = new File(rootPath + label.getSrc());
-			labelImage = ImageIO.read(f);
+			_log.warning("No label image was found.");
+			return image;
 		}
-		else
-		{
-			URL labelUrl = new URL(label.getSrc());
-			labelImage = ImageIO.read(labelUrl);
-		}
-//				Image resizedLabel = new Image(label);
+
 		_log.info("m.width: " + m.getWidth());
 		_log.info("m.height: " + m.getHeight());
 		float orignal2PreviewRatio = getOriginal2PreviewRatio(image);
@@ -272,9 +289,7 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 		}
 		_log.info("new width: " + newWidth + ", new height: " + newHeight);
 		_log.info("new x: " + newX + ", new y: " + newY);
-//				resizedLabel.resize(newWidth, newHeight);
-//				label = resizedLabel.getAsBufferedImage();
-		image = ImageUtils.composite(image, labelImage, newX, newY, newWidth, newHeight, label.getOpacity()/100F);
+		image = ImageUtils.composite(image, labelImage, newX, newY, newWidth, newHeight, m.getOpacity()/100F);
 		return image;
 	}
 	
@@ -282,7 +297,7 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 	{
 		File f = new File(rootPath + frame.getSrc());
 		BufferedImage frameImage = ImageIO.read(f);
-		return ImageUtils.composite(image, frameImage, 0, 0, image.getWidth(), image.getHeight(), frame.getOpacity()/100F);
+		return ImageUtils.composite(image, frameImage, 0, 0, image.getWidth(), image.getHeight(), 1F);
 	}
 	
 	private float getOriginal2PreviewRatio(BufferedImage originalImage)

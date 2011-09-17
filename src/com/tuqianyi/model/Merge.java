@@ -1,23 +1,19 @@
 package com.tuqianyi.model;
 
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
 public class Merge implements Serializable{
 	
-	private ImageLabel label;
+	private ImageLabel imageLabel;
+	private TextLabel textLabel;
+	private int opacity = 100;
 	private float x;
 	private float y;
 	private int z;
 	private int width = 100;
 	private int height = 100;
-	
-	public void setLabel(ImageLabel label) {
-		this.label = label;
-	}
-	
-	public ImageLabel getLabel() {
-		return label;
-	}
+	private BufferedImage image;
 
 	public void setX(float x) {
 		this.x = x;
@@ -57,5 +53,37 @@ public class Merge implements Serializable{
 
 	public int getHeight() {
 		return height;
+	}
+
+	public void setImageLabel(ImageLabel imageLabel) {
+		this.imageLabel = imageLabel;
+	}
+
+	public ImageLabel getImageLabel() {
+		return imageLabel;
+	}
+
+	public void setTextLabel(TextLabel textLabel) {
+		this.textLabel = textLabel;
+	}
+
+	public TextLabel getTextLabel() {
+		return textLabel;
+	}
+	
+	public void setOpacity(int opacity) {
+		this.opacity = opacity;
+	}
+
+	public int getOpacity() {
+		return opacity;
+	}
+
+	public void setImage(BufferedImage image) {
+		this.image = image;
+	}
+
+	public BufferedImage getImage() {
+		return image;
 	}
 }
