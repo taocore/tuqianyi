@@ -7,6 +7,8 @@ tbody tr.row-selected, tbody tr.row-selected td {background:rgb(255, 255, 150);}
 .ui-widget-content a {color:#06C;text-decoration:underline;}
 .selection {background:rgb(255, 255, 150);}
 #label-form {text-align:left;background-color:white;}
+#label-form fieldset {padding:0 10px;}
+#label-form table {margin:0;}
 #label-form table tr td {background-color:white;}
 #label-form table tr td:first-child {width:70px;}
 #label-form input[type='text'] {width:150px;}
@@ -28,7 +30,7 @@ tbody tr.row-selected, tbody tr.row-selected td {background:rgb(255, 255, 150);}
 .loading {background:url('../images/processing.gif') no-repeat center;}
 .label-tool {position:absolute;top:0;right:0;cursor:pointer;}
 #main-pic .ui-selected {border:1px solid blue;}
-#image-label-options,#text-label-options {height:150px;overflow:auto;}
+#image-label-options,#text-label-options {height:190px;overflow:auto;}
 .border {border:1px solid lightblue;}
 #faq ul {list-style-type:none;width:550px;}
 #faq li {font-size:1.1em;font-weight:bold;color:blue;margin-bottom:5px;}

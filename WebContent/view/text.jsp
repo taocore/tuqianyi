@@ -33,6 +33,7 @@
 	$(".text-item").click(
 			function() {
 				var mergeId = 'm_' + mid++;
+				var font = $(this).attr('f');
 				var $label = $("img", this);
 				var w = $(this).width();
 				var h = $(this).height();
@@ -50,8 +51,7 @@
 				}
 				
 				var $textMerge = $("<div class='merge loading'></div>");
-				$textMerge.attr('mid', mergeId)
-				.appendTo("#main-pic")
+				$textMerge.appendTo("#main-pic")
 				.css({
 					width: width,
 					height: height,
@@ -80,18 +80,25 @@
 						$(".label-tool", this).hide();
 					}
 				).data('option', {
-					aspectRatio: true, 
+					mid: mergeId,
+					font: font,
+					text: '热卖',
+					color: '#ff0000',
+					background: '',
+					//aspectRatio: true, 
 					opacity: 100
 				}).mousedown(function(){
 					$(this).addClass('ui-selected');
 					$('#main-pic .merge').not(this).removeClass('ui-selected');
 					$('#image-label-options').hide();
 					$('#text-label-options').show();
-					var opacity = $(this).data('option').opacity;
-					$('#opacity').slider('value', opacity);
+					var option = $(this).data('option');
+					$('#text').val(option.text);
+					$('#fore-color').val(option.color).change();
+					$('#back-color').val(option.background).change();
+					$('#text-opacity').slider('value', option.opacity);
 				}).trigger('mousedown');
 				
-				var font = $(this).attr('f');
 				var src = "text.action?label.id=" + mergeId + "&label.font=" + font;
 				$("<img class='hide' src='" + src + "' width='100%' height='100%'/>")
 				.appendTo($textMerge)

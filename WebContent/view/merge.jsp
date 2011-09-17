@@ -32,7 +32,7 @@
 					<table>
 					<tr>
 					<td><label>文字：</label></td> 
-					<td><input type='text' class='short-field'/></td>
+					<td><input id='text' type='text' class='short-field'/></td>
 					</tr>
 					<tr>
 					<td><label>文字颜色：</label></td>
@@ -46,7 +46,12 @@
 					<input id='back-color' type='text' class='color'/>
 					</td>
 					</tr>
+					<tr>
+					<td><label>透明度：</label></td>
+					<td><div id='text-opacity'></div></td>
+					</tr>
 					</table>
+					<button id='merge-changed' class='right'>刷新预览</button>
 				</fieldset>
 			</div>
 		</div>
@@ -61,7 +66,7 @@
 </div>
 
 <script type="text/javascript">
-	$("#opacity").slider({
+	$("#opacity,#text-opacity").slider({
 		value: 100,
 		change: function(event, ui) {
 			var value = $(this).slider('value');
@@ -72,6 +77,23 @@
 				'filter': 'alpha(opacity = ' + value + ')'
 			});
 		}
+	});
+	
+	$('#merge-changed').button().click(function(){
+		var $label = $( "#main-pic .ui-selected" );
+		var option = $label.data('option');
+		option.text = $('#text').val();
+		option.color = $('#fore-color').val();
+		option.background = $('#back-color').val();
+		var src = "text.action?label.id=" + option.mid 
+				+ "&label.font=" + option.font 
+				+ '&label.text=' + encodeURIComponent(option.text)
+				+ '&label.color=' + encodeURIComponent(option.color) 
+				+ '&label.background=' + encodeURIComponent(option.background)
+				+ '&t=' + new Date().getTime();
+		$label.addClass('loading');
+		$("img", $label).hide().attr('src', src);
+		return false;
 	});
 	
 	$('.color').colorPicker();
