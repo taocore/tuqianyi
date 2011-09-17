@@ -50,7 +50,7 @@
 					width = w * 100 / h;
 				}
 				
-				var $textMerge = $("<div class='merge loading'></div>");
+				var $textMerge = $("<div class='merge t loading'></div>");
 				$textMerge.appendTo("#main-pic")
 				.css({
 					width: width,

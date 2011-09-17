@@ -102,14 +102,22 @@
 	{
 		var q = '';
 		$("#main-pic div.merge").each(function(i){
+			var $this = $(this);
 			var m = '&merges[' + i + '].';
-			var pos = $(this).position();
+			var pos = $this.position();
 			q = q + m + 'x=' + pos.left
 			 + m + 'y=' + pos.top
-			 + m + 'width=' + $(this).width()
-			 + m + 'height=' + $(this).height()
-			 + m + 'label.src=' + $("img", $(this)).attr("src")
-			 + m + 'label.opacity=' + $(this).data('option').opacity;
+			 + m + 'width=' + $this.width()
+			 + m + 'height=' + $this.height()
+			 + m + 'opacity=' + $this.data('option').opacity;;
+			if ($this.hasClass('t'))
+			{
+				q = q + m + 'textLabel.id=' + $this.data('option').mid;
+			}
+			else
+			{
+				q = q + m + 'imageLabel.src=' + $("img", $this).attr("src");
+			}
 		});
 		var frameSrc = $("#frame img").attr('src');
 		if (frameSrc)
