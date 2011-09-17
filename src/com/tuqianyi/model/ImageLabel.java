@@ -11,7 +11,6 @@ public class ImageLabel extends Label{
 	private long id = -1;
 	private long categoryID;
 	private String src;
-	private int opacity = 100;
 
 	public void setSrc(String src) {
 		this.src = src;
@@ -35,14 +34,6 @@ public class ImageLabel extends Label{
 
 	public long getId() {
 		return id;
-	}
-	
-	public void setOpacity(int opacity) {
-		this.opacity = opacity;
-	}
-
-	public int getOpacity() {
-		return opacity;
 	}
 	
 	public static boolean isLocal(String src)

@@ -65,4 +65,11 @@ public class TextLabel extends Label{
 	public String getId() {
 		return id;
 	}
+	
+	public String toString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("text: ").append(this.text);
+		return sb.toString();
+	}
 }
