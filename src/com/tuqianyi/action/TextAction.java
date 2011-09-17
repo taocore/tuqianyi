@@ -29,7 +29,10 @@ public class TextAction extends ActionBase implements ServletContextAware{
 	private InputStream stream;
 	
 	public String execute() throws Exception
-	{
+	{ 
+		_log.info("label: " + label);
+//		label.setText(new String(label.getText().getBytes("ISO-8859-1"),"UTF-8"));
+//		_log.info("fixed: " + label.getText());
 		try
 		{
 			Font f = FontsServlet.getFontProvider().getFont(label.getFont());
@@ -55,7 +58,7 @@ public class TextAction extends ActionBase implements ServletContextAware{
 		font = font.deriveFont(Font.PLAIN, 72);
 		Color foreground = Color.decode(color);
 		Color background = null;
-		if (backColor != null)
+		if (backColor != null && backColor.length() > 0)
 		{
 			background = Color.decode(backColor);
 		}
@@ -91,5 +94,4 @@ public class TextAction extends ActionBase implements ServletContextAware{
 	public InputStream getStream() {
 		return stream;
 	}
-
 }
