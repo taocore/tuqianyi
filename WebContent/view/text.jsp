@@ -63,7 +63,7 @@
 					scroll : false
 				}).resizable({
 					containment : "#main-pic",
-					aspectRatio : true,
+					//aspectRatio : true,
 					minWidth : 20,
 					minHeight : 20,
 					maxWidth : 310,
@@ -100,7 +100,7 @@
 				}).trigger('mousedown');
 				
 				var src = "text.action?label.id=" + mergeId + "&label.font=" + font;
-				$("<img class='hide' src='" + src + "' width='100%' height='100%'/>")
+				$("<img class='t hide' src='" + src + "' width='100%' height='100%'/>")
 				.appendTo($textMerge)
 				.load(function(){
 					$(this).parent().removeClass('loading');

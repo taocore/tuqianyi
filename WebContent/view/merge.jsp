@@ -92,7 +92,7 @@
 				+ '&label.background=' + encodeURIComponent(option.background)
 				+ '&t=' + new Date().getTime();
 		$label.addClass('loading');
-		$("img", $label).hide().attr('src', src);
+		$("img.t", $label).hide().attr('src', src);
 		return false;
 	});
 	
