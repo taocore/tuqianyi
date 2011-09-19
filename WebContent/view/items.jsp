@@ -50,7 +50,7 @@
 				</td>
 				<td class="op">
 					<s:if test="%{merged}">
-						<div><a class="recover-link" href="#">还原</a></div>
+						<div><a class="recover-link" href="#">恢复</a></div>
 					</s:if>
 					<s:else>
 	    				<a class="add-label-link" href="#">贴标签</a>

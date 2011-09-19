@@ -32,9 +32,9 @@
 		<div class="right">
 			<span class="selection" title='可跨页及跨查找结果选择'></span>
 			<a href="#" id="clear-selection">清除重选</a>
-			<button id='batch-promote'>批量加标签</button>
-			<button id='batch-cancel'>批量恢复</button>
-			<button id='batch-promote'>批量换标签</button>
+			<button id='batch-add-label'>批量加标签</button>
+			<button id='batch-recover'>批量恢复</button>
+			<button id='batch-change-label'>批量换标签</button>
 		</div>
 		<div class="clear"></div>
 	</div>
@@ -81,51 +81,63 @@
 		}
 	});
 	
-	$("#batch-promote").click(function(){
+	$("#batch-add-label").click(function(){
 		if (selectedItems.length == 0)
 		{
 			alert("未选中宝贝。");
 			return false;
 		}
 		var $dialog = $("#label-dialog");
-		$dialog.dialog("option", "buttons", {
-			确定: function() {
-				if (!validatePromotionForm())
-				{
-					return false;
-				}
-				showProcessingDialog();
-				var url = "add_promotion.action";
-				var q = getPromotionParameter() + "&promotionAddRequest.numIids=" + selectedItems.join();
-				$.ajax({
-					url: url,
-					data: q,
-					type: 'POST',
-					success: function(data) {
-						hideProcessingDialog();
-						$dialog.dialog( "close" );
-						reload(clearSelection);
+		var url = "merging.action";
+		var numIids = selectedItems.join();
+		var q = "numIids=" + numIids;
+		$.ajax({
+			url: url,
+			data: q,
+			type: 'POST',
+			success: function(data) {
+				$dialog.html(data);
+				$dialog.dialog("option", "buttons", {
+					确定: function() {
+						var url = 'merge.action';
+						var q = 'numIids=' + numIids + getMerges();
+						$.ajax({
+							url: url,
+							data: q,
+							type: 'POST',
+							success: function(data){
+								if ((data == 'ok'))
+								{
+									$dialog.dialog('close');
+									reload();
+								}
+								else
+								{
+									alert(data);
+								}
+							}
+						});
+						return false;
+					},
+					取消: function() {
+						$(this).dialog( "close" );
+						return false;
 					}
 				});
-				return false;
-			},
-			取消: function() {
-				$(this).dialog( "close" );
+				$dialog.dialog("open");
 			}
 		});
-		$dialog.dialog("open");
 		return false;
 	});
 	
-	$("#batch-cancel").click(function(){
+	$("#batch-recover").click(function(){
 		if (selectedItems.length == 0)
 		{
 			alert("未选中宝贝。");
 			return false;
 		}
 		showProcessingDialog();
-		var promotionIds = selectedItems.join();
-		var url = "batch_delete_promotions.action?numIids=" + promotionIds;
+		var url = "recover.action?numIids=" + selectedItems.join();
 		$.ajax({
 			url: url,
 			success: function(data) {
@@ -287,25 +299,6 @@
 	{
 		var i = parseInt($("#items-table").attr("pageIndex"));
 		loadPage(i+1, callback);
-	}
-	
-	function getPromotionParameter()
-	{
-		var form = $("#promotion-form");
-		var discountType = $("input:radio[name='discount_type']:checked", form).val();
-		var discountValue = $("input[name='discount_value']", form).val();
-		var startDate = $("input[name='start_date']", form).val();
-		var endDate = $("input[name='end_date']", form).val();
-		var title = $("input[name='title']", form).val();
-		var desc = $("input[name='description']", form).val();
-		var q = "promotionAddRequest.tagId=1"
-			+ "&promotionAddRequest.discountType=" + discountType
-			+ "&promotionAddRequest.discountValue=" + discountValue
-			+ "&promotionAddRequest.startDate=" + startDate
-			+ "&promotionAddRequest.endDate=" + endDate
-			+ "&promotionAddRequest.promotionTitle=" + title
-			+ "&promotionAddRequest.promotionDesc=" + desc;
-		return q;
 	}
 	
 	function showProcessingDialog()
