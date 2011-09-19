@@ -40,30 +40,57 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 	private ImageLabel frame;
 	
 	public String execute() throws Exception {
-		List<Item> items = getItems(numIids);
-		merge(items, merges);
+		Connection conn = null;
+		try
+		{
+			conn = DBUtils.getConnection();
+			List<Item> items = getItems(numIids, conn);
+			merge(items, merges, conn);
+		}
+		catch (Exception e)
+		{
+			error(e);
+			if (Constants.OUT_OF_ALLOWED_ITEMS.equals(e.getMessage()))
+			{
+				return Constants.OUT_OF_ALLOWED_ITEMS;
+			}
+		}
+		finally
+		{
+			DBUtils.close(conn, null, null);
+		}
 		return SUCCESS;
 	}
 	
-	private List<Item> getItems(String numIids)
+	private List<Item> getItems(String numIids, Connection conn) throws Exception
 	{
 		List<Item> items = new ArrayList<Item>();
 		if (numIids != null)
 		{
 			String[] iids = StringUtils.split(numIids, ',');
+			if (!checkItemsCount(iids.length))
+			{
+				throw new Exception(Constants.OUT_OF_ALLOWED_ITEMS);
+			}
+			updateProgress(iids.length, 0);
 			for (String numIid : iids)
 			{
 				try {
-					ItemGetResponse rsp = TaobaoProxy.getItem(getSessionId(), Long.parseLong(numIid));
-					if (rsp.isSuccess())
+					Item item = Dao.INSTANCE.getMergedItem(Long.parseLong(numIid), conn);
+					if (item == null)
 					{
-						com.taobao.api.domain.Item item = rsp.getItem();
-						items.add(new Item(item));
+						ItemGetResponse rsp = TaobaoProxy.getItem(getSessionId(), Long.parseLong(numIid));
+						if (rsp.isSuccess())
+						{
+							com.taobao.api.domain.Item i = rsp.getItem();
+							item = new Item(i);
+						}
+						else
+						{
+							error(rsp);
+						}
 					}
-					else
-					{
-						error(rsp);
-					}
+					items.add(item);
 				} catch (NumberFormatException e) {
 					error(e);
 				} catch (ApiException e) {
@@ -74,17 +101,11 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 		return items;
 	}
 	
-	public String merge(List<Item> items, List<Merge> merges)
+	public String merge(List<Item> items, List<Merge> merges, Connection conn)
 	{
 		String topSession = getSessionId();
-		if (!checkItemsCount(items.size()))
-		{
-			return Constants.OUT_OF_ALLOWED_ITEMS;
-		}
-		Connection conn = null;
 		try
 		{
-			conn = DBUtils.getConnection();
 			for (Item item : items)
 			{
 				if (item.getStatus() == Item.STATUS_OK)
@@ -118,10 +139,6 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 		catch (Exception e)
 		{
 			_log.log(Level.SEVERE, "", e);
-		}
-		finally
-		{
-			DBUtils.close(conn, null, null);
 		}
 		return null;
 	}
