@@ -20,9 +20,9 @@
     <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
 	<script type="text/javascript" src="js/jquery-ui-1.8.15.custom.min.js"></script>
 	<script type="text/javascript" src="js/jquery.tooltip.min.js"></script>
-	<script type="text/javascript" src="js/jquery.ui.datepicker-zh-CN.js"></script>
+	<!-- script type="text/javascript" src="js/jquery.ui.datepicker-zh-CN.js"></script>
 	<script type="text/javascript" src="js/jquery-ui-timepicker-addon.js"></script>
-	<script type="text/javascript" src="js/jquery-ui-timepicker-zh-CN.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-timepicker-zh-CN.js"></script -->
 	<script type="text/javascript" src="js/jquery.pager.js" ></script>
 	<script type="text/javascript" src="js/jquery.colorPicker.js" ></script>
 	<script type="text/javascript" src="js/jquery.mytable.js" ></script> 
@@ -46,7 +46,7 @@
 	</script>     
 </head>
 
-<body>
+<body oncontextmenu="return false;">
 <div class="container">
 	<div id="header" class="span-24 last append-bottom">
 		<div class="left">
