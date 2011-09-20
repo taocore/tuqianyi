@@ -1,6 +1,8 @@
 body {background-color:rgb(195, 217, 255);}
 #footer {text-align:center;}
 .separator {padding-left:10px;padding-right:10px;}
+#header>div.left>span:first-of-type {font-family: SimHei;font-size: 18pt;color: gray;}
+#header>div.left>span:nth-of-type(2) {margin-left: 5px;color: blue;}
 #nick {font-weight:bold;}
 #upgrade {font-weight:bold;}
 tbody tr.row-selected, tbody tr.row-selected td {background:rgb(255, 255, 150);}

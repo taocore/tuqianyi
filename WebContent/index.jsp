@@ -39,6 +39,9 @@
 			$("#bottom").click(function(){
 				$(window).scrollTop($(document).height());
 			});
+			$("#old-edition").click(function(){
+				location.href = location.href.replace(location.host + '/tuqianyi3', 'taocore.w44.mc-test.com/tuqianyi');
+			});
 		});
 	</script>     
 </head>
@@ -48,10 +51,20 @@
 	<div id="header" class="span-24 last append-bottom">
 		<div class="left">
 		<img src="images/logo.png"></img>
+		<s:if test="%{#session.VERSION == 1}">
+	    	<span>初级版</span><span>支持300件宝贝</span>
+		</s:if>
+		<s:elseif test="%{#session.VERSION == 2}">
+    		<span>中级版</span><span>支持800件宝贝</span>
+		</s:elseif>
+		<s:elseif test="%{#session.VERSION == 3}">
+    		<span>高级版</span><span>支持2000件宝贝</span>
+		</s:elseif>
 		</div>
 		<div class="right" style="margin-top: 5px;">
 			您好，<span id="nick"><s:property value="#session.USER"/></span><span class="quiet separator">|</span>
 			<span id='upgrade'><a href="http://fuwu.taobao.com/using/serv_upgrade.htm?service_id=6371" target="_blank">升级</a></span><span class="quiet separator">|</span>
+			<span id='old-edition'><a href="#">返回旧版</a></span><span class="quiet separator">|</span>
 			<span><a target='_blank' href='http://amos.im.alisoft.com/msg.aw?v=2&uid=%E8%B5%A4%E7%8F%A0%E5%AD%90&site=cntaobao&s=1&charset=utf-8'><img border='0' src='http://amos.im.alisoft.com/online.aw?v=2&uid=%E8%B5%A4%E7%8F%A0%E5%AD%90&site=cntaobao&s=1&charset=utf-8' alt='联系作者' /></a></span>
 		</div>
 	</div>
