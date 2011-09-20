@@ -11,7 +11,7 @@ public interface Constants {
 	
 	String SESSION_TIMEOUT = "SESSION_TIMEOUT";
 	
-	String OUT_OF_ALLOWED_ITEMS = "OUT_OF_ALLOWED_ITEMS";
+	String OUT_OF_ALLOWED_ITEMS = "out_of_allowed_items";
 	
 	String API_EXCEPTION = "API_EXCEPTION";
 	
@@ -27,7 +27,7 @@ public interface Constants {
 	
 	String VERSION = "VERSION";
 	
-	String TOTAL = "TOTAL";
+	String TOTAL = "total";
 	
-	String PROCESSED = "PROCESSED";
+	String PROCESSED = "processed";
 }

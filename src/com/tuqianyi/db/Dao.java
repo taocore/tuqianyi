@@ -403,7 +403,6 @@ public class Dao {
 	
 	public com.tuqianyi.model.Item getMergedItem(long numIid, Connection conn) throws Exception
 	{
-		conn = DBUtils.getConnection();
 		String sql = "select * from merged_item_t where num_iid_c=?";
 		PreparedStatement statement = conn.prepareStatement(sql);
 		statement.setLong(1, numIid);

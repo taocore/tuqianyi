@@ -336,7 +336,9 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 		try {
 			processedItemsCount = Dao.INSTANCE.getMergedItemsCount(getUser(), Item.STATUS_OK);
 			String version = getVersion();
+			_log.info("version: " + version);
 			int allowedItemsCount = getAllowedItems(version);
+			_log.info("allowed items: " + allowedItemsCount);
 			return (processedItemsCount + processingItemsCount <= allowedItemsCount);
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, "", e);
