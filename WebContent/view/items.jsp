@@ -82,6 +82,7 @@
 				$dialog.html(data);
 				$dialog.dialog("option", "buttons", {
 					确定: function() {
+						showProcessingDialog();
 						var url = 'merge.action';
 						var q = 'numIids=' + currentItem + getMerges();
 						$.ajax({
@@ -89,6 +90,7 @@
 							data: q,
 							type: 'POST',
 							success: function(data){
+								hideProcessingDialog();
 								if ((data == 'ok'))
 								{
 									$dialog.dialog('close');

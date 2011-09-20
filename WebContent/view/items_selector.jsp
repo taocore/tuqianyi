@@ -54,6 +54,9 @@
 	</div>
 </div>
 
+<div id='progress-dialog' title='正在处理...'>
+</div>
+
 <script type="text/javascript">
 	$(".selection").tooltip();
 	$("button").button();
@@ -81,6 +84,14 @@
 		}
 	});
 	
+	$("#progress-dialog").dialog({
+		autoOpen: false,
+		modal: true,
+		open: function(event, ui) { 
+			$(".ui-dialog-titlebar-close").hide(); 
+		}
+	});
+	
 	$("#batch-add-label").click(function(){
 		if (selectedItems.length == 0)
 		{
@@ -99,6 +110,7 @@
 				$dialog.html(data);
 				$dialog.dialog("option", "buttons", {
 					确定: function() {
+						showProgressDialog();
 						var url = 'merge.action';
 						var q = 'numIids=' + numIids + getMerges();
 						$.ajax({
@@ -106,6 +118,7 @@
 							data: q,
 							type: 'POST',
 							success: function(data){
+								hideProgressDialog();
 								if ((data == 'ok'))
 								{
 									$dialog.dialog('close');
@@ -136,12 +149,12 @@
 			alert("未选中宝贝。");
 			return false;
 		}
-		showProcessingDialog();
+		showProgressDialog();
 		var url = "recover.action?numIids=" + selectedItems.join();
 		$.ajax({
 			url: url,
 			success: function(data) {
-				hideProcessingDialog();
+				hideProgressDialog();
 				reload(clearSelection);
 			}
 		});
@@ -309,5 +322,35 @@
 	function hideProcessingDialog()
 	{
 		$("#processing-dialog").dialog("close");
+	}
+	
+	function showProgressDialog()
+	{
+		$("#progress-dialog").dialog("open");
+		updateStatus();
+	}
+	
+	function updateStatus()
+	{
+		$dialog = $("#progress-dialog");
+		var isOpen = $dialog.dialog( "isOpen" );
+		if (!isOpen)
+		{
+			clearTimeout($dialog.data('timer'));
+			return;
+		}
+		$.ajax({
+			  url: 'progress.action',
+			  success: function( data ) {
+				  $dialog.html(data);
+			  }
+		});
+		var t = setTimeout("updateStatus()", 2000);
+		$dialog.data('timer', t);
+	}
+	
+	function hideProgressDialog()
+	{
+		$("#progress-dialog").dialog("close");
 	}
 </script>
