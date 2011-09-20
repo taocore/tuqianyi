@@ -35,6 +35,7 @@
         
         <action name="merge" class="com.tuqianyi.action.MergeAction" method="execute">
             <result name="success">/view/ok.jsp</result>
+            <result name="out_of_allowed_items">/view/over_items.jsp</result>
         </action>
         
         <action name="recover" class="com.tuqianyi.action.RecoverAction" method="execute">

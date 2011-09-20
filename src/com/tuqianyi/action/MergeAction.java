@@ -43,17 +43,22 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 		Connection conn = null;
 		try
 		{
-			conn = DBUtils.getConnection();
-			List<Item> items = getItems(numIids, conn);
-			merge(items, merges, conn);
+			if (numIids != null)
+			{
+				String[] iids = StringUtils.split(numIids, ',');
+				if (!checkItemsCount(iids.length))
+				{
+					return Constants.OUT_OF_ALLOWED_ITEMS;
+				}
+				updateProgress(iids.length, 0);
+				conn = DBUtils.getConnection();
+				List<Item> items = getItems(iids, conn);
+				merge(items, merges, conn);
+			}
 		}
 		catch (Exception e)
 		{
 			error(e);
-			if (Constants.OUT_OF_ALLOWED_ITEMS.equals(e.getMessage()))
-			{
-				return Constants.OUT_OF_ALLOWED_ITEMS;
-			}
 		}
 		finally
 		{
@@ -62,40 +67,34 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 		return SUCCESS;
 	}
 	
-	private List<Item> getItems(String numIids, Connection conn) throws Exception
+	private List<Item> getItems(String[] numIids, Connection conn)
 	{
 		List<Item> items = new ArrayList<Item>();
-		if (numIids != null)
+		for (String numIid : numIids)
 		{
-			String[] iids = StringUtils.split(numIids, ',');
-			if (!checkItemsCount(iids.length))
-			{
-				throw new Exception(Constants.OUT_OF_ALLOWED_ITEMS);
-			}
-			updateProgress(iids.length, 0);
-			for (String numIid : iids)
-			{
-				try {
-					Item item = Dao.INSTANCE.getMergedItem(Long.parseLong(numIid), conn);
-					if (item == null)
+			try {
+				Item item = Dao.INSTANCE.getMergedItem(Long.parseLong(numIid), conn);
+				if (item == null)
+				{
+					ItemGetResponse rsp = TaobaoProxy.getItem(getSessionId(), Long.parseLong(numIid));
+					if (rsp.isSuccess())
 					{
-						ItemGetResponse rsp = TaobaoProxy.getItem(getSessionId(), Long.parseLong(numIid));
-						if (rsp.isSuccess())
-						{
-							com.taobao.api.domain.Item i = rsp.getItem();
-							item = new Item(i);
-						}
-						else
-						{
-							error(rsp);
-						}
+						com.taobao.api.domain.Item i = rsp.getItem();
+						item = new Item(i);
 					}
-					items.add(item);
-				} catch (NumberFormatException e) {
-					error(e);
-				} catch (ApiException e) {
-					error(e);
+					else
+					{
+						error(rsp);
+					}
 				}
+				items.add(item);
+			} catch (NumberFormatException e) {
+				error(e);
+			} catch (ApiException e) {
+				error(e);
+			} catch (Exception e)
+			{
+				error(e);
 			}
 		}
 		return items;
