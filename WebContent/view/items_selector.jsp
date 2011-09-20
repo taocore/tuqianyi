@@ -34,7 +34,6 @@
 			<a href="#" id="clear-selection">清除重选</a>
 			<button id='batch-add-label'>批量加标签</button>
 			<button id='batch-recover'>批量恢复</button>
-			<button id='batch-change-label'>批量换标签</button>
 		</div>
 		<div class="clear"></div>
 	</div>
@@ -64,7 +63,7 @@
 	$("#label-dialog").dialog({
 		autoOpen: false,
 		modal: true,
-		width: 870,
+		width: 880,
 		open: function(event, ui) {
 			$("#search-form select").hide();
 			$("#ctabs").tabs({
@@ -158,42 +157,6 @@
 				reload(clearSelection);
 			}
 		});
-		return false;
-	});
-	
-	$("#batch-update").click(function(){
-		if (selectedItems.length == 0)
-		{
-			alert("未选中宝贝。");
-			return false;
-		}
-		var $dialog = $("#label-dialog");
-		$dialog.dialog("option", "buttons", {
-			确定: function() {
-				if (!validatePromotionForm())
-				{
-					return false;
-				}
-				showProcessingDialog();
-				var url = "update_promotion.action";
-				var q = getPromotionParameter() + "&promotionAddRequest.numIids=" + selectedItems.join();
-				$.ajax({
-					url: url,
-					data: q,
-					type: 'POST',
-					success: function(data) {
-						hideProcessingDialog();
-						$dialog.dialog( "close" );
-						reload(clearSelection);
-					}
-				});
-				return false;
-			},
-			取消: function() {
-				$(this).dialog( "close" );
-			}
-		});
-		$dialog.dialog("open");
 		return false;
 	});
 	
