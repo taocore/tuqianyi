@@ -32,7 +32,7 @@
 					<table>
 					<tr>
 					<td><label>文字：</label></td> 
-					<td><input id='text' type='text' class='short-field'/></td>
+					<td><input id='text' type='text' class='short-field' title="特殊标记将被替换为真实值，目前支持“#价格#”以及类似“#8.5折#”等格式"/></td>
 					</tr>
 					<tr>
 					<td><label>文字颜色：</label></td>
@@ -112,7 +112,12 @@
 			 + m + 'opacity=' + $this.data('option').opacity;;
 			if ($this.hasClass('t'))
 			{
-				q = q + m + 'textLabel.id=' + $this.data('option').mid;
+				var option = $this.data('option');
+				q = q + m + 'textLabel.id=' + $this.data('option').mid
+					+ m + "textLabel.font=" + option.font 
+					+ m + 'textLabel.text=' + option.text
+					+ m + 'textLabel.color=' + option.color 
+					+ m + 'textLabel.background=' + option.background;
 			}
 			else
 			{
