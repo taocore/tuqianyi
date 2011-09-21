@@ -107,7 +107,7 @@
 					$(this).show();
 				});
 				
-				$("<div class='label-tool hide'><img src='images/cross_small.png'/></div>")
+				$("<div class='label-tool hide' title='删除'><img src='images/cross_small.png'/></div>")
 				.appendTo($textMerge)
 				.click(function(){
 					$textMerge.remove();

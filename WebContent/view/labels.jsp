@@ -94,7 +94,7 @@
 				$('#opacity').slider('value', opacity);
 			}).trigger('mousedown');
 			
-			$("<div class='label-tool hide'><img src='images/cross_small.png'/></div>")
+			$("<div title='删除' class='label-tool hide'><img src='images/cross_small.png'/></div>")
 			.appendTo($labelItem)
 			.click(function(){
 				$labelItem.remove();
