@@ -13,10 +13,8 @@ import java.util.Map;
 import java.util.logging.Level;
 
 import javax.imageio.ImageIO;
-import javax.servlet.ServletContext;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.struts2.util.ServletContextAware;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.taobao.api.ApiException;
@@ -25,16 +23,17 @@ import com.taobao.api.response.ItemUpdateResponse;
 import com.tuqianyi.Constants;
 import com.tuqianyi.db.DBUtils;
 import com.tuqianyi.db.Dao;
+import com.tuqianyi.font.FontProvider;
 import com.tuqianyi.image.ImageUtils;
 import com.tuqianyi.model.ImageLabel;
 import com.tuqianyi.model.Item;
 import com.tuqianyi.model.Merge;
 import com.tuqianyi.model.TextLabel;
+import com.tuqianyi.servlet.FontsServlet;
 import com.tuqianyi.taobao.TaobaoProxy;
 
-public class MergeAction extends ActionBase implements ServletContextAware{
+public class MergeAction extends ActionBase {
 
-	private ServletContext context;
 	private String numIids;
 	private List<Merge> merges;
 	private ImageLabel frame;
@@ -147,16 +146,12 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 		try {
 			_log.info("merging..." + item.getNumIid());
 			BufferedImage image = ImageIO.read(new URL(item.getPicUrl()));
-			String rootPath = context.getRealPath("/");
+			String rootPath = FontsServlet.getRootPath();
 			if (merges != null)
 			{
 				for (Merge m : merges)
 				{
-					if (m.getImage() == null)
-					{
-						setupMerge(m, rootPath);
-					}
-					image = mergeImage(image, m);
+					image = mergeImage(image, m, item);
 				}
 			}
 			if (frame != null)
@@ -232,32 +227,48 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 		}
 	}
 	
-	public void setupMerge(Merge m, String rootPath) throws IOException
+	private BufferedImage createMergeImage(Merge m, Item item) throws IOException
 	{
-		BufferedImage labelImage = null;
 		ImageLabel imageLabel = m.getImageLabel();
 		TextLabel textLabel = m.getTextLabel();
 		if (imageLabel != null)
 		{
-			_log.info("label id: " + imageLabel.getId());
-			if (ImageLabel.isLocal(imageLabel.getSrc()))
+			if (m.getImage() == null)
 			{
-				_log.info("label file path: " + rootPath + imageLabel.getSrc());
-				File f = new File(rootPath + imageLabel.getSrc());
-				labelImage = ImageIO.read(f);
+				BufferedImage labelImage = null;
+				_log.info("label id: " + imageLabel.getId());
+				if (ImageLabel.isLocal(imageLabel.getSrc()))
+				{
+					String root = FontsServlet.getRootPath();
+					_log.info("label file path: " + root + imageLabel.getSrc());
+					File f = new File(root + imageLabel.getSrc());
+					labelImage = ImageIO.read(f);
+				}
+				else
+				{
+					URL labelUrl = new URL(imageLabel.getSrc());
+					labelImage = ImageIO.read(labelUrl);
+				}
+				m.setImage(labelImage);
 			}
-			else
-			{
-				URL labelUrl = new URL(imageLabel.getSrc());
-				labelImage = ImageIO.read(labelUrl);
-			}
+			return m.getImage();
 		}
 		else if (textLabel != null)
 		{
-			Map<String, Object> session = ActionContext.getContext().getSession();
-			labelImage = (BufferedImage)session.remove(textLabel.getId());
+			if (textLabel.hasToken())
+			{
+				String text = textLabel.getParseText(item.getPrice());
+				String color = textLabel.getColor();
+				String backColor = textLabel.getBackground();
+				return FontProvider.getInstance().createText(text, textLabel.getFont(), color, backColor);
+			}
+			else
+			{
+				Map<String, Object> session = ActionContext.getContext().getSession();
+				return (BufferedImage)session.get(textLabel.getId());
+			}
 		}
-		m.setImage(labelImage);
+		return null;
 	}
 	
 	private String getNewPicUrl(String topSession, long numIid)
@@ -279,9 +290,9 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 		return null;
 	}
 	
-	private BufferedImage mergeImage(BufferedImage image, Merge m) throws IOException
+	private BufferedImage mergeImage(BufferedImage image, Merge m, Item item) throws IOException
 	{
-		BufferedImage labelImage = m.getImage();
+		BufferedImage labelImage = createMergeImage(m, item);
 		if (labelImage == null)
 		{
 			_log.warning("No label image was found.");
@@ -361,10 +372,6 @@ public class MergeAction extends ActionBase implements ServletContextAware{
 			allowedItemsCount = 2000;
 		};
 		return allowedItemsCount;
-	}
-
-	public void setServletContext(ServletContext context) {
-		this.context = context;
 	}
 
 	public void setNumIids(String numIids) {

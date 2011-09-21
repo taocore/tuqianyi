@@ -1,21 +1,22 @@
 package com.tuqianyi.servlet;
 
-import javax.servlet.http.HttpServlet;
+import java.util.logging.Logger;
 
-import com.tuqianyi.font.FontProvider;
+import javax.servlet.http.HttpServlet;
 
 public class FontsServlet extends HttpServlet{
 
-	private static FontProvider fontProvider;
+	static Logger _log = Logger.getLogger(FontsServlet.class.getName());
+	
+	private static String root;
 	
 	public void init()
 	{
-		String dir = getServletContext().getRealPath("/");
-		fontProvider = new FontProvider(dir);
+		root = getServletContext().getRealPath("/");
 	}
 	
-	public static FontProvider getFontProvider()
+	public static String getRootPath()
 	{
-		return fontProvider;
+		return root;
 	}
 }

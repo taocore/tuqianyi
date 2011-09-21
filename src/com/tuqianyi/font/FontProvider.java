@@ -16,17 +16,19 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 import com.tuqianyi.image.ImageUtils;
+import com.tuqianyi.servlet.FontsServlet;
 
 public class FontProvider {
 
 	static Logger _log = Logger.getLogger(FontProvider.class.getName());
+	private static FontProvider instance = new FontProvider();
+	private BufferedImage canvas;
 	
-	private String root;
 	private Map<String, FontImage> fonts;
 	
-	public FontProvider(String root)
+	private FontProvider()
 	{
-		this.root = root;
+		String root = FontsServlet.getRootPath();
 		_log.info("root: " + root);
 		fonts = new HashMap<String, FontImage>();
 		try {
@@ -45,19 +47,24 @@ public class FontProvider {
 		}
 	}
 	
+	public static FontProvider getInstance()
+	{
+		return instance;
+	}
+	
 	private FontImage createFontImage(String name, String path) throws FontFormatException, IOException
 	{
 		FontImage fontImage = new FontImage();
 		Font f = Font.createFont(Font.TRUETYPE_FONT, new File(path));
 		fontImage.setName(name);
 		fontImage.setFont(f);
-		fontImage.setImage(createText("热卖", f));
+		fontImage.setImage(createTextLabel("热卖", f));
 		return fontImage;
 	}
 	
-	private BufferedImage createText(String text, Font font) throws IOException
+	public BufferedImage createTextLabel(String text, Font font) throws IOException
 	{
-		BufferedImage image = ImageIO.read(new File(root + "images/clear.png"));
+		BufferedImage image = getCanvas();
 		font = font.deriveFont(Font.PLAIN, 36);
 		
 		Graphics2D g = image.createGraphics();
@@ -72,6 +79,34 @@ public class FontProvider {
 		return image;
 	}
 
+	public BufferedImage createText(String text, String font, String color, String backColor) throws IOException
+	{
+		return createText(text, getFont(font), color, backColor);
+	}
+	
+	public BufferedImage createText(String text, Font font, String color, String backColor) throws IOException
+	{
+		BufferedImage image = getCanvas();
+		font = font.deriveFont(Font.PLAIN, 72);
+		Color foreground = Color.decode(color);
+		Color background = null;
+		if (backColor != null && backColor.length() > 0)
+		{
+			background = Color.decode(backColor);
+		}
+		
+		Graphics2D g = image.createGraphics();
+		FontMetrics metrics = g.getFontMetrics(font);
+		int width = metrics.stringWidth(text);
+		int height = metrics.getHeight();
+		g.dispose();
+		_log.info("text.size: " + width + ", " + height);
+		image = ImageUtils.resize(image, width, height);
+		image = ImageUtils.pressText(image, text, font, 
+				foreground, background, null, 0, 0, 0, 1F);
+		return image;
+	}
+	
 	public Font getFont(String fontName)
 	{
 		return fonts.get(fontName).getFont();
@@ -80,5 +115,18 @@ public class FontProvider {
 	public BufferedImage getFontImage(String name)
 	{
 		return fonts.get(name).getImage();
+	}
+	
+	public BufferedImage getCanvas()
+	{
+		if (canvas == null)
+		{
+			try {
+				canvas = ImageIO.read(new File(FontsServlet.getRootPath() + "images/clear.png"));
+			} catch (IOException e) {
+				_log.log(Level.SEVERE, "", e);
+			}
+		}
+		return canvas;
 	}
 }

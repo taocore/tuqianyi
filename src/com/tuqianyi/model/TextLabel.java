@@ -2,6 +2,9 @@ package com.tuqianyi.model;
 
 
 public class TextLabel extends Label{
+	
+	private static final String TOKEN_PRICE = "#价格#";
+	
 	private String id;
 	private String text = "热卖";
 	private String font = "simhei";
@@ -64,6 +67,35 @@ public class TextLabel extends Label{
 
 	public String getId() {
 		return id;
+	}
+	
+	public boolean hasToken()
+	{
+		return (this.text.indexOf(TOKEN_PRICE) >= 0) || (this.text.indexOf("折#") >= 0);
+	}
+	
+	public String getParseText(String price)
+	{
+		String text = this.text.replace(TOKEN_PRICE, price);
+		String[] tmp = text.split("#", 3);
+		if (tmp.length != 3)
+		{
+			return text;
+		}
+		String token = tmp[1].substring(0, tmp[1].lastIndexOf("折"));
+		try
+		{
+			float off = Float.parseFloat(token);
+			double offPrice = Double.parseDouble(price) * off * 0.1;
+			long round = Math.round(offPrice);
+			String s = String.valueOf(round);
+			text  = tmp[0] + s + tmp[2];
+		}
+		catch (NumberFormatException e)
+		{
+			
+		}
+		return text;
 	}
 	
 	public String toString()

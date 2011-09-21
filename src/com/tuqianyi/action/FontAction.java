@@ -7,8 +7,8 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
+import com.tuqianyi.font.FontProvider;
 import com.tuqianyi.model.TextLabel;
-import com.tuqianyi.servlet.FontsServlet;
 
 public class FontAction extends ActionBase {
 
@@ -19,7 +19,7 @@ public class FontAction extends ActionBase {
 	{
 		try
 		{
-			BufferedImage image = FontsServlet.getFontProvider().getFontImage(label.getFont());
+			BufferedImage image = FontProvider.getInstance().getFontImage(label.getFont());
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 	        ImageIO.write(image, "png", out);
 	        stream = new ByteArrayInputStream(out.toByteArray());

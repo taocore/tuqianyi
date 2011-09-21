@@ -12,8 +12,6 @@ public class Item extends com.taobao.api.domain.Item{
 	public static final short ACTION_MERGE = 0;
 	public static final short ACTION_RECOVER = 1;
 	
-	private static final String TOKEN_PRICE = "#价格#";
-	
 	private String detailUrl;
 	private String oldPicUrl;
 	private short action = ACTION_MERGE;
@@ -77,49 +75,6 @@ public class Item extends com.taobao.api.domain.Item{
 
 	public String getErrorMsg() {
 		return errorMsg;
-	}
-
-	/**
-	 * 
-	 * @param off 折扣，八折off�?
-	 * @return
-	 */
-	public double getDiscountPrice(float off)
-	{
-		double p = Double.parseDouble(getPrice());
-		return p * off * 0.1;
-	}
-	
-	public String parseToken(String text)
-	{
-		text = text.replace(TOKEN_PRICE, getPrice());
-		String[] tmp = text.split("#", 3);
-		if (tmp.length != 3)
-		{
-			return text;
-		}
-		String token = tmp[1].substring(0, tmp[1].lastIndexOf("折"));
-		try
-		{
-			float off = Float.parseFloat(token);
-			double p = getDiscountPrice(off);
-			String s = String.valueOf(p);
-			int dotIndex = s.indexOf('.');
-			if (dotIndex > 0)
-			{
-				String tail = s.substring(dotIndex);
-				if (tail.length() > 3)
-				{
-					s = s.substring(0, dotIndex + 3);
-				}
-			}
-			text  = tmp[0] + s + tmp[2];
-		}
-		catch (NumberFormatException e)
-		{
-			
-		}
-		return text;
 	}
 	
 	public boolean equals(Object o)
