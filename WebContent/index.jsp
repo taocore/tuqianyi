@@ -40,7 +40,7 @@
 				$(window).scrollTop($(document).height());
 			});
 			$("#old-edition").click(function(){
-				location.href = location.href.replace(location.host + '/tuqianyi3', 'taocore.w44.mc-test.com/tuqianyi');
+				location.href = location.href.replace(location.host + '/tuqianyi3/', 'taocore.w44.mc-test.com/tuqianyi/Tuqianyi.html');
 			});
 		});
 	</script>     
@@ -67,6 +67,9 @@
 			<span id='old-edition'><a href="#">返回旧版</a></span><span class="quiet separator">|</span>
 			<span><a target='_blank' href='http://amos.im.alisoft.com/msg.aw?v=2&uid=%E8%B5%A4%E7%8F%A0%E5%AD%90&site=cntaobao&s=1&charset=utf-8'><img border='0' src='http://amos.im.alisoft.com/online.aw?v=2&uid=%E8%B5%A4%E7%8F%A0%E5%AD%90&site=cntaobao&s=1&charset=utf-8' alt='联系作者' /></a></span>
 		</div>
+	</div>
+	<div class="span-23 last notice">
+		应用到期后，所有贴标签的宝贝并不会自动恢复，所以如果到期后不想继续使用本应用的用户，请于到期前自行手动恢复所有已贴标签的宝贝，否则，将永远无法恢复。
 	</div>
 	<div id="tabs" class="span-24 last">
 		<ul>
