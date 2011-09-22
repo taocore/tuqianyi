@@ -8,6 +8,8 @@ body {background-color:rgb(195, 217, 255);}
 tbody tr.row-selected, tbody tr.row-selected td {background:rgb(255, 255, 150);}
 .ui-widget-content a {color:#06C;text-decoration:underline;}
 .selection {background:rgb(255, 255, 150);}
+.item-main-pic {width:90px;}
+.item-details {width:200px;}
 #label-form {text-align:left;background-color:white;}
 #label-form fieldset {padding:0 10px;}
 #label-form table {margin:0;}

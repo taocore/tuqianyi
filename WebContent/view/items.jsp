@@ -18,9 +18,9 @@
 	<tbody>
 		<s:iterator value="pagingItems.items">
 			<tr class="drow" num_iid='<s:property value="numIid"/>'>
-				<td><input type="checkbox" class="selector"></input>
+				<td style='width:20px;'><input type="checkbox" class="selector"></input>
 				</td>
-				<td>
+				<td class='item-main-pic'>
 					<a href='http://item.taobao.com/item.htm?id=<s:property value="numIid"/>' target="_blank">
 						<img class="pic" src='<s:property value="picUrl"/>_80x80.jpg' src_310='<s:property value="picUrl"/>_310x310.jpg' />
 					</a>
