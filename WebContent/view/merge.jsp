@@ -5,8 +5,11 @@
 <div>
 	<form id="label-form">
 		<div id="merging-left" class="left">
-			<table id="image-wrapper" cellpadding="0" cellspacing="0">
-			<tr><td>
+			<table id="image-table" cellpadding="0" cellspacing="0">
+			<tr><td></td><td><img src='images/x.png'/></td></tr>
+			<tr>
+			<td><img src='images/y.png'/></td>
+			<td id='image-td'>
 				<div id="main-pic">
 				<s:if test="%{item == null}">
 						<img src='images/unknown.jpg'/>
@@ -16,7 +19,8 @@
 				</s:else>
 				<div id="frame"></div>
 				</div>
-			</td></tr>
+			</td>
+			</tr>
 			</table>
 			<div id='options'>
 				<fieldset id="image-label-options" class='hide'>

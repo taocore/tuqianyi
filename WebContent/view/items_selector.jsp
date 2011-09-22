@@ -63,7 +63,7 @@
 	$("#label-dialog").dialog({
 		autoOpen: false,
 		modal: true,
-		width: 880,
+		width: 900,
 		open: function(event, ui) {
 			$("#search-form select").hide();
 			$("#ctabs").tabs({
