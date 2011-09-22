@@ -84,6 +84,7 @@ public class ItemsAction extends ActionBase{
 		_log.info("total: " + total);
 		pagingItems = new PagingResult<Item>();
 		pagingItems.setItems(resultItems);
+		pagingItems.setTotal(total);
 		pagingItems.setOption(option);
 		retriveCategories();
 		return SUCCESS;
