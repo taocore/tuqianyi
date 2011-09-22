@@ -91,7 +91,8 @@ public class MergeAction extends ActionBase {
 				error(e);
 			} catch (ApiException e) {
 				error(e);
-			} catch (Exception e)
+			} 
+			catch (Exception e)
 			{
 				error(e);
 			}
@@ -145,7 +146,13 @@ public class MergeAction extends ActionBase {
 	{
 		try {
 			_log.info("merging..." + item.getNumIid());
-			BufferedImage image = ImageIO.read(new URL(item.getPicUrl()));
+			String picUrl = item.getPicUrl();
+			if (picUrl == null)
+			{
+				_log.info("no pic: " + item.getNumIid());
+				return;
+			}
+			BufferedImage image = ImageIO.read(new URL(picUrl));
 			String rootPath = FontsServlet.getRootPath();
 			if (merges != null)
 			{

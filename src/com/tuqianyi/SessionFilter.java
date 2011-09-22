@@ -2,6 +2,8 @@ package com.tuqianyi;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.sql.Connection;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.taobao.api.internal.util.TaobaoUtils;
+import com.taobao.api.response.ItemGetResponse;
+import com.tuqianyi.db.DBUtils;
 import com.tuqianyi.db.Dao;
 import com.tuqianyi.taobao.TaobaoProxy;
 
@@ -89,6 +93,15 @@ public class SessionFilter implements Filter, Constants{
 		{
 			if (verify(req))
 		    {
+//				HttpSession session = ((HttpServletRequest)req).getSession(false);
+//				final String user = (String) session.getAttribute(USER);
+//				new Thread()
+//				{
+//					public void run()
+//					{
+//						sync(user);
+//					}
+//				}.start();
 		    	chain.doFilter(req, rsp);
 		    }
 			else
@@ -100,6 +113,35 @@ public class SessionFilter implements Filter, Constants{
 		catch (IOException e) {
 			_log.log(Level.SEVERE, "", e);
 			throw e;
+		}
+	}
+	
+	private void sync(String user)
+	{
+		_log.info("syncing");
+		Connection conn = null;
+		try {
+			conn = DBUtils.getConnection();
+			List<Long> ids = Dao.INSTANCE.getMergedItemIds(user, conn);
+			for (long id : ids)
+			{
+				ItemGetResponse response = TaobaoProxy.getItem(id);
+				if (!response.isSuccess())
+				{
+					_log.info(response.getErrorCode() + ": " +response.getMsg() + ", " + response.getSubCode() + ": " + response.getSubMsg());
+					if ("isv.item-is-delete:invalid-numIid".equals(response.getSubCode()) || "isv.item-is-delete:invalid-numIid-or-iid".equals(response.getSubCode()) || "isv.item-get-service-error:ITEM_NOT_FOUND".equals(response.getSubCode()))
+					{
+						_log.info("deleting invalid item: " + id);
+						Dao.INSTANCE.deleteMergedItem(id, conn);
+					}
+				}
+			}
+		} catch (Exception e) {
+			_log.log(Level.SEVERE, "", e);
+		}
+		finally
+		{
+			DBUtils.close(conn, null, null);
 		}
 	}
 	
