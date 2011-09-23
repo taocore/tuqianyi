@@ -21,7 +21,7 @@ tbody tr.row-selected, tbody tr.row-selected td {background:rgb(255, 255, 150);}
 #merging-left {width:330px;}
 #image-table {display:table-cell;width:330px;height:330px;text-align:center;overflow:hidden;}
 #image-table td {padding:0;}
-#image-td {width:310px;height:310px;border:1px solid lightblue;overflow:hidden;}
+#image-td {width:310px;height:310px;border:1px solid lightblue;text-align:center;overflow:hidden;}
 #main-pic {position:relative;margin:auto;}
 #frame {position:absolute;top:0;left:0;width:100%;height:100%;}
 #ctabs {width:510px;height:500px;}
