@@ -70,6 +70,17 @@
 </div>
 
 <script type="text/javascript">
+	var $mainPic = $('#main-pic');
+	var $innerImg = $("img", $mainPic);
+	if ($mainPic.data('loaded'))
+	{
+		$mainPic.width($innerImg.width()).height($innerImg.height());
+	}
+
+	$innerImg.load(function(){
+		$mainPic.width($(this).width()).height($(this).height()).data('loaded', true);
+	});
+	
 	$("#opacity,#text-opacity").slider({
 		value: 100,
 		change: function(event, ui) {

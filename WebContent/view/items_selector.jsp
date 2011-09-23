@@ -14,7 +14,8 @@
 			<form id="search-form">
 			<select name="filter.saleStatus">
 				<option value="0">出售中</option>
-				<option value="1">库存中</option>
+				<option value="1" banner='for_shelved'>待上架</option>
+				<option value="1" banner='sold_out'>已卖完</option>
 			</select>
 			<select name="filter.sellerCids">
 				<option value=''>所有分类</option>
@@ -24,6 +25,11 @@
 						<s:property value="name" />
 					</option>
 				</s:iterator>
+			</select>
+			<select name="filter.status">
+				<option value="-1">所有状态</option>
+				<option value="3">出错</option>
+				<option value="4">成功</option>
 			</select>
 			<input id="keyword" type="text" name="filter.keyWord" value="关键字" style="margin:0.5em 0;"></input>
 			<button id='search' style="margin:0.5em 0;">查找</button>
@@ -210,6 +216,7 @@
 	{
 		var $form = $("#search-form");
 		var saleStatus = $("select[name='filter.saleStatus']", $form).val();
+		var banner = $("select[name='filter.saleStatus'] option:selected", $form).attr('banner');
 		var cids = null;
 		var c = $("select[name='filter.sellerCids']", $form);
 		var cid = c.val();
@@ -220,16 +227,19 @@
 				cids.push($(this).val());
 			});
 		}
+		var status = $("select[name='filter.status']", $form).val();
 		var keyword = $("input[name='filter.keyWord']", $form).val();
 		if (keyword == '关键字')
 		{
 			keyword = null;
 		}
 		var q = 'filter.saleStatus=' + saleStatus;
+		q += '&filter.banner=' + banner;
 		if (cids)
 		{
 			q += '&filter.sellerCids=' + cids;
 		}
+		q += '&filter.status=' + status;
 		if (keyword)
 		{
 			q += '&filter.keyWord=' + keyword;
