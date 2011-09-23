@@ -9,6 +9,7 @@ public class ItemsFilter{
 	private short saleStatus = STATUS_ONSALE;
 	private String keyWord;
 	private String sellerCids;
+	private String banner;
 
 	public void setSaleStatus(short status) {
 		this.saleStatus = status;
@@ -45,5 +46,13 @@ public class ItemsFilter{
 
 	public short getStatus() {
 		return status;
+	}
+
+	public void setBanner(String banner) {
+		this.banner = banner;
+	}
+
+	public String getBanner() {
+		return banner;
 	}
 }

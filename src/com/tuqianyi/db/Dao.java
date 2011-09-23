@@ -247,7 +247,7 @@ public class Dao {
 		return null;
 	}
 	
-	public Map<Long, com.tuqianyi.model.Item> getMergedItems(String user) throws Exception
+	public Map<Long, com.tuqianyi.model.Item> getMergedItems(String user, short status) throws Exception
 	{
 		Connection conn = null;
 		PreparedStatement statement = null;
@@ -255,9 +255,15 @@ public class Dao {
 		try
 		{
 			conn = DBUtils.getConnection();
-			String sql = "select * from merged_item_t where owner_c=?";
+			String sql = status == -1 ? 
+					"select * from merged_item_t where owner_c=?" 
+					: "select * from merged_item_t where owner_c=? and status_c=?";
 			statement = conn.prepareStatement(sql);
 			statement.setString(1, user);
+			if (status != -1)
+			{
+				statement.setShort(2, status);
+			}
 			rs = statement.executeQuery();
 			Map<Long, Item> items = new HashMap<Long, Item>();
 			while (rs.next())

@@ -30,6 +30,7 @@ public class Item extends com.taobao.api.domain.Item{
 		this.setTitle(item.getTitle());
 		this.setPrice(item.getPrice());
 		this.setPicUrl(item.getPicUrl());
+		this.setDetailUrl(item.getDetailUrl());
 	}
 	
 	public void setDetailUrl(String detailUrl) {

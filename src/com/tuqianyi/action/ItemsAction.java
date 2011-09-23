@@ -42,7 +42,7 @@ public class ItemsAction extends ActionBase{
 		{
 			if (filter.getSaleStatus() == ItemsFilter.STATUS_INVENTORY)
 			{
-				ItemsInventoryGetResponse rsp = TaobaoProxy.getInventory(topSession, option.getCurrentPage() + 1, option.getLimit(), null, filter.getSellerCids(), filter.getKeyWord());
+				ItemsInventoryGetResponse rsp = TaobaoProxy.getInventory(topSession, option.getCurrentPage() + 1, option.getLimit(), filter.getBanner(), filter.getSellerCids(), filter.getKeyWord());
 				if (rsp.isSuccess())
 				{
 					taobaoItems = rsp.getItems();
@@ -95,28 +95,18 @@ public class ItemsAction extends ActionBase{
 		List<com.tuqianyi.model.Item> items = new ArrayList<com.tuqianyi.model.Item>();
 		if (taobaoItems != null)
 		{
-			Map<Long, com.tuqianyi.model.Item> mergedItems = Dao.INSTANCE.getMergedItems(getUser());
+			Map<Long, com.tuqianyi.model.Item> mergedItems = Dao.INSTANCE.getMergedItems(getUser(), filter.getStatus());
 			for (com.taobao.api.domain.Item item : taobaoItems)
 			{
 				com.tuqianyi.model.Item it = mergedItems.remove(item.getNumIid());
 				if (it == null)
 				{
-					it = new com.tuqianyi.model.Item();
+					it = new com.tuqianyi.model.Item(item);
 				}
-				copyTo(item, it);
 				items.add(it);
 			}
 		}
 		return items;
-	}
-	
-	private void copyTo(com.taobao.api.domain.Item item, com.tuqianyi.model.Item it)
-	{
-		it.setNumIid(item.getNumIid());
-		it.setTitle(item.getTitle());
-		it.setPrice(item.getPrice());
-		it.setPicUrl(item.getPicUrl());
-		it.setDetailUrl(item.getDetailUrl());
 	}
 	
 	private void retriveCategories() throws ApiException
