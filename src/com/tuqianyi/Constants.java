@@ -4,6 +4,10 @@ public interface Constants {
 
 	String APP_KEY = "12184977";
 	String SECRET = "c94dd6e8ca8b480ea0c0d0721aaaeb84";
+	String ARTICLE_CODE = "service-0-23009";
+	String ITEM_CODE_1 = "service-0-23009-1";
+	String ITEM_CODE_2 = "service-0-23009-2";
+	String ITEM_CODE_3 = "service-0-23009-3";
 	
 	String ENTRY = "http://fuwu.taobao.com/using/app_ins_processor.htm?service_id=6371";//"http://container.open.taobao.com/container?appkey=" + APP_KEY;
 	

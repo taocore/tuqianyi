@@ -1,6 +1,8 @@
 package com.tuqianyi.taobao;
 
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -35,13 +37,7 @@ public class TaobaoProxy implements Constants
 	
 	public static final String INVALID_PIC_PATH = "isv.invalid-parameter:picPath";
 	
-	private static boolean _test = false;
 	private static final TaobaoClient taobaoClient = new DefaultTaobaoClient(getApiUrl(), getAppKey(), getAppSecret());
-	
-	public static boolean isTest()
-	{
-		return _test;
-	}
 	
 	private static String getApiUrl()
 	{
@@ -210,5 +206,25 @@ public class TaobaoProxy implements Constants
 		String s = DigestUtils.md5Hex(result.toString());
 		_log.info("s: " + s);
 		return sign != null && sign.equals(s.toUpperCase());
+    }
+	
+	public static boolean verifySubscription(String nick, String itemCode)
+    {
+		try {
+			List<ArticleUserSubscribe> subscriptions = getSubscription(nick, ARTICLE_CODE);
+			if (subscriptions != null)
+			{
+				for (ArticleUserSubscribe sub : subscriptions)
+				{
+					if (itemCode.equals(sub.getItemCode()) && new Date().before(sub.getDeadline()))
+					{
+						return true;
+					}
+				}
+			}
+		} catch (ApiException e) {
+			_log.log(Level.SEVERE, "", e);
+		}
+		return false;
     }
 }

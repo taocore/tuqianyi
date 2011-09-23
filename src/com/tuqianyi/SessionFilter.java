@@ -51,6 +51,7 @@ public class SessionFilter implements Filter, Constants{
 		String leaseId = req.getParameter("leaseId");
 		String timestamp = req.getParameter("timestamp");
 		String sign = req.getParameter("sign");
+		String itemCode = req.getParameter("itemCode");
 		
 		if (topParams == null || topSession == null || topSign==null || appKey == null)
 		{
@@ -59,8 +60,7 @@ public class SessionFilter implements Filter, Constants{
 		
 		boolean verifiedTopParameters = TaobaoUtils.verifyTopResponse(topParams, topSession, topSign, appKey, TaobaoProxy.SECRET);
 		_log.info("top parameters verified: " + verifiedTopParameters);
-		boolean versionVerified = TaobaoProxy.verifyVersion(appKey, leaseId, timestamp, version, sign, SECRET);
-		if (TaobaoProxy.isTest() || (verifiedTopParameters && versionVerified))
+		if (verifiedTopParameters)
 		{
 			_log.info("browser: " + ((HttpServletRequest)req).getHeader("user-agent"));
 			Map<String, String> topMap = TaobaoUtils.decodeTopParams(URLEncoder.encode(topParams, "GBK"));
@@ -69,23 +69,50 @@ public class SessionFilter implements Filter, Constants{
 			String nick = topMap.get("visitor_nick");
 			_log.info("uid: " + userId);
 			_log.info("session: " + topSession);
-			
-			session = ((HttpServletRequest)req).getSession(true);
-			session.setAttribute(TOP_SESSION, topSession);
-			session.setAttribute(USER, nick);
-			session.setAttribute(USER_ID, userId);
-			session.setAttribute(VERSION, version);
-			try {
-				Dao.INSTANCE.updateUser(Long.parseLong(userId), nick, topSession);
-			} catch (Exception e) {
-				_log.log(Level.SEVERE, "", e);
+			_log.info("itemCode: " + itemCode);
+			boolean v = false;
+			if (itemCode != null)
+			{
+				v = TaobaoProxy.verifySubscription(nick, itemCode);
+				_log.info("subscription verified: " + v);
+				if (version == null)
+				{
+					if (ITEM_CODE_3.equals(itemCode))
+					{
+						version = "3";
+					}
+					else if (ITEM_CODE_2.equals(itemCode))
+					{
+						version = "2";
+					}
+					else
+					{
+						version = "1";
+					}
+				}
 			}
-			return true;
+			else
+			{
+				v = TaobaoProxy.verifyVersion(appKey, leaseId, timestamp, version, sign, SECRET);
+				_log.info("version verified: " + v);
+			}
+			v = true;
+			if (v)
+			{
+				session = ((HttpServletRequest)req).getSession(true);
+				session.setAttribute(TOP_SESSION, topSession);
+				session.setAttribute(USER, nick);
+				session.setAttribute(USER_ID, userId);
+				session.setAttribute(VERSION, version);
+				try {
+					Dao.INSTANCE.updateUser(Long.parseLong(userId), nick, topSession);
+				} catch (Exception e) {
+					_log.log(Level.SEVERE, "", e);
+				}
+				return true;
+			}
 		}
-		else
-		{
-			return false;
-		}
+		return false;
 	}
 	
 	public void doFilter(ServletRequest req, ServletResponse rsp,
