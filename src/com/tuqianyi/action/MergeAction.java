@@ -73,7 +73,7 @@ public class MergeAction extends ActionBase {
 		{
 			try {
 				Item item = Dao.INSTANCE.getMergedItem(Long.parseLong(numIid), conn);
-				if (item == null)
+				if (item == null || item.getPicUrl() == null)
 				{
 					ItemGetResponse rsp = TaobaoProxy.getItem(getSessionId(), Long.parseLong(numIid));
 					if (rsp.isSuccess())
@@ -86,7 +86,10 @@ public class MergeAction extends ActionBase {
 						error(rsp);
 					}
 				}
-				items.add(item);
+				if (item != null)
+				{
+					items.add(item);
+				}
 			} catch (NumberFormatException e) {
 				error(e);
 			} catch (ApiException e) {

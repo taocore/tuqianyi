@@ -62,6 +62,7 @@ public class SessionFilter implements Filter, Constants{
 		boolean versionVerified = TaobaoProxy.verifyVersion(appKey, leaseId, timestamp, version, sign, SECRET);
 		if (TaobaoProxy.isTest() || (verifiedTopParameters && versionVerified))
 		{
+			_log.info("browser: " + ((HttpServletRequest)req).getHeader("user-agent"));
 			Map<String, String> topMap = TaobaoUtils.decodeTopParams(URLEncoder.encode(topParams, "GBK"));
 			_log.warning("parsed top params: " + topMap);
 			String userId = topMap.get("visitor_id");
