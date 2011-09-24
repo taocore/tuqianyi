@@ -103,6 +103,11 @@
 			alert("未选中宝贝。");
 			return false;
 		}
+		if (selectedItems.length > 100)
+		{
+			alert("批量一次最多只能处理100件宝贝。");
+			return false;
+		}
 		var $dialog = $("#label-dialog");
 		var url = "merging.action";
 		var numIids = selectedItems.join();
