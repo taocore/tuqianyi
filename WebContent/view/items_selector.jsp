@@ -6,6 +6,7 @@
 <script type="text/javascript">
 	var selectedItems = new Array();
 	var mid = 0;
+	var maxBatch = 50;
 </script>
 
 <div>
@@ -103,9 +104,9 @@
 			alert("未选中宝贝。");
 			return false;
 		}
-		if (selectedItems.length > 100)
+		if (selectedItems.length > maxBatch)
 		{
-			alert("批量一次最多只能处理100件宝贝。");
+			alert("批量一次最多只能处理 " + maxBatch + " 件宝贝。");
 			return false;
 		}
 		var $dialog = $("#label-dialog");
