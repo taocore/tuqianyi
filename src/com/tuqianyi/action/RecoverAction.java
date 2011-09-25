@@ -54,10 +54,21 @@ public class RecoverAction extends ActionBase{
 		try {
 			if (item.getOldPicUrl() != null)
 			{
-				_log.info("nick: " + getUser() + " num_iid:" + item.getNumIid() + " old: " + item.getOldPicUrl());
-				URL oldUrl = new URL(item.getOldPicUrl());
+				String oldPicUrl = item.getOldPicUrl();
+				_log.info("nick: " + getUser() + " num_iid:" + item.getNumIid() + " old: " + oldPicUrl);
+				URL oldUrl = new URL(oldPicUrl);
 				byte[] data = IOUtils.toByteArray(oldUrl.openStream());
-				ItemUpdateResponse response = TaobaoProxy.updateMainPic(topSession, item.getNumIid(), data);
+				_log.info("data.length: " + data.length);
+				ItemUpdateResponse response;
+				if (data.length > 524288)
+				{
+					response = TaobaoProxy.updateMainPic(topSession, item.getNumIid(), oldPicUrl);
+				}
+				else
+				{
+					response = TaobaoProxy.updateMainPic(topSession, item.getNumIid(), data);
+				}
+				
 				if (response.isSuccess())
 				{
 					Dao.INSTANCE.unmerged(item.getNumIid(), true, null, conn);
