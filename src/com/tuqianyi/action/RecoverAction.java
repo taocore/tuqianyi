@@ -62,6 +62,8 @@ public class RecoverAction extends ActionBase{
 				ItemUpdateResponse response;
 				if (data.length > 524288)
 				{
+					oldPicUrl = oldPicUrl.replace("bao/uploaded", "imgextra");
+					_log.info("kongjian.url: " + oldPicUrl);
 					response = TaobaoProxy.updateMainPic(topSession, item.getNumIid(), oldPicUrl);
 				}
 				else
