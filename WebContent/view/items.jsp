@@ -29,7 +29,7 @@
 					<div><s:property value="title"/></div>
 					<div>价格：<s:property value="price"/>元</div>
 				</td>
-				<td>
+				<td class='error-msg'>
 					<s:if test="%{status == 3}">
 	    				<div class='error'><s:property value="errorMsg"/></div>
 					</s:if>

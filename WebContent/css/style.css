@@ -8,8 +8,9 @@ body {background-color:rgb(195, 217, 255);}
 tbody tr.row-selected, tbody tr.row-selected td {background:rgb(255, 255, 150);}
 .ui-widget-content a {color:#06C;text-decoration:underline;}
 .selection {background:rgb(255, 255, 150);}
-.item-main-pic {width:90px;}
-.item-details {width:200px;}
+td.item-main-pic {width:90px;}
+td.item-details {width:200px;}
+td.error-msg {width:420px;}
 #options {text-align:left;background-color:white;}
 #options fieldset {padding:0 10px;}
 #options table {margin:0;}
