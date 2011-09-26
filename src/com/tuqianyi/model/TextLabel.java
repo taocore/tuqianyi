@@ -6,6 +6,10 @@ import java.awt.Font;
 public class TextLabel extends Label{
 	
 	private static final String TOKEN_PRICE = "#价格#";
+	public static final int LINE_NONE = 0;
+	public static final int LINE_UNDER = 1;
+	public static final int LINE_THROUGH = 2;
+	public static final int LINE_SLASH = 3;
 	
 	private String id;
 	private String text = "热卖";
@@ -15,6 +19,7 @@ public class TextLabel extends Label{
 	private String background;
 	private int angle;
 	private int style = Font.PLAIN;
+	private int line = LINE_NONE;
 	
 	public void setText(String text) {
 		this.text = text;
@@ -114,5 +119,13 @@ public class TextLabel extends Label{
 
 	public int getStyle() {
 		return style;
+	}
+
+	public void setLine(int line) {
+		this.line = line;
+	}
+
+	public int getLine() {
+		return line;
 	}
 }

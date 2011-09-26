@@ -11,6 +11,7 @@ import java.awt.RenderingHints;
 import java.awt.Transparency;
 import java.awt.font.TextAttribute;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.GeneralPath;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -23,6 +24,8 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageTypeSpecifier;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
+
+import com.tuqianyi.model.TextLabel;
 
 public class ImageUtils {
 
@@ -59,7 +62,8 @@ public class ImageUtils {
 	}
 
 	public static BufferedImage pressText(BufferedImage image, String text, 
-			Font font, Color color, Color backColor, Color borderColor, int borderWidth, 
+			Font font, Color color, Color backColor, int line, 
+			Color borderColor, int borderWidth, 
 			int x, int y, float alpha) {
 		Graphics2D g = image.createGraphics();
 		FontMetrics metrics = g.getFontMetrics(font);
@@ -77,7 +81,23 @@ public class ImageUtils {
 		{
 			as.addAttribute(TextAttribute.BACKGROUND, backColor);
 		}
+		if (line == TextLabel.LINE_UNDER)
+		{
+			as.addAttribute(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+		}
+		else if (line == TextLabel.LINE_THROUGH)
+		{
+			as.addAttribute(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
+		}
 		g.drawString(as.getIterator(), 0, metrics.getAscent());
+		if (line == TextLabel.LINE_SLASH)
+		{
+			GeneralPath path = new GeneralPath();
+			path.moveTo(0, 0);
+			path.lineTo(width, height);
+			g.setPaint(color);
+			g.draw(path);
+		}
 		if (borderColor != null)
 		{
 			g.setColor(borderColor);

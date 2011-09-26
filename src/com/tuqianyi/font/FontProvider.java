@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 import com.tuqianyi.image.ImageUtils;
+import com.tuqianyi.model.TextLabel;
 import com.tuqianyi.servlet.FontsServlet;
 
 public class FontProvider {
@@ -75,16 +76,16 @@ public class FontProvider {
 		_log.info("text.size: " + width + ", " + height);
 		image = ImageUtils.resize(image, width, height);
 		image = ImageUtils.pressText(image, text, font, 
-				Color.blue, null, null, 0, 0, 0, 1F);
+				Color.blue, null, TextLabel.LINE_NONE, null, 0, 0, 0, 1F);
 		return image;
 	}
 
-	public BufferedImage createText(String text, String font, String color, String backColor, int style) throws IOException
+	public BufferedImage createText(String text, String font, String color, String backColor, int style, int line) throws IOException
 	{
-		return createText(text, getFont(font), color, backColor, style);
+		return createText(text, getFont(font), color, backColor, style, line);
 	}
 	
-	public BufferedImage createText(String text, Font font, String color, String backColor, int style) throws IOException
+	public BufferedImage createText(String text, Font font, String color, String backColor, int style, int line) throws IOException
 	{
 		BufferedImage image = getCanvas();
 		font = font.deriveFont(style, 72);
@@ -103,7 +104,7 @@ public class FontProvider {
 		_log.info("text.size: " + width + ", " + height);
 		image = ImageUtils.resize(image, width, height);
 		image = ImageUtils.pressText(image, text, font, 
-				foreground, background, null, 0, 0, 0, 1F);
+				foreground, background, line, null, 0, 0, 0, 1F);
 		return image;
 	}
 	
