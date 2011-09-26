@@ -82,9 +82,15 @@
 				$dialog.html(data);
 				$dialog.dialog("option", "buttons", {
 					确定: function() {
+						var merges = getMerges();
+						if (!merges)
+						{
+							alert("未改变原图。");
+							return false;
+						}
 						showProcessingDialog();
 						var url = 'merge.action';
-						var q = 'numIids=' + currentItem + getMerges();
+						var q = 'numIids=' + currentItem + merges;
 						$.ajax({
 							url: url,
 							data: q,
@@ -126,38 +132,6 @@
 				reload();
 			}
 		});
-		return false;
-	});
-	
-	$(".update-promotion-link").click(function(){
-		var currentItem = $(this).closest("tr").attr("num_iid");
-		var $dialog = $("#label-dialog");
-		$dialog.dialog("option", "buttons", {
-			确定: function() {
-				if (!validatePromotionForm())
-				{
-					return false;
-				}
-				showProcessingDialog();
-				var url = "update_promotion.action";
-				var q = getPromotionParameter() + "&promotionAddRequest.numIids=" + currentItem;
-				$.ajax({
-					url: url,
-					data: q,
-					type: 'POST',
-					success: function(data) {
-						hideProcessingDialog();
-						$dialog.dialog( "close" );
-						reload(clearSelection);
-					}
-				});
-				return false;
-			},
-			取消: function() {
-				$(this).dialog( "close" );
-			}
-		});
-		$dialog.dialog("open");
 		return false;
 	});
 

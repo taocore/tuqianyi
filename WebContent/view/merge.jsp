@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.awt.Font" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <div>
@@ -49,6 +50,16 @@
 					<td><label>背景颜色：</label></td>
 					<td>
 					<input id='back-color' type='text' class='color'/>
+					</td>
+					</tr>
+					<tr>
+					<td><label>风格：</label></td>
+					<td>
+					<div id='style'>
+						<input id='style1' name='style' type='radio' value='<%=Font.PLAIN%>' checked='checked' /><label for='style1'>正常</label>
+						<input id='style2' name='style' type='radio' value='<%=Font.BOLD%>' /><label for='style2'>加粗</label>
+						<input id='style3' name='style' type='radio' value='<%=Font.ITALIC%>' /><label for='style3'>斜体</label>
+					</div>
 					</td>
 					</tr>
 					<tr>
@@ -104,11 +115,13 @@
 		option.text = $('#text').val();
 		option.color = $('#fore-color').val();
 		option.background = $('#back-color').val();
+		option.style = $('#text-options-form input[name="style"]:checked').val();
 		var src = "text.action?label.id=" + option.mid 
 				+ "&label.font=" + option.font 
 				+ '&label.text=' + encodeURIComponent(option.text)
 				+ '&label.color=' + encodeURIComponent(option.color) 
 				+ '&label.background=' + encodeURIComponent(option.background)
+				+ '&label.style=' + option.style
 				+ '&t=' + new Date().getTime();
 		$label.addClass('loading');
 		$("img.t", $label).hide().attr('src', src);
@@ -116,11 +129,18 @@
 	});
 	
 	$('.color').colorPicker();
+	$('#style').buttonset();
 	
 	function getMerges()
 	{
+		var $merges = $("#main-pic div.merge");
+		var $frame = $("#frame img");
+		if (!$merges && !$frame)
+		{
+			return null;
+		}
 		var q = '';
-		$("#main-pic div.merge").each(function(i){
+		$merges.each(function(i){
 			var $this = $(this);
 			var m = '&merges[' + i + '].';
 			var pos = $this.position();
@@ -143,7 +163,7 @@
 				q = q + m + 'imageLabel.src=' + $("img", $this).attr("src");
 			}
 		});
-		var frameSrc = $("#frame img").attr('src');
+		var frameSrc = $frame.attr('src');
 		if (frameSrc)
 		{
 			q += '&frame.src=' + frameSrc;

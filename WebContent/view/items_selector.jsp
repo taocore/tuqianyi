@@ -121,9 +121,15 @@
 				$dialog.html(data);
 				$dialog.dialog("option", "buttons", {
 					确定: function() {
+						var merges = getMerges();
+						if (!merges)
+						{
+							alert("未改变原图。");
+							return false;
+						}
 						showProgressDialog();
 						var url = 'merge.action';
-						var q = 'numIids=' + numIids + getMerges();
+						var q = 'numIids=' + numIids + merges;
 						$.ajax({
 							url: url,
 							data: q,

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.awt.Font" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <div id="text">
@@ -85,6 +86,7 @@
 					text: '热卖',
 					color: '#ff0000',
 					background: '',
+					style: <%=Font.PLAIN%>,
 					//aspectRatio: true, 
 					opacity: 100
 				}).mousedown(function(){
@@ -96,6 +98,9 @@
 					$('#text').val(option.text);
 					$('#fore-color').val(option.color).change();
 					$('#back-color').val(option.background).change();
+					$('#style input[name="style"]').removeAttr('checked');
+					$('#style input[value="' + option.style + '"]').attr('checked', 'checked');
+					$('#style input').change();
 					$('#text-opacity').slider('value', option.opacity);
 				}).trigger('mousedown');
 				
