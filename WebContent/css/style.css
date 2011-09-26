@@ -22,7 +22,7 @@ td.op {width:70px;}
 #merging-left {width:330px;}
 #image-table {display:table-cell;width:330px;height:330px;text-align:center;overflow:hidden;}
 #image-table td {padding:0;}
-#image-td {width:312px;height:312px;border:1px solid lightblue;text-align:center;overflow:hidden;}
+#image-td {width:310px;height:310px;border:1px solid lightblue;text-align:center;overflow:hidden;}
 #main-pic {position:relative;margin:auto;}
 #frame {position:absolute;top:0;left:0;width:100%;height:100%;}
 #ctabs {width:510px;height:500px;}
@@ -37,6 +37,8 @@ td.op {width:70px;}
 .label-tool {position:absolute;top:0;right:0;cursor:pointer;}
 #main-pic .ui-selected {border:1px solid blue;}
 #image-label-options,#text-label-options {height:190px;overflow:auto;}
+#text-options-form {height:130px;overflow:auto}
+.button-bar {height:32px;}
 .border {border:1px solid lightblue;}
 #faq ul {list-style-type:none;width:550px;}
 #faq li {font-size:1.1em;font-weight:bold;color:blue;margin-bottom:5px;}

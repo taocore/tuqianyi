@@ -33,6 +33,7 @@
 				
 				<fieldset id="text-label-options" class='hide'>
 					<legend>标签选项</legend>
+					<div id='text-options-form'>
 					<table>
 					<tr>
 					<td><label>文字：</label></td> 
@@ -55,7 +56,10 @@
 					<td><div id='text-opacity'></div></td>
 					</tr>
 					</table>
-					<button id='merge-changed' class='right'>刷新预览</button>
+					</div>
+					<div class='button-bar'>
+						<button id='merge-changed' class='right'>确定修改</button>
+					</div>
 				</fieldset>
 			</div>
 		</div>

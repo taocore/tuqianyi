@@ -62,6 +62,7 @@
 		</s:elseif>
 		</div>
 		<div class="right" style="margin-top: 5px;">
+			<span style='color:red;'>IE6用户请使用旧版</span><span class="quiet separator">|</span>
 			您好，<span id="nick"><s:property value="#session.USER"/></span><span class="quiet separator">|</span>
 			<span id='upgrade'><a href="http://fuwu.taobao.com/using/serv_upgrade.htm?service_id=6371" target="_blank">升级</a></span><span class="quiet separator">|</span>
 			<span id='old-edition'><a href="#">返回旧版</a></span><span class="quiet separator">|</span>
