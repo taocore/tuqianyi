@@ -79,15 +79,15 @@ public class FontProvider {
 		return image;
 	}
 
-	public BufferedImage createText(String text, String font, String color, String backColor) throws IOException
+	public BufferedImage createText(String text, String font, String color, String backColor, int style) throws IOException
 	{
-		return createText(text, getFont(font), color, backColor);
+		return createText(text, getFont(font), color, backColor, style);
 	}
 	
-	public BufferedImage createText(String text, Font font, String color, String backColor) throws IOException
+	public BufferedImage createText(String text, Font font, String color, String backColor, int style) throws IOException
 	{
 		BufferedImage image = getCanvas();
-		font = font.deriveFont(Font.PLAIN, 72);
+		font = font.deriveFont(style, 72);
 		Color foreground = Color.decode(color);
 		Color background = null;
 		if (backColor != null && backColor.length() > 0)

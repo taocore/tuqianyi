@@ -1,5 +1,7 @@
 package com.tuqianyi.model;
 
+import java.awt.Font;
+
 
 public class TextLabel extends Label{
 	
@@ -12,6 +14,7 @@ public class TextLabel extends Label{
 	private String color = "#ff0000";
 	private String background;
 	private int angle;
+	private int style = Font.PLAIN;
 	
 	public void setText(String text) {
 		this.text = text;
@@ -103,5 +106,13 @@ public class TextLabel extends Label{
 		StringBuilder sb = new StringBuilder();
 		sb.append("text: ").append(this.text);
 		return sb.toString();
+	}
+
+	public void setStyle(int style) {
+		this.style = style;
+	}
+
+	public int getStyle() {
+		return style;
 	}
 }

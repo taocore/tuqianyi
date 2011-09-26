@@ -24,7 +24,7 @@ public class TextAction extends ActionBase {
 //		_log.info("fixed: " + label.getText());
 		try
 		{
-			BufferedImage image = FontProvider.getInstance().createText(label.getText(), label.getFont(), label.getColor(), label.getBackground());
+			BufferedImage image = FontProvider.getInstance().createText(label.getText(), label.getFont(), label.getColor(), label.getBackground(), label.getStyle());
 			Map<String, Object> session = ActionContext.getContext().getSession();
 			String mid = label.getId();
 			session.put(mid, image);
