@@ -72,11 +72,19 @@ public class RecoverAction extends ActionBase{
 					oldPicUrl = oldPicUrl.replace("bao/uploaded", "imgextra");
 					_log.info("kongjian.url: " + oldPicUrl);
 					response = TaobaoProxy.updateMainPic(topSession, item.getNumIid(), oldPicUrl);
+					if (!response.isSuccess())
+					{
+						error(response);
+					}
 				}
 				else
 				{
 					_log.info("recovering by data...");
 					response = TaobaoProxy.updateMainPic(topSession, item.getNumIid(), data);
+					if (!response.isSuccess())
+					{
+						error(response);
+					}
 				}
 				
 				if (!response.isSuccess() && data.length > 500000)
