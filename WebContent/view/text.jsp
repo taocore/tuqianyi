@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.awt.Font" %>
+<%@ page import="com.tuqianyi.model.TextLabel" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <div id="text">
@@ -87,6 +88,7 @@
 					color: '#ff0000',
 					background: '',
 					style: <%=Font.PLAIN%>,
+					line: <%=TextLabel.LINE_NONE%>,
 					//aspectRatio: true, 
 					opacity: 100
 				}).mousedown(function(){
@@ -101,6 +103,9 @@
 					$('#style input[name="style"]').removeAttr('checked');
 					$('#style input[value="' + option.style + '"]').attr('checked', 'checked');
 					$('#style input').change();
+					$('#line input[name="line"]').removeAttr('checked');
+					$('#line input[value="' + option.line + '"]').attr('checked', 'checked');
+					$('#line input').change();
 					$('#text-opacity').slider('value', option.opacity);
 				}).trigger('mousedown');
 				

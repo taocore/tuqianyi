@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.awt.Font" %>
+<%@ page import="com.tuqianyi.model.TextLabel" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <div>
@@ -63,6 +64,17 @@
 					</td>
 					</tr>
 					<tr>
+					<td><label>划线：</label></td>
+					<td>
+					<div id='line'>
+						<input id='line1' name='line' type='radio' value='<%=TextLabel.LINE_NONE%>' checked='checked' /><label for='line1'>无线</label>
+						<input id='line2' name='line' type='radio' value='<%=TextLabel.LINE_UNDER%>' /><label for='line2'>下划线</label>
+						<input id='line3' name='line' type='radio' value='<%=TextLabel.LINE_THROUGH%>' /><label for='line3'>删除线</label>
+						<input id='line4' name='line' type='radio' value='<%=TextLabel.LINE_SLASH%>' /><label for='line4'>斜线</label>
+					</div>
+					</td>
+					</tr>
+					<tr>
 					<td><label>透明度：</label></td>
 					<td><div id='text-opacity'></div></td>
 					</tr>
@@ -115,13 +127,15 @@
 		option.text = $('#text').val();
 		option.color = $('#fore-color').val();
 		option.background = $('#back-color').val();
-		option.style = $('#text-options-form input[name="style"]:checked').val();
+		option.style = $('#style input[name="style"]:checked').val();
+		option.line = $('#line input[name="line"]:checked').val();
 		var src = "text.action?label.id=" + option.mid 
 				+ "&label.font=" + option.font 
 				+ '&label.text=' + encodeURIComponent(option.text)
 				+ '&label.color=' + encodeURIComponent(option.color) 
 				+ '&label.background=' + encodeURIComponent(option.background)
 				+ '&label.style=' + option.style
+				+ '&label.line=' + option.line
 				+ '&t=' + new Date().getTime();
 		$label.addClass('loading');
 		$("img.t", $label).hide().attr('src', src);
@@ -129,7 +143,7 @@
 	});
 	
 	$('.color').colorPicker();
-	$('#style').buttonset();
+	$('#style,#line').buttonset();
 	
 	function getMerges()
 	{
@@ -156,7 +170,9 @@
 					+ m + "textLabel.font=" + option.font 
 					+ m + 'textLabel.text=' + option.text
 					+ m + 'textLabel.color=' + option.color 
-					+ m + 'textLabel.background=' + option.background;
+					+ m + 'textLabel.background=' + option.background
+					+ m + 'textLabel.style=' + option.style
+					+ m + 'textLabel.line=' + option.line;
 			}
 			else
 			{
