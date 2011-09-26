@@ -1,8 +1,13 @@
 package com.tuqianyi.action;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.logging.Level;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -11,6 +16,7 @@ import com.taobao.api.ApiException;
 import com.taobao.api.response.ItemUpdateResponse;
 import com.tuqianyi.db.DBUtils;
 import com.tuqianyi.db.Dao;
+import com.tuqianyi.image.ImageUtils;
 import com.tuqianyi.model.Item;
 import com.tuqianyi.taobao.TaobaoProxy;
 
@@ -62,12 +68,29 @@ public class RecoverAction extends ActionBase{
 				ItemUpdateResponse response;
 				if (data.length > 524288)
 				{
+					_log.info("recovering by picPath...");
 					oldPicUrl = oldPicUrl.replace("bao/uploaded", "imgextra");
 					_log.info("kongjian.url: " + oldPicUrl);
 					response = TaobaoProxy.updateMainPic(topSession, item.getNumIid(), oldPicUrl);
 				}
 				else
 				{
+					_log.info("recovering by data...");
+					response = TaobaoProxy.updateMainPic(topSession, item.getNumIid(), data);
+				}
+				
+				if (!response.isSuccess() && data.length > 500000)
+				{
+					_log.info("recovering by reduced data...");
+					do
+					{
+						ByteArrayInputStream in = new ByteArrayInputStream(data);
+						BufferedImage image = ImageIO.read(in);
+						ByteArrayOutputStream out = new ByteArrayOutputStream();							
+						ImageUtils.writeImage(image, "jpg", 0.8F, out);
+						data = out.toByteArray();
+						_log.info("reduced data.length: " + data.length);
+					} while (data.length > 500000);
 					response = TaobaoProxy.updateMainPic(topSession, item.getNumIid(), data);
 				}
 				
