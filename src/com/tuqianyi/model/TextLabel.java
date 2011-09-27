@@ -20,6 +20,7 @@ public class TextLabel extends Label{
 	private int angle;
 	private int style = Font.PLAIN;
 	private int line = LINE_NONE;
+	private int borderWidth;
 	
 	public void setText(String text) {
 		this.text = text;
@@ -127,5 +128,13 @@ public class TextLabel extends Label{
 
 	public int getLine() {
 		return line;
+	}
+
+	public void setBorderWidth(int borderWidth) {
+		this.borderWidth = borderWidth;
+	}
+
+	public int getBorderWidth() {
+		return borderWidth;
 	}
 }

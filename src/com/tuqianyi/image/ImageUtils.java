@@ -98,7 +98,7 @@ public class ImageUtils {
 			g.setPaint(color);
 			g.draw(path);
 		}
-		if (borderColor != null)
+		if (borderWidth > 0)
 		{
 			g.setColor(borderColor);
 			g.setStroke(new BasicStroke(borderWidth));

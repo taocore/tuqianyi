@@ -69,9 +69,11 @@ public class RecoverAction extends ActionBase{
 				if (data.length > 524288)
 				{
 					_log.info("recovering by picPath...");
-					oldPicUrl = oldPicUrl.replace("bao/uploaded", "imgextra");
+					String key = "bao/uploaded/";
+					int i = oldPicUrl.indexOf(key);
+					String picPath = oldPicUrl.substring(i + key.length());
 					_log.info("kongjian.url: " + oldPicUrl);
-					response = TaobaoProxy.updateMainPic(topSession, item.getNumIid(), oldPicUrl);
+					response = TaobaoProxy.updateMainPic(topSession, item.getNumIid(), picPath);
 					if (!response.isSuccess())
 					{
 						error(response);

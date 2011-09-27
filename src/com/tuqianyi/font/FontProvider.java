@@ -80,12 +80,12 @@ public class FontProvider {
 		return image;
 	}
 
-	public BufferedImage createText(String text, String font, String color, String backColor, int style, int line) throws IOException
+	public BufferedImage createText(String text, String font, String color, String backColor, int style, int line, int borderWidth) throws IOException
 	{
-		return createText(text, getFont(font), color, backColor, style, line);
+		return createText(text, getFont(font), color, backColor, style, line, borderWidth);
 	}
 	
-	public BufferedImage createText(String text, Font font, String color, String backColor, int style, int line) throws IOException
+	public BufferedImage createText(String text, Font font, String color, String backColor, int style, int line, int borderWidth) throws IOException
 	{
 		BufferedImage image = getCanvas();
 		font = font.deriveFont(style, 72);
@@ -104,7 +104,7 @@ public class FontProvider {
 		_log.info("text.size: " + width + ", " + height);
 		image = ImageUtils.resize(image, width, height);
 		image = ImageUtils.pressText(image, text, font, 
-				foreground, background, line, null, 0, 0, 0, 1F);
+				foreground, background, line, foreground, borderWidth, 0, 0, 1F);
 		return image;
 	}
 	
