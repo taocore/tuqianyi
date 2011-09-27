@@ -75,6 +75,10 @@
 					</td>
 					</tr>
 					<tr>
+					<td><label>边框粗细：</label></td>
+					<td><div id='border-width'></div></td>
+					</tr>
+					<tr>
 					<td><label>透明度：</label></td>
 					<td><div id='text-opacity'></div></td>
 					</tr>
@@ -108,6 +112,10 @@
 		$mainPic.width($(this).width()).height($(this).height()).data('loaded', true);
 	});
 	
+	$("#border-width").slider({
+		max: 10
+	});
+	
 	$("#opacity,#text-opacity").slider({
 		value: 100,
 		change: function(event, ui) {
@@ -129,6 +137,7 @@
 		option.background = $('#back-color').val();
 		option.style = $('#style input[name="style"]:checked').val();
 		option.line = $('#line input[name="line"]:checked').val();
+		option.borderWidth = $('#border-width').slider('value');
 		var src = "text.action?label.id=" + option.mid 
 				+ "&label.font=" + option.font 
 				+ '&label.text=' + encodeURIComponent(option.text)
@@ -136,6 +145,7 @@
 				+ '&label.background=' + encodeURIComponent(option.background)
 				+ '&label.style=' + option.style
 				+ '&label.line=' + option.line
+				+ '&label.borderWidth=' + option.borderWidth
 				+ '&t=' + new Date().getTime();
 		$label.addClass('loading');
 		$("img.t", $label).hide().attr('src', src);

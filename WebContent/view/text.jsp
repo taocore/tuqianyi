@@ -89,6 +89,7 @@
 					background: '',
 					style: <%=Font.PLAIN%>,
 					line: <%=TextLabel.LINE_NONE%>,
+					borderWidth: 0,
 					//aspectRatio: true, 
 					opacity: 100
 				}).mousedown(function(){
@@ -106,6 +107,7 @@
 					$('#line input[name="line"]').removeAttr('checked');
 					$('#line input[value="' + option.line + '"]').attr('checked', 'checked');
 					$('#line input').change();
+					$('#border-width').slider('value', option.borderWidth);
 					$('#text-opacity').slider('value', option.opacity);
 				}).trigger('mousedown');
 				
