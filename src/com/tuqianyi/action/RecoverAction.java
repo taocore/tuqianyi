@@ -92,16 +92,26 @@ public class RecoverAction extends ActionBase{
 				if (!response.isSuccess() && data.length > 500000)
 				{
 					_log.info("recovering by reduced data...");
-					do
+					float quality = 0.9F;
+					byte[] tmp = null;
+					ByteArrayInputStream in = new ByteArrayInputStream(data);
+					BufferedImage image = ImageIO.read(in);
+					for (int i = 0; i < 5; i++)
 					{
-						ByteArrayInputStream in = new ByteArrayInputStream(data);
-						BufferedImage image = ImageIO.read(in);
 						ByteArrayOutputStream out = new ByteArrayOutputStream();							
-						ImageUtils.writeImage(image, "jpg", 0.8F, out);
-						data = out.toByteArray();
-						_log.info("reduced data.length: " + data.length);
-					} while (data.length > 500000);
-					response = TaobaoProxy.updateMainPic(topSession, item.getNumIid(), data);
+						ImageUtils.writeImage(image, "jpg", quality, out);
+						tmp = out.toByteArray();
+						_log.info("reduced data.length: " + tmp.length);
+						if (tmp.length < 500000)
+						{
+							break;
+						}
+						quality = quality - 0.1F;
+					};
+					if (tmp != null)
+					{
+						response = TaobaoProxy.updateMainPic(topSession, item.getNumIid(), tmp);
+					}
 				}
 				
 				if (response.isSuccess())
