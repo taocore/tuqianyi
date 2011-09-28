@@ -157,16 +157,16 @@ public class MergeAction extends ActionBase {
 			}
 			BufferedImage image = ImageIO.read(new URL(picUrl));
 			String rootPath = FontsServlet.getRootPath();
+			if (frame != null)
+			{
+				image = addFrame(image, rootPath);
+			}
 			if (merges != null)
 			{
 				for (Merge m : merges)
 				{
 					image = mergeImage(image, m, item);
 				}
-			}
-			if (frame != null)
-			{
-				image = addFrame(image, rootPath);
 			}
 			ByteArrayOutputStream out2 = new ByteArrayOutputStream();
 			try
