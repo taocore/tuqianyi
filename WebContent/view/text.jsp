@@ -4,31 +4,18 @@
 <%@ page import="com.tuqianyi.model.TextLabel" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
+<%
+	final String[] fontKeys = {"simhei", "simkai", "simsun",
+	"msyh", "hkst", "mnjccy", "mnjdh", "mnxf"};
+	pageContext.setAttribute("fonts", fontKeys);
+%>
+
 <div id="text">
-	<div class="text-item" f='simhei'>
-		<img src="font.action?label.font=simhei" width="100%" height="100%" />
-	</div>
-	<div class="text-item" f='simkai'>
-		<img src="font.action?label.font=simkai" width="100%" height="100%" />
-	</div>
-	<div class="text-item" f='simsun'>
-		<img src="font.action?label.font=simsun" width="100%" height="100%" />
-	</div>
-	<div class="text-item" f='msyh'>
-		<img src="font.action?label.font=msyh" width="100%" height="100%" />
-	</div>
-	<div class="text-item" f='hkst'>
-		<img src="font.action?label.font=hkst" width="100%" height="100%" />
-	</div>
-	<div class="text-item" f='mnjccy'>
-		<img src="font.action?label.font=mnjccy" width="100%" height="100%" />
-	</div>
-	<div class="text-item" f='mnjdh'>
-		<img src="font.action?label.font=mnjdh" width="100%" height="100%" />
-	</div>
-	<div class="text-item" f='mnxf'>
-		<img src="font.action?label.font=mnxf" width="100%" height="100%" />
-	</div>
+	<s:iterator value="#attr.fonts">
+		<div class="text-item" f='<s:property/>' title="单击将标签添加到主图">
+			<img src="font.action?label.font=<s:property/>" width="100%" height="100%" />
+		</div>
+	</s:iterator>
 </div>
 
 <script type="text/javascript">
