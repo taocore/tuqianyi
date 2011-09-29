@@ -62,7 +62,8 @@ public class SessionFilter implements Filter, Constants{
 		_log.info("top parameters verified: " + verifiedTopParameters);
 		if (verifiedTopParameters)
 		{
-			_log.info("browser: " + ((HttpServletRequest)req).getHeader("user-agent"));
+			String browser = ((HttpServletRequest)req).getHeader("user-agent");
+			_log.info("browser: " + browser);
 			Map<String, String> topMap = TaobaoUtils.decodeTopParams(URLEncoder.encode(topParams, "GBK"));
 			_log.warning("parsed top params: " + topMap);
 			String userId = topMap.get("visitor_id");
@@ -104,6 +105,8 @@ public class SessionFilter implements Filter, Constants{
 				session.setAttribute(USER, nick);
 				session.setAttribute(USER_ID, userId);
 				session.setAttribute(VERSION, version);
+				session.setAttribute("query", queryString);
+				session.setAttribute("browser", browser);
 				try {
 					Dao.INSTANCE.updateUser(Long.parseLong(userId), nick, topSession);
 				} catch (Exception e) {
