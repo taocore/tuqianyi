@@ -80,7 +80,7 @@
 		</ul>
 	</div>
 	<div id="footer" class="span-24 last prepend-top quiet">
-		<a href="http://seller.taobao.com/fuwu/shopshow/shop_index.htm?page_id=95889&isv_id=62112477&page_rank=2&tab_type=1" target="_blank" class="quiet">稻壳科技</a>
+		<a href="http://seller.taobao.com/fuwu/shopshow/shop_index.htm?page_id=95889&isv_id=62112477&page_rank=2&tab_type=1" target="_blank" class="quiet">道和科技</a>
 	</div>
 	<div id="fixed-tools">
 		<div id="top"><img src="images/top.png" /></div>
