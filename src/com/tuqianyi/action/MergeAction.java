@@ -145,7 +145,7 @@ public class MergeAction extends ActionBase {
 		return null;
 	}
 	
-	private synchronized void merge(Item item, List<Merge> merges, String topSession, Connection conn)
+	private void merge(Item item, List<Merge> merges, String topSession, Connection conn)
 	{
 		try {
 			_log.info("merging..." + item.getNumIid());
@@ -270,7 +270,7 @@ public class MergeAction extends ActionBase {
 				String text = textLabel.getParseText(item.getPrice());
 				String color = textLabel.getColor();
 				String backColor = textLabel.getBackground();
-				return FontProvider.getInstance().createText(text, textLabel.getFont(), color, backColor, textLabel.getStyle(), textLabel.getLine(), textLabel.getBorderWidth());
+				return FontProvider.getInstance().createText(text, textLabel.getFont(), color, backColor, textLabel.getStyle(), textLabel.getLine(), textLabel.getBorderWidth(), textLabel.getAngle());
 			}
 			else
 			{
