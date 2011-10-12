@@ -79,6 +79,10 @@
 					<td><div id='border-width'></div></td>
 					</tr>
 					<tr>
+					<td><label>角度：</label></td>
+					<td><div id='angle'></div></td>
+					</tr>
+					<tr>
 					<td><label>透明度：</label></td>
 					<td><div id='text-opacity'></div></td>
 					</tr>
@@ -116,6 +120,12 @@
 		max: 10
 	});
 	
+	$("#angle").slider({
+		min:-90,
+		max: 90,
+		value: 0
+	});
+	
 	$("#opacity,#text-opacity").slider({
 		value: 100,
 		change: function(event, ui) {
@@ -138,6 +148,7 @@
 		option.style = $('#style input[name="style"]:checked').val();
 		option.line = $('#line input[name="line"]:checked').val();
 		option.borderWidth = $('#border-width').slider('value');
+		option.angle = $('#angle').slider('value');
 		var src = "text.action?label.id=" + option.mid 
 				+ "&label.font=" + option.font 
 				+ '&label.text=' + encodeURIComponent(option.text)
@@ -146,6 +157,7 @@
 				+ '&label.style=' + option.style
 				+ '&label.line=' + option.line
 				+ '&label.borderWidth=' + option.borderWidth
+				+ '&label.angle=' + option.angle
 				+ '&t=' + new Date().getTime();
 		$label.addClass('loading');
 		$("img.t", $label).hide().attr('src', src);
