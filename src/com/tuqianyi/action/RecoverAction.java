@@ -40,7 +40,15 @@ public class RecoverAction extends ActionBase{
 				if (item != null && item.isMerged())
 				{
 					Dao.INSTANCE.recovering(item.getNumIid(), conn);
-					recover(item, topSession, conn);
+					try
+					{
+						recover(item, topSession, conn);
+					}
+					catch (Exception e)
+					{
+						_log.log(Level.SEVERE, "", e);
+						Dao.INSTANCE.unmerged(item.getNumIid(), false, e.getMessage(), conn);
+					}
 				}
 				updateProgress(ids.length, ++processed);
 			}
@@ -55,9 +63,8 @@ public class RecoverAction extends ActionBase{
 		return SUCCESS;
 	}
 	
-	private static synchronized void recover(Item item, String topSession, Connection conn)
+	private static void recover(Item item, String topSession, Connection conn) throws Exception
 	{
-		try {
 			if (item.getOldPicUrl() != null)
 			{
 				String oldPicUrl = item.getOldPicUrl();
@@ -132,11 +139,6 @@ public class RecoverAction extends ActionBase{
 					}
 				}
 			}
-		} catch (ApiException e) {
-			_log.log(Level.SEVERE, "", e);
-		} catch (Exception e) {
-			_log.log(Level.SEVERE, "", e);
-		}
 	}
 
 	public void setNumIids(String numIids) {
