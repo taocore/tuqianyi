@@ -84,12 +84,12 @@ public class FontProvider {
 		return image;
 	}
 
-	public BufferedImage createText(String text, String font, String color, String backColor, int style, int line, int borderWidth) throws IOException
+	public BufferedImage createText(String text, String font, String color, String backColor, int style, int line, int borderWidth, int angle) throws IOException
 	{
-		return createText(text, getFont(font), color, backColor, style, line, borderWidth);
+		return createText(text, getFont(font), color, backColor, style, line, borderWidth, angle);
 	}
 	
-	public BufferedImage createText(String text, Font font, String color, String backColor, int style, int line, int borderWidth) throws IOException
+	public BufferedImage createText(String text, Font font, String color, String backColor, int style, int line, int borderWidth, int angle) throws IOException
 	{
 		BufferedImage image = getCanvas();
 		font = font.deriveFont(style, 72);
@@ -109,6 +109,14 @@ public class FontProvider {
 		image = ImageUtils.resize(image, width, height);
 		image = ImageUtils.pressText(image, text, font, 
 				foreground, background, line, foreground, borderWidth, 0, 0, 1F);
+		if (angle != 0)
+		{
+			if (angle < 0)
+			{
+				angle += 360;
+			}
+			image = ImageUtils.rotate(image, angle, null);
+		}
 		return image;
 	}
 	

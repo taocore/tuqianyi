@@ -246,4 +246,54 @@ public class ImageUtils {
         writer.write(writer.getDefaultImageMetadata(type, param), iioImage, param);
         writer.dispose();
 	}
+	
+	/** 
+     *   旋转   -   参数指定目标图旋转角度。 
+     *   @param   image BufferedImage 
+     *   @param   angle   int 
+     *   @param   hints   RenderingHints 
+     *   @return   BufferedImage 
+     */ 
+	public static BufferedImage rotate(
+			BufferedImage image, 
+			int angle, 
+			RenderingHints hints)   
+	{ 
+		int width = image.getWidth(); 
+		int height = image.getHeight(); 
+
+		BufferedImage dstImage = null; 
+		AffineTransform affineTransform = new AffineTransform(); 
+		if (angle == 180)
+		{
+			affineTransform.translate(width, height);
+			dstImage = new BufferedImage(width, height, image.getType()); 
+		}
+		else if (angle == 90)
+		{
+			affineTransform.translate(height, 0); 
+			dstImage = new BufferedImage(height, width, image.getType());
+		}
+		else if (angle == 270)
+		{ 
+			affineTransform.translate(0, width); 
+			dstImage = new BufferedImage(height, width, image.getType()); 
+		}
+		if (dstImage != null)
+		{
+			affineTransform.rotate(java.lang.Math.toRadians(angle));
+		}
+		else
+		{
+			double angleRadians = java.lang.Math.toRadians(angle);
+			int d = width + height;
+			int w = (int) (d * Math.abs(Math.cos(angleRadians)));
+			int h = (int) (d * Math.abs(Math.sin(angleRadians)));
+			dstImage = new  BufferedImage(w, h, image.getType());
+			affineTransform.rotate(angleRadians, w/2, h/2);
+			affineTransform.translate((w - width)/2, (h - height)/2);
+		}
+		AffineTransformOp affineTransformOp = new AffineTransformOp(affineTransform, hints); 
+		return affineTransformOp.filter(image, dstImage); 
+	}   
 }
