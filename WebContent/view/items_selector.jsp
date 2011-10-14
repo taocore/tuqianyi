@@ -317,7 +317,7 @@
 	
 	function updateStatus()
 	{
-		$dialog = $("#progress-dialog");
+		var $dialog = $("#progress-dialog");
 		var isOpen = $dialog.dialog( "isOpen" );
 		if (!isOpen)
 		{
