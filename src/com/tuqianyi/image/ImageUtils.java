@@ -74,13 +74,14 @@ public class ImageUtils {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 	              RenderingHints.VALUE_ANTIALIAS_ON);
 
+		if (backColor != null)
+		{
+			g.setColor(backColor);
+			g.fillRect(0, 0, width, height);
+		}
 		AttributedString as = new AttributedString(text);
 		as.addAttribute(TextAttribute.FONT, font);
 		as.addAttribute(TextAttribute.FOREGROUND, color);
-		if (backColor != null)
-		{
-			as.addAttribute(TextAttribute.BACKGROUND, backColor);
-		}
 		if (line == TextLabel.LINE_UNDER)
 		{
 			as.addAttribute(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
@@ -96,6 +97,7 @@ public class ImageUtils {
 			path.moveTo(0, 0);
 			path.lineTo(width, height);
 			g.setPaint(color);
+			g.setStroke(new BasicStroke(5));
 			g.draw(path);
 		}
 		if (borderWidth > 0)
