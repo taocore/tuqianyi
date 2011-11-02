@@ -6,7 +6,7 @@
 <script type="text/javascript">
 	var selectedItems = new Array();
 	var mid = 0;
-	var maxBatch = 50;
+	var maxBatch = 100;
 </script>
 
 <div>
@@ -128,6 +128,7 @@
 							return false;
 						}
 						showProgressDialog();
+						//showProcessingDialog();
 						var url = 'merge.action';
 						var q = 'numIids=' + numIids + merges;
 						$.ajax({
@@ -136,6 +137,7 @@
 							type: 'POST',
 							success: function(data){
 								hideProgressDialog();
+								//hideProcessingDialog();
 								if ((data == 'ok'))
 								{
 									$dialog.dialog('close');
