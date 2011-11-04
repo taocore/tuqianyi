@@ -97,6 +97,8 @@
 		<div id="ctabs" class="right">
 				<ul>
 					<li><a href="labels.action">标签</a></li>
+					<li><a href="custom_labels.action">自定义</a></li>
+					<li><a href="stuff_labels.action">素材</a></li>
 					<li><a href="view/text.jsp">文字</a></li>
 					<li><a href="frames.action">边框</a></li>
 				</ul>

@@ -13,22 +13,6 @@
 			</s:iterator>
 		</div>
 	</s:iterator>
-	<h3><a href="#">自定义标签</a></h3>
-	<div class="labels-panel">
-		<div>
-			<button id='add-label'>添加网络上的标签</button>
-			<a id='design' href='http://banner.alimama.com/ml?bannerSize=250x250' target='_blank' 
-				title='设计完成后请以PNG格式下载并上传到您的图片空间，然后将图片地址添加到此栏。'>设计</a>
-		</div>
-		<div id="custom-labels">
-			<s:include value="custom_labels.jsp" />
-		</div>
-	</div>
-</div>
-
-<div id="add-label-dialog" title='添加自定义标签'>
-	<p>请输入您所要添加的标签图的网络地址，建议使用<span style='font-weight:bold;color:blue;'>PNG</span>格式图片以支持透明并保持最佳质量</p>
-	<input id='label-address' type='text' class='text' value='http://'></input>
 </div>
 
 <script type="text/javascript">
@@ -100,54 +84,6 @@
 				$labelItem.remove();
 				$('#image-label-options').hide();
 			});
-	});
-	
-	$("#add-label, #design").button();
-	
-	$("#add-label-dialog").dialog({
-		autoOpen: false,
-		modal: true,
-		width: 350,
-		open : function() {
-			$('#label-address').focus().select();
-		},
-		buttons: {
-			确定: function() {
-				var labelUrl = $('#label-address').val();
-				if (!labelUrl)
-				{
-					alert('图片地址不能为空。');
-					return false;
-				}
-				if (labelUrl.indexOf('http://') != 0)
-				{
-					alert('错误的网络地址。');
-					return false;
-				}
-				showProcessingDialog();
-				var url = "add_label.action";
-				var q = "label.src=" + labelUrl;
-				$.ajax({
-					url: url,
-					data: q,
-					type: 'POST',
-					success: function(data) {
-						hideProcessingDialog();
-						$("#add-label-dialog").dialog( "close" );
-						$("#custom-labels").html(data);
-					}
-				});
-				return false;
-			},
-			取消: function() {
-				$(this).dialog( "close" );
-			}
-		}
-	});
-	
-	$('#add-label').click(function(){
-		$('#add-label-dialog').dialog('open');
-		return false;
 	});
 	
 </script>
