@@ -39,6 +39,8 @@ public class LabelCategory implements Serializable{
 	
 	public static final LabelCategory[] BUILDIN_CATEGORIES = {REMAI, BAOYOU, ZHENGPIN, XINPIN, TEJIA, DAZHE, JIERI, QITA};
 
+	public static final long CATEGORY_ID_STUFF = 10;
+	
 	private long categoryID;
 	private String name;
 	private List<ImageLabel> labels;
