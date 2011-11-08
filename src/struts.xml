@@ -25,6 +25,14 @@
             <result name="success">/view/labels.jsp</result>
         </action>
         
+        <action name="custom_labels" class="com.tuqianyi.action.CustomLabelsAction" method="execute">
+            <result name="success">/view/custom_labels_wrapper.jsp</result>
+        </action>
+        
+        <action name="stuff_labels" class="com.tuqianyi.action.StuffLabelsAction" method="execute">
+            <result name="success">/view/stuff_labels.jsp</result>
+        </action>
+        
         <action name="frames" class="com.tuqianyi.action.FramesAction" method="execute">
             <result name="success">/view/frames.jsp</result>
         </action>
