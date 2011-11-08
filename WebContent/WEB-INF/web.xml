@@ -33,6 +33,12 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
   
+  <servlet>
+  	<servlet-name>fontsServlet</servlet-name>
+  	<servlet-class>com.tuqianyi.servlet.FontsServlet</servlet-class>
+  	<load-on-startup>0</load-on-startup>
+  </servlet>
+  
   <resource-ref>
       <description>DB Connection</description>
       <res-ref-name>jdbc/tuqianyi</res-ref-name>
