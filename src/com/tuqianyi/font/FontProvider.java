@@ -45,6 +45,10 @@ public class FontProvider {
 			fonts.put("hdzb_46", createFontImage("hdzb_46", root + "fonts/hdzb_46.ttf"));
 			fonts.put("stliti", createFontImage("stliti", root + "fonts/stliti.ttf"));
 			fonts.put("jdjykd", createFontImage("jdjykd", root + "fonts/jdjykd.ttf"));
+			fonts.put("sszhjt", createFontImage("sszhjt", root + "fonts/sszhjt.ttf"));
+			fonts.put("ygyxsziti", createFontImage("ygyxsziti", root + "fonts/ygyxsziti.ttf"));
+			fonts.put("mnjzy", createFontImage("mnjzy", root + "fonts/mnjzy.ttf"));
+			fonts.put("stfajcgbxs", createFontImage("stfajcgbxs", root + "fonts/stfajcgbxs.ttf"));
 		} catch (FontFormatException e) {
 			_log.log(Level.SEVERE, "", e);
 		} catch (IOException e) {

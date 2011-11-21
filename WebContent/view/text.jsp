@@ -6,7 +6,8 @@
 
 <%
 	final String[] fontKeys = {"simhei", "simkai", "simsun",
-	"msyh", "hkst", "mnjccy", "mnjdh", "mnxf", "mshkj", "hdzb_46", "stliti", "jdjykd"};
+	"msyh", "hkst", "mnjccy", "mnjdh", "mnxf", "mshkj", "hdzb_46", "stliti", "jdjykd",
+	"sszhjt", "ygyxsziti", "mnjzy", "stfajcgbxs"};
 	pageContext.setAttribute("fonts", fontKeys);
 %>
 
