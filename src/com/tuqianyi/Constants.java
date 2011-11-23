@@ -9,6 +9,10 @@ public interface Constants {
 	String ITEM_CODE_2 = "service-0-23009-2";
 	String ITEM_CODE_3 = "service-0-23009-3";
 	
+	int ALLOWED_ITEMS_V1 = 300;
+	int ALLOWED_ITEMS_V2 = 800;
+	int ALLOWED_ITEMS_V3 = 2000;
+	
 	String ENTRY = "http://fuwu.taobao.com/using/app_ins_processor.htm?service_id=6371";//"http://container.open.taobao.com/container?appkey=" + APP_KEY;
 	
 	String ERROR_CODE_SESSION_NOT_EXISTS = "27";
@@ -30,6 +34,8 @@ public interface Constants {
 	String USER = "USER";
 	
 	String VERSION = "VERSION";
+	
+	String SUBSCRIPTION = "SUBSCRIPTION";
 	
 	String TOTAL = "total";
 	

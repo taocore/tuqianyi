@@ -17,6 +17,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.taobao.api.domain.ArticleUserSubscribe;
 import com.taobao.api.internal.util.TaobaoUtils;
 import com.taobao.api.response.ItemGetResponse;
 import com.tuqianyi.db.DBUtils;
@@ -72,9 +73,11 @@ public class SessionFilter implements Filter, Constants{
 			_log.info("session: " + topSession);
 			_log.info("itemCode: " + itemCode);
 			boolean v = false;
+			ArticleUserSubscribe sub = null;
 			if (itemCode != null)
 			{
-				v = TaobaoProxy.verifySubscription(nick, itemCode);
+				sub = TaobaoProxy.verifySubscription(nick, itemCode);
+				v = (sub != null);
 				_log.info("subscription verified: " + v);
 				if (version == null)
 				{
@@ -105,6 +108,7 @@ public class SessionFilter implements Filter, Constants{
 				session.setAttribute(USER, nick);
 				session.setAttribute(USER_ID, userId);
 				session.setAttribute(VERSION, version);
+				session.setAttribute(SUBSCRIPTION, sub);
 				session.setAttribute("query", queryString);
 				session.setAttribute("browser", browser);
 				try {

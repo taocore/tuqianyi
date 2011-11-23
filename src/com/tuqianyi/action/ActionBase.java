@@ -1,6 +1,8 @@
 package com.tuqianyi.action;
 
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -12,6 +14,7 @@ import com.tuqianyi.Constants;
 public class ActionBase extends ActionSupport implements Constants{
 	
 	static Logger _log = Logger.getLogger(ActionBase.class.getName());
+	static ExecutorService POOL = Executors.newFixedThreadPool(5);
 	
 	protected static void error(TaobaoResponse rsp)
 	{
@@ -21,6 +24,11 @@ public class ActionBase extends ActionSupport implements Constants{
 	protected static void error(Throwable e)
 	{
 		_log.log(Level.SEVERE, "", e);
+	}
+	
+	protected Map<String, Object> getSession()
+	{
+		return ActionContext.getContext().getSession();
 	}
 	
 	protected String getSessionId()
@@ -52,7 +60,7 @@ public class ActionBase extends ActionSupport implements Constants{
 		return (String)session.get(VERSION);
 	}
 	
-	public void updateProgress(int total, int processed)
+	public static void updateProgress(int total, int processed)
 	{
 		Map<String, Object> session = ActionContext.getContext().getSession();
 		if (session != null)
@@ -60,5 +68,45 @@ public class ActionBase extends ActionSupport implements Constants{
 			session.put(TOTAL, total);
 			session.put(PROCESSED, processed);
 		}
+	}
+	
+	public static synchronized void increaseProgress()
+	{
+		Map<String, Object> session = ActionContext.getContext().getSession();
+		int i = (Integer)session.get(PROCESSED);
+		if (session != null)
+		{
+			session.put(PROCESSED, ++i);
+		}
+	}
+	
+	public void executeInPool(Runnable task)
+	{
+		POOL.execute(task);
+	}
+	
+	public int getAllowedItems()
+	{
+		String version = getVersion();
+		_log.info("version: " + version);
+		return getAllowedItems(version);
+	}
+	
+	private int getAllowedItems(String version)
+	{
+		int allowedItemsCount = 10;
+		if ("1".equals(version))
+		{
+			allowedItemsCount = ALLOWED_ITEMS_V1;
+		}
+		else if ("2".equals(version))
+		{
+			allowedItemsCount = ALLOWED_ITEMS_V2;
+		}
+		else if ("3".equals(version))
+		{
+			allowedItemsCount = ALLOWED_ITEMS_V3;
+		};
+		return allowedItemsCount;
 	}
 }
