@@ -49,7 +49,7 @@
 <body oncontextmenu="return false;">
 <div class="container">
 	<div id="header" class="span-24 last append-bottom">
-		<div class="left">
+		<div class="left logo">
 		<img src="images/logo.png"></img>
 		<s:if test="%{#session.VERSION == 1}">
 	    	<span>初级版</span><span>支持300件宝贝</span>
@@ -74,9 +74,11 @@
 	</div>
 	<div id="tabs" class="span-24 last">
 		<ul>
-			<li><a href="items_selector.action">图签易</a></li>
+			<s:url action="items_selector" var="itemSelectorLink"></s:url>
+			<li><a href="${itemSelectorLink}">图签易</a></li>
 			<li><a href="faq.html">常见问题</a></li>
-			<li><a href="about.html">服务信息</a></li>
+			<s:url action="service_info" var="serviceInfoLink"></s:url>
+			<li><a href='${serviceInfoLink}'>服务信息</a></li>
 		</ul>
 	</div>
 	<div id="footer" class="span-24 last prepend-top quiet">
@@ -91,8 +93,8 @@
 <script "text/javascript"> 
 var jiathis_config = { 
 	url: "http://fuwu.taobao.com/serv/detail.htm?service_id=6371", 
-	title: "#淘宝##卖家#推荐#水印#工具【图签易】，迅速提升流量，一分钟上手。", 
-	summary:"淘宝 卖家 水印 工具 图签易 一分钟上手" 
+	title: "#淘宝##卖家#推荐#水印#工具【图签易】，迅速#提升流量#，一分钟上手。", 
+	summary:"淘宝 卖家 水印 流量 工具 图签易 一分钟上手" 
 } 
 </script> 
 <script src="http://v2.jiathis.com/code/jiathis_r.js?move=0"></script> 

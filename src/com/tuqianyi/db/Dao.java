@@ -214,6 +214,22 @@ public class Dao {
 		return null;
 	}
 	
+	public String recovering(String[] numIids, Connection conn) throws Exception
+	{
+		String sql = "update merged_item_t set action_c=?, status_c=? where num_iid_c=?";
+		PreparedStatement statement = conn.prepareStatement(sql);
+		statement.setShort(1, Item.ACTION_RECOVER);
+		statement.setShort(2, Item.STATUS_PENDING);
+		for (String numIid : numIids)
+		{
+			statement.setLong(3, Long.parseLong(numIid));
+			statement.addBatch();
+		}
+		statement.executeBatch();
+		statement.close();
+		return null;
+	}
+	
 	public String unmerged(long numIid, boolean ok, String msg, Connection conn) throws Exception
 	{
 		if (ok)
@@ -366,6 +382,27 @@ public class Dao {
 			statement = conn.prepareStatement(sql);
 			statement.setString(1, user);
 			statement.setShort(2, status);
+			rs = statement.executeQuery();
+			rs.next();
+			return rs.getLong(1);
+		}
+		finally
+		{
+			DBUtils.close(conn, statement, rs);
+		}
+	}
+	
+	public long getMergedItemsCount(String user) throws Exception
+	{
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		try
+		{
+			conn = DBUtils.getConnection();
+			String sql = "select count(*) from merged_item_t where owner_c=?";
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, user);
 			rs = statement.executeQuery();
 			rs.next();
 			return rs.getLong(1);
@@ -532,6 +569,30 @@ public class Dao {
 		{
 			DBUtils.close(conn, statement, null);
 		}
+	}
+	
+	public String getSessionByUser(String nick) throws NamingException, SQLException
+	{
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		try
+		{
+			conn = DBUtils.getConnection();
+			String sql = "select session_c from user_t where nick_c=?";
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, nick);
+			rs = statement.executeQuery();
+			if (rs.next())
+			{
+				return rs.getString("session_c");
+			}
+		}
+		finally
+		{
+			DBUtils.close(conn, statement, null);
+		}
+		return null;
 	}
 	
 	public List<User> getUsers() throws NamingException, SQLException

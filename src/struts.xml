@@ -77,6 +77,14 @@
         <action name="progress" class="com.tuqianyi.action.ProgressAction" method="execute">
             <result name="success">/view/progress.jsp</result>
         </action>
+        
+        <action name="service_info" class="com.tuqianyi.action.ServiceInfoAction" method="execute">
+            <result name="success">/view/service_info.jsp</result>
+        </action>
+        
+        <action name="sync" class="com.tuqianyi.action.SyncAction" method="execute">
+            <result name="success">/view/ok.jsp</result>
+        </action>
 
 	</package>
 
