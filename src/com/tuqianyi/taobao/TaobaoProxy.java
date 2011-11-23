@@ -208,7 +208,7 @@ public class TaobaoProxy implements Constants
 		return sign != null && sign.equals(s.toUpperCase());
     }
 	
-	public static boolean verifySubscription(String nick, String itemCode)
+	public static ArticleUserSubscribe verifySubscription(String nick, String itemCode)
     {
 		try {
 			List<ArticleUserSubscribe> subscriptions = getSubscription(nick, ARTICLE_CODE);
@@ -218,13 +218,13 @@ public class TaobaoProxy implements Constants
 				{
 					if (itemCode.equals(sub.getItemCode()) && new Date().before(sub.getDeadline()))
 					{
-						return true;
+						return sub;
 					}
 				}
 			}
 		} catch (ApiException e) {
 			_log.log(Level.SEVERE, "", e);
 		}
-		return false;
+		return null;
     }
 }
