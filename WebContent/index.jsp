@@ -70,7 +70,7 @@
 		</div>
 	</div>
 	<div class="span-23 last notice">
-		【公告】应用到期后，已贴标签的宝贝并不会自动恢复，如果到期后不想继续使用本应用，请在到期前自己恢复所有已贴标签的宝贝，否则，将永远无法恢复。
+		【公告】服务到期后，已贴标签的宝贝并不会自动恢复，如果到期后不想继续使用此服务，请在到期前自己恢复所有已贴标签的宝贝，否则，将永远无法恢复。
 	</div>
 	<div id="tabs" class="span-24 last">
 		<ul>
@@ -90,14 +90,15 @@
 	</div>
 </div>
 <!-- JiaThis Button BEGIN --> 
-<script "text/javascript"> 
+<script type="text/javascript"> 
 var jiathis_config = { 
 	url: "http://fuwu.taobao.com/serv/detail.htm?service_id=6371", 
 	title: "#淘宝##卖家#推荐#水印#工具【图签易】，迅速#提升流量#，一分钟上手。", 
 	summary:"淘宝 卖家 水印 流量 工具 图签易 一分钟上手" 
-} 
+};
 </script> 
 <script src="http://v2.jiathis.com/code/jiathis_r.js?move=0"></script> 
 <!-- JiaThis Button END -->
+<script type="text/javascript" src="http://toptrace.taobao.com/assets/getAppKey.js" topappkey="12184977"></script>
 </body>
 </html>
