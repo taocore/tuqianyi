@@ -10,10 +10,14 @@ public interface Constants {
 	String ITEM_CODE_3 = "service-0-23009-3";
 	
 	int ALLOWED_ITEMS_V1 = 300;
-	int ALLOWED_ITEMS_V2 = 800;
-	int ALLOWED_ITEMS_V3 = 2000;
+	int ALLOWED_ITEMS_V2 = 1000;
+	int ALLOWED_ITEMS_V3 = 2500;
 	
 	String ENTRY = "http://fuwu.taobao.com/using/app_ins_processor.htm?service_id=6371";//"http://container.open.taobao.com/container?appkey=" + APP_KEY;
+	
+	String DETAIL_PAGE = "http://fuwu.taobao.com/serv/detail.htm?service_id=6371";
+	
+	long ADMIN_ID = 62112477;
 	
 	String ERROR_CODE_SESSION_NOT_EXISTS = "27";
 	

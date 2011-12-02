@@ -1,8 +1,6 @@
 package com.tuqianyi.action;
 
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,7 +12,6 @@ import com.tuqianyi.Constants;
 public class ActionBase extends ActionSupport implements Constants{
 	
 	static Logger _log = Logger.getLogger(ActionBase.class.getName());
-	static ExecutorService POOL = Executors.newFixedThreadPool(5);
 	
 	protected static void error(TaobaoResponse rsp)
 	{
@@ -80,11 +77,6 @@ public class ActionBase extends ActionSupport implements Constants{
 		}
 	}
 	
-	public void executeInPool(Runnable task)
-	{
-		POOL.execute(task);
-	}
-	
 	public int getAllowedItems()
 	{
 		String version = getVersion();
@@ -108,5 +100,10 @@ public class ActionBase extends ActionSupport implements Constants{
 			allowedItemsCount = ALLOWED_ITEMS_V3;
 		};
 		return allowedItemsCount;
+	}
+	
+	public boolean isAdmin()
+	{
+		return getUserId() == ADMIN_ID;
 	}
 }
