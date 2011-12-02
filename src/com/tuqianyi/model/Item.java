@@ -12,7 +12,6 @@ public class Item extends com.taobao.api.domain.Item{
 	public static final short ACTION_MERGE = 0;
 	public static final short ACTION_RECOVER = 1;
 	
-	private String detailUrl;
 	private String oldPicUrl;
 	private short action = ACTION_MERGE;
 	private short status = STATUS_NORMAL;
@@ -31,14 +30,6 @@ public class Item extends com.taobao.api.domain.Item{
 		this.setPrice(item.getPrice());
 		this.setPicUrl(item.getPicUrl());
 		this.setDetailUrl(item.getDetailUrl());
-	}
-	
-	public void setDetailUrl(String detailUrl) {
-		this.detailUrl = detailUrl;
-	}
-
-	public String getDetailUrl() {
-		return detailUrl;
 	}
 
 	public void setOldPicUrl(String oldPicUrl) {
