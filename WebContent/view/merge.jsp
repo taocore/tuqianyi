@@ -16,6 +16,9 @@
 				<s:if test="%{item == null}">
 						<img src='images/unknown.jpg'/>
 				</s:if>
+				<s:elseif test="%{item.oldPicUrl != null}">
+    					<img src='<s:property value="item.oldPicUrl"/>_310x310.jpg'/>
+				</s:elseif>
 				<s:else>
 	    				<img src='<s:property value="item.picUrl"/>_310x310.jpg'/>
 				</s:else>
