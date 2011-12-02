@@ -46,6 +46,11 @@
             <result name="out_of_allowed_items">/view/over_items.jsp</result>
         </action>
         
+        <action name="change-label" class="com.tuqianyi.action.ChangeLabelAction" method="execute">
+            <result name="success">/view/ok.jsp</result>
+            <result name="out_of_allowed_items">/view/over_items.jsp</result>
+        </action>
+        
         <action name="recover" class="com.tuqianyi.action.RecoverAction" method="execute">
             <result name="success">/view/ok.jsp</result>
         </action>
@@ -84,6 +89,18 @@
         
         <action name="sync" class="com.tuqianyi.action.SyncAction" method="execute">
             <result name="success">/view/ok.jsp</result>
+        </action>
+        
+        <action name="op-by-categories" class="com.tuqianyi.action.OpByCategoriesAction" method="execute">
+            <result name="success">/view/op_by_categories.jsp</result>
+        </action>
+        
+        <action name="merging-category">
+            <result name="success">/view/merge.jsp</result>
+        </action>
+        
+        <action name="admin">
+            <result name="success">/view/manage/main.jsp</result>
         </action>
 
 	</package>

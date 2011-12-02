@@ -462,6 +462,8 @@ public class Dao {
 			item.setAction(rs.getShort("action_c"));
 			item.setErrorMsg(rs.getString("msg_c"));
 			item.setErrorCode(rs.getString("error_code_c"));
+			item.setTitle(rs.getString("title_c"));
+			item.setPrice(rs.getString("price_c"));
 			DBUtils.close(null, statement, rs);
 			return item;
 		}
