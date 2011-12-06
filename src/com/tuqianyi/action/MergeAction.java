@@ -100,7 +100,12 @@ public class MergeAction extends ActionBase {
 				continue;
 			}
 			try {
-				Dao.INSTANCE.merging(item, getUser(), item.getPicUrl(), -1L, conn);
+				String picUrl = item.getOldPicUrl();
+				if (picUrl == null)
+				{
+					picUrl = item.getPicUrl();
+				}
+				Dao.INSTANCE.merging(item, getUser(), picUrl, -1L, conn);
 			} catch (Exception e) {
 				_log.log(Level.SEVERE, "", e);
 			}

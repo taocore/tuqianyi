@@ -43,6 +43,13 @@ create table label_t(
     foreign key (owner_c) references user_t(nick_c) on delete cascade
 );
 
+create table recent_label_t(
+	user_id_c bigint,
+	label_id_c bigint,
+	time_c datetime,
+	primary key(user_id_c, label_id_c)
+);
+
 create table text_area_t(
 	text_area_id_c serial,
 	label_id_c bigint,

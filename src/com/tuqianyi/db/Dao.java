@@ -101,6 +101,7 @@ public class Dao {
 			statement = conn.prepareStatement(sql);
 			statement.setLong(1, label.getId());
 			statement.executeUpdate();
+			deleteRecentLabel(label, conn);
 		}
 		finally
 		{
@@ -624,5 +625,112 @@ public class Dao {
 		{
 			DBUtils.close(conn, statement, rs);
 		}
+	}
+	
+	public void addRecentLabel(ImageLabel label, long userId, Connection conn) throws Exception
+	{
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		try
+		{
+			String sql = "select * from recent_label_t where user_id_c=? and label_id_c=?";
+			statement = conn.prepareStatement(sql);
+			statement.setLong(1, userId);
+			statement.setLong(2, label.getId());
+			rs = statement.executeQuery();
+			if (rs.next())
+			{
+				sql = "update recent_label_t set time_c=? where user_id_c=? and label_id_c=?";
+				statement = conn.prepareStatement(sql);
+				statement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+				statement.setLong(2, userId);
+				statement.setLong(3, label.getId());
+				statement.executeUpdate();
+			}
+			else
+			{
+				sql = "insert into recent_label_t(user_id_c, label_id_c, time_c) values(?,?,?)";
+				statement = conn.prepareStatement(sql);
+				statement.setLong(1, userId);
+				statement.setLong(2, label.getId());
+				statement.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+				statement.executeUpdate();
+			}
+			
+			List<ImageLabel> labels = getRecentLabels(userId, conn);
+			int labelsCount = labels.size();
+			if (labelsCount > 14)
+			{
+				ImageLabel oldestLabel = labels.remove(labelsCount - 1);
+				deleteRecentLabel(oldestLabel, userId, conn);
+			}
+		}
+		finally
+		{
+			DBUtils.close(null, statement, rs);
+		}
+	}
+	
+	public List<ImageLabel> getRecentLabels(long userId, Connection conn) throws Exception
+	{
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		try
+		{
+			String sql = "select * from label_t l " +
+					"inner join recent_label_t r on l.label_id_c=r.label_id_c " +
+					"where r.user_id_c=? order by time_c desc";
+			statement = conn.prepareStatement(sql);
+			statement.setLong(1, userId);
+			rs = statement.executeQuery();
+			List<ImageLabel> labels = new ArrayList<ImageLabel>();
+			while (rs.next())
+			{
+				ImageLabel label = new ImageLabel();
+				label.setId(rs.getLong("label_id_c"));
+				label.setSrc(rs.getString("url_c"));
+				labels.add(label);
+			}
+			return labels;
+		}
+		finally
+		{
+			DBUtils.close(null, statement, rs);
+		}
+	}
+	
+	public String deleteRecentLabel(ImageLabel label, long userId, Connection conn) throws Exception
+	{
+		PreparedStatement statement = null;
+		try
+		{
+			String sql = "delete from recent_label_t where label_id_c=? and user_id_c=?";
+			statement = conn.prepareStatement(sql);
+			statement.setLong(1, label.getId());
+			statement.setLong(2, userId);
+			statement.executeUpdate();
+		}
+		finally
+		{
+			DBUtils.close(null, statement, null);
+		}
+		return null;
+	}
+	
+	public String deleteRecentLabel(ImageLabel label, Connection conn) throws Exception
+	{
+		PreparedStatement statement = null;
+		try
+		{
+			String sql = "delete from recent_label_t where label_id_c=?";
+			statement = conn.prepareStatement(sql);
+			statement.setLong(1, label.getId());
+			statement.executeUpdate();
+		}
+		finally
+		{
+			DBUtils.close(null, statement, null);
+		}
+		return null;
 	}
 }
