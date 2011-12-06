@@ -100,6 +100,7 @@
 		<div id="ctabs" class="right">
 				<ul>
 					<li><a href="labels.action">标签</a></li>
+					<li><a href="recent-labels.action">最近使用</a></li>
 					<li><a href="custom_labels.action">自定义</a></li>
 					<li><a href="stuff_labels.action">素材</a></li>
 					<li><a href="view/text.jsp">文字</a></li>
@@ -204,6 +205,11 @@
 			else
 			{
 				q = q + m + 'imageLabel.src=' + $("img", $this).attr("src");
+				var labelId = $this.data('id');
+				if (labelId)
+				{
+					q = q + m + 'imageLabel.id=' + labelId;
+				}
 			}
 		});
 		var frameSrc = $frame.attr('src');

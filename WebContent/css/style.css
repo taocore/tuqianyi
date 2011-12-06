@@ -1,10 +1,11 @@
 body {background-color:rgb(195, 217, 255);}
 #footer {text-align:center;}
 .separator {padding-left:10px;padding-right:10px;}
-#header>div.left>span:first-of-type {font-family: SimHei;font-size: 18pt;color: gray;}
-#header>div.left>span:nth-of-type(2) {margin-left: 5px;color: blue;}
+#header>div.left>span:first-of-type {font-family:SimHei;font-size:18pt;color:gray;}
+#header>div.left>span:nth-of-type(2) {margin-left: 5px;color:blue;}
 #nick {font-weight:bold;}
 #upgrade {font-weight:bold;}
+.logo {margin-top: 10px;}
 tbody tr.row-selected, tbody tr.row-selected td {background:rgb(255, 255, 150);}
 .ui-widget-content a {color:#06C;text-decoration:underline;}
 .selection {background:rgb(255, 255, 150);}
@@ -37,10 +38,11 @@ td.op {width:70px;}
 .label-tool {position:absolute;top:0;right:0;cursor:pointer;}
 #main-pic .ui-selected {border:1px solid blue;}
 #image-label-options,#text-label-options {height:190px;overflow:auto;}
-#text-options-form {height:130px;overflow:auto}
+#text-options-form {height:130px;overflow:auto;border:1px solid #DDD;}
 .button-bar {height:32px;}
 .border {border:1px solid lightblue;}
 #faq ul {list-style-type:none;width:550px;}
 #faq li {font-size:1.1em;font-weight:bold;color:blue;margin-bottom:5px;}
-#faq p {color:#666}
+#faq p {color:#666;}
 .red {color:red;}
+.strong{color:blue;font-weight:bold;}

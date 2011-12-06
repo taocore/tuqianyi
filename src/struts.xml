@@ -33,6 +33,10 @@
             <result name="success">/view/stuff_labels.jsp</result>
         </action>
         
+        <action name="recent-labels" class="com.tuqianyi.action.RecentLabelsAction" method="execute">
+            <result name="success">/view/recent_labels.jsp</result>
+        </action>
+        
         <action name="frames" class="com.tuqianyi.action.FramesAction" method="execute">
             <result name="success">/view/frames.jsp</result>
         </action>
