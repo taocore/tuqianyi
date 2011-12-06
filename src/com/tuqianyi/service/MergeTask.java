@@ -17,6 +17,7 @@ import javax.imageio.ImageIO;
 import com.taobao.api.ApiException;
 import com.taobao.api.response.ItemGetResponse;
 import com.taobao.api.response.ItemUpdateResponse;
+import com.tuqianyi.Constants;
 import com.tuqianyi.action.MergeAction;
 import com.tuqianyi.db.DBUtils;
 import com.tuqianyi.db.Dao;
@@ -53,6 +54,20 @@ public class MergeTask implements Runnable
 			conn = DBUtils.getConnection();
 			String topSession = (String)session.get(MergeAction.TOP_SESSION);
 			merge(item, frame, merges, topSession, conn);
+			String sUserId = (String)session.get(Constants.USER_ID);
+			long userId = Long.parseLong(sUserId);
+			for (Merge m : merges)
+			{
+				ImageLabel label = m.getImageLabel();
+				if (label != null && label.getId() > 0)
+				{
+					try {
+						Dao.INSTANCE.addRecentLabel(label, userId, conn);
+					} catch (Exception e) {
+						_log.log(Level.SEVERE, "", e);
+					}
+				}
+			}
 		}
 		catch (Exception e)
 		{
