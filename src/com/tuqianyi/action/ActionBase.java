@@ -11,7 +11,7 @@ import com.tuqianyi.Constants;
 
 public class ActionBase extends ActionSupport implements Constants{
 	
-	static Logger _log = Logger.getLogger(ActionBase.class.getName());
+	protected static Logger _log = Logger.getLogger(ActionBase.class.getName());
 	
 	protected static void error(TaobaoResponse rsp)
 	{
@@ -86,7 +86,7 @@ public class ActionBase extends ActionSupport implements Constants{
 	
 	private int getAllowedItems(String version)
 	{
-		int allowedItemsCount = 10;
+		int allowedItemsCount = ALLOWED_ITEMS_FREE;
 		if ("1".equals(version))
 		{
 			allowedItemsCount = ALLOWED_ITEMS_V1;
@@ -98,7 +98,7 @@ public class ActionBase extends ActionSupport implements Constants{
 		else if ("3".equals(version))
 		{
 			allowedItemsCount = ALLOWED_ITEMS_V3;
-		};
+		}
 		return allowedItemsCount;
 	}
 	

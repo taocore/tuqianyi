@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.tuqianyi.Constants" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -40,25 +41,29 @@
 				$(window).scrollTop($(document).height());
 			});
 			$("#old-edition").click(function(){
-				location.href = location.href.replace(location.host + '/tuqianyi3/', 'taocore.w44.mc-test.com/tuqianyi/Tuqianyi.html');
+				//location.href = location.href.replace(location.host + '/tuqianyi3/', 'taocore.w44.mc-test.com/tuqianyi/Tuqianyi.html');
+				location.href = location.href.replace('/tuqianyi3/', '/tuqianyi/Tuqianyi.html');
 			});
 		});
 	</script>     
 </head>
 
-<body oncontextmenu="return false;">
+<body <s:if test='!#session.admin'> oncontextmenu="return false;"</s:if>>
 <div class="container">
 	<div id="header" class="span-24 last append-bottom">
 		<div class="left logo">
 		<img src="images/logo.png"></img>
 		<s:if test="%{#session.VERSION == 1}">
-	    	<span>初级版</span><span>支持300件宝贝</span>
+	    	<span>初级版</span><span>支持<%=Constants.ALLOWED_ITEMS_V1%>件宝贝</span>
 		</s:if>
 		<s:elseif test="%{#session.VERSION == 2}">
-    		<span>中级版</span><span>支持800件宝贝</span>
+    		<span>中级版</span><span>支持<%=Constants.ALLOWED_ITEMS_V2%>件宝贝</span>
 		</s:elseif>
 		<s:elseif test="%{#session.VERSION == 3}">
-    		<span>高级版</span><span>支持2000件宝贝</span>
+    		<span>高级版</span><span>支持<%=Constants.ALLOWED_ITEMS_V3%>件宝贝</span>
+		</s:elseif>
+		<s:elseif test="%{#session.VERSION == 0}">
+    		<span>体验版</span><span>支持<%=Constants.ALLOWED_ITEMS_FREE%>件宝贝</span>
 		</s:elseif>
 		</div>
 		<div class="right" style="margin-top: 5px;">
@@ -69,9 +74,9 @@
 			<span><a target='_blank' href='http://amos.im.alisoft.com/msg.aw?v=2&uid=%E8%B5%A4%E7%8F%A0%E5%AD%90&site=cntaobao&s=1&charset=utf-8'><img border='0' src='http://amos.im.alisoft.com/online.aw?v=2&uid=%E8%B5%A4%E7%8F%A0%E5%AD%90&site=cntaobao&s=1&charset=utf-8' alt='联系作者' /></a></span>
 		</div>
 	</div>
-	<div class="span-23 last notice">
-		【公告】服务到期后，已贴标签的宝贝并不会自动恢复，如果到期后不想继续使用此服务，请在到期前自己恢复所有已贴标签的宝贝，否则，将永远无法恢复。
-	</div>
+	<!-- div class="span-23 last notice">
+		【公告】服务到期后，已贴标签的宝贝并不会自动恢复。如果到期后不想继续使用此服务，请在到期前自己恢复所有已贴标签的宝贝，否则，将永远无法恢复。
+	</div -->
 	<div id="tabs" class="span-24 last">
 		<ul>
 			<s:url action="items_selector" var="itemSelectorLink"></s:url>
@@ -79,6 +84,12 @@
 			<li><a href="faq.html">常见问题</a></li>
 			<s:url action="service_info" var="serviceInfoLink"></s:url>
 			<li><a href='${serviceInfoLink}'>服务信息</a></li>
+			<s:if test='#session.admin'>
+				<s:url action="op-by-categories" var="opByCategoriesLink"></s:url>
+				<li><a href="${opByCategoriesLink}">快速操作</a></li>
+				<s:url action="admin" var="adminLink"></s:url>
+				<li><a href="${adminLink}">Admin</a></li>
+			</s:if>
 		</ul>
 	</div>
 	<div id="footer" class="span-24 last prepend-top quiet">

@@ -8,10 +8,12 @@ public interface Constants {
 	String ITEM_CODE_1 = "service-0-23009-1";
 	String ITEM_CODE_2 = "service-0-23009-2";
 	String ITEM_CODE_3 = "service-0-23009-3";
+	String ITEM_CODE_FREE = "service-0-23009-4";
 	
 	int ALLOWED_ITEMS_V1 = 300;
 	int ALLOWED_ITEMS_V2 = 1000;
 	int ALLOWED_ITEMS_V3 = 2500;
+	int ALLOWED_ITEMS_FREE = 10;
 	
 	String ENTRY = "http://fuwu.taobao.com/using/app_ins_processor.htm?service_id=6371";//"http://container.open.taobao.com/container?appkey=" + APP_KEY;
 	
