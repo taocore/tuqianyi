@@ -12,15 +12,19 @@
 </div>
 
 <div>
-	您现在使用的是【图签易】<s:if test="%{#session.VERSION == 1}">
-	    	<span class='large strong'>初级版</span>，支持宝贝<span class='large strong'><s:property value="allowedItems"/></span>件
-		</s:if>
-		<s:elseif test="%{#session.VERSION == 2}">
-    		<span class='large strong'>中级版</span>，支持宝贝<span class='large strong'><s:property value="allowedItems"/></span>件
-		</s:elseif>
-		<s:elseif test="%{#session.VERSION == 3}">
-    		<span class='large strong'>高级版</span>，支持宝贝<span class='large strong'><s:property value="allowedItems"/></span>件
-		</s:elseif>。
+	您现在使用的是【图签易】
+	<s:if test="%{#session.VERSION == 0}">
+	   	<span class='large strong'>体验版</span>，支持宝贝<span class='large strong'><s:property value="allowedItems"/></span>件
+	</s:if>
+	<s:elseif test="%{#session.VERSION == 1}">
+	   	<span class='large strong'>初级版</span>，支持宝贝<span class='large strong'><s:property value="allowedItems"/></span>件
+	</s:elseif>
+	<s:elseif test="%{#session.VERSION == 2}">
+    	<span class='large strong'>中级版</span>，支持宝贝<span class='large strong'><s:property value="allowedItems"/></span>件
+	</s:elseif>
+	<s:elseif test="%{#session.VERSION == 3}">
+    	<span class='large strong'>高级版</span>，支持宝贝<span class='large strong'><s:property value="allowedItems"/></span>件
+	</s:elseif>。
 </div>
 <s:url action="sync" var="syncLink"></s:url>
 <div>
