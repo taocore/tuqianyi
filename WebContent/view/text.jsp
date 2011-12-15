@@ -5,9 +5,10 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <%
-	final String[] fontKeys = {"simhei", "simkai", "simsun",
-	"msyh", "hkst", "mnjccy", "mnjdh", "mnxf", "mshkj", "hdzb_46", "stliti", "jdjykd",
-	"sszhjt", "ygyxsziti", "mnjzy", "stfajcgbxs"};
+	final String[] fontKeys = {"simhei", "simkai", "hkst", "mnjccy", 
+		"mnjdh", "mnxf", "mshkj", "hdzb_46", "stliti", "jdjykd",
+		"sszhjt", "ygyxsziti", "mnjzy", "mnjpl", "jdzytj",  
+		"mnjhpt", "mnjjz"};
 	pageContext.setAttribute("fonts", fontKeys);
 %>
 
@@ -72,9 +73,9 @@
 				).data('option', {
 					mid: mergeId,
 					font: font,
-					text: '热卖',
-					color: '#ff0000',
-					background: '',
+					text: '<%=TextLabel.DEFAULT_TEXT%>',
+					color: '<%=TextLabel.DEFAULT_COLOR%>',
+					background: null,
 					style: <%=Font.PLAIN%>,
 					line: <%=TextLabel.LINE_NONE%>,
 					borderWidth: 0,

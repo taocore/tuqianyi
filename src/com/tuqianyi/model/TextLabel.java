@@ -5,6 +5,9 @@ import java.awt.Font;
 
 public class TextLabel extends Label{
 	
+	public static final String DEFAULT_TEXT = "狂销";
+	public static final String DEFAULT_COLOR = "#800080";
+	
 	private static final String TOKEN_PRICE = "#价格#";
 	public static final int LINE_NONE = 0;
 	public static final int LINE_UNDER = 1;
@@ -12,15 +15,18 @@ public class TextLabel extends Label{
 	public static final int LINE_SLASH = 3;
 	
 	private String id;
-	private String text = "热卖";
+	private String text = DEFAULT_TEXT;
 	private String font = "simhei";
 	private int fontSize = 18; //normal font size = 16px = 12pt
-	private String color = "#ff0000";
+	private String color = DEFAULT_COLOR;
 	private String background;
 	private int angle;
 	private int style = Font.PLAIN;
 	private int line = LINE_NONE;
 	private int borderWidth;
+	private int outLine;
+	private String outLineColor = "#ffffff";
+	private boolean isVertical;
 	
 	public void setText(String text) {
 		this.text = text;
@@ -111,6 +117,7 @@ public class TextLabel extends Label{
 	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("text: ").append(this.text);
+		sb.append("angle: ").append(this.angle);
 		return sb.toString();
 	}
 
@@ -136,5 +143,29 @@ public class TextLabel extends Label{
 
 	public int getBorderWidth() {
 		return borderWidth;
+	}
+
+	public void setOutLine(int outLine) {
+		this.outLine = outLine;
+	}
+
+	public int getOutLine() {
+		return outLine;
+	}
+
+	public void setOutLineColor(String outLineColor) {
+		this.outLineColor = outLineColor;
+	}
+
+	public String getOutLineColor() {
+		return outLineColor;
+	}
+
+	public void setVertical(boolean isVertical) {
+		this.isVertical = isVertical;
+	}
+
+	public boolean isVertical() {
+		return isVertical;
 	}
 }

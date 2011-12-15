@@ -14,6 +14,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.awt.image.ConvolveOp;
+import java.awt.image.Kernel;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.AttributedString;
@@ -58,13 +60,20 @@ public class ImageUtils {
 		g.drawImage(watermark, x, y, wideth_biao, height_biao, null);
 		// 水印文件结束
 		g.dispose();
+//		float[] kernelData2 = { 
+//          -0.125f, -0.125f, -0.125f,
+//	      -0.125f,2, -0.125f,
+//	      -0.125f,-0.125f, -0.125f };
+//	    Kernel kernel = new Kernel(3, 3, kernelData2);
+//	    ConvolveOp cOp = new ConvolveOp(kernel, ConvolveOp.EDGE_NO_OP, null);
+//	    result = cOp.filter(result, null);
 		return result;
 	}
 
 	public static BufferedImage pressText(BufferedImage image, String text, 
 			Font font, Color color, Color backColor, int line, 
 			Color borderColor, int borderWidth, 
-			int x, int y, float alpha) {
+			int x, int y, float alpha, boolean isVertical) {
 		Graphics2D g = image.createGraphics();
 		FontMetrics metrics = g.getFontMetrics(font);
 		int width = metrics.stringWidth(text);
@@ -81,7 +90,7 @@ public class ImageUtils {
 		}
 		AttributedString as = new AttributedString(text);
 		as.addAttribute(TextAttribute.FONT, font);
-		as.addAttribute(TextAttribute.FOREGROUND, color);
+//		as.addAttribute(TextAttribute.FOREGROUND, color);
 		if (line == TextLabel.LINE_UNDER)
 		{
 			as.addAttribute(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
@@ -90,7 +99,36 @@ public class ImageUtils {
 		{
 			as.addAttribute(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
 		}
-		g.drawString(as.getIterator(), 0, metrics.getAscent());
+		x = 0;
+		y = metrics.getAscent();
+//		int outline = 3;
+//		Color outlineColor = Color.white;
+//		if (!outlineColor.equals(color))
+//		{
+//			as.addAttribute(TextAttribute.FOREGROUND, outlineColor);
+//			g.drawString(as.getIterator(), x + outline, y);
+//			g.drawString(as.getIterator(), x - outline, y);
+//			g.drawString(as.getIterator(), x, y + outline);
+//			g.drawString(as.getIterator(), x, y - outline);
+//			g.drawString(as.getIterator(), x + outline, y + outline);
+//			g.drawString(as.getIterator(), x - outline, y + outline);
+//			g.drawString(as.getIterator(), x + outline, y - outline);
+//			g.drawString(as.getIterator(), x - outline, y - outline);
+//		}
+		as.addAttribute(TextAttribute.FOREGROUND, color);
+		if (isVertical)
+		{
+			for (int i = 0, n = text.length(); i < n; i++)
+			{
+				int h = metrics.getHeight();
+				int yy = y + h * n;
+				g.drawString(as.getIterator(), x, yy);
+			}
+		}
+		else
+		{
+			g.drawString(as.getIterator(), x, y);
+		}
 		if (line == TextLabel.LINE_SLASH)
 		{
 			GeneralPath path = new GeneralPath();

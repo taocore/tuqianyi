@@ -35,8 +35,8 @@ public class FontProvider {
 		try {
 			fonts.put("simhei", createFontImage("simhei", root + "fonts/simhei.ttf"));
 			fonts.put("simkai", createFontImage("simkai", root + "fonts/simkai.ttf"));
-			fonts.put("simsun", createFontImage("simsun", root + "fonts/simsun.ttc"));
-			fonts.put("msyh", createFontImage("msyh", root + "fonts/msyh.ttf"));
+//			fonts.put("simsun", createFontImage("simsun", root + "fonts/simsun.ttc"));
+//			fonts.put("msyh", createFontImage("msyh", root + "fonts/msyh.ttf"));
 			fonts.put("hkst", createFontImage("hkst", root + "fonts/hkst.ttf"));
 			fonts.put("mnjccy", createFontImage("mnjccy", root + "fonts/mnjccy.ttf"));
 			fonts.put("mnjdh", createFontImage("mnjdh", root + "fonts/mnjdh.ttf"));
@@ -48,7 +48,13 @@ public class FontProvider {
 			fonts.put("sszhjt", createFontImage("sszhjt", root + "fonts/sszhjt.ttf"));
 			fonts.put("ygyxsziti", createFontImage("ygyxsziti", root + "fonts/ygyxsziti.ttf"));
 			fonts.put("mnjzy", createFontImage("mnjzy", root + "fonts/mnjzy.ttf"));
-			fonts.put("stfajcgbxs", createFontImage("stfajcgbxs", root + "fonts/stfajcgbxs.ttf"));
+//			fonts.put("stfajcgbxs", createFontImage("stfajcgbxs", root + "fonts/stfajcgbxs.ttf"));
+			fonts.put("mnjpl", createFontImage("mnjpl", root + "fonts/mnjpl.ttf"));
+//			fonts.put("wdztggt", createFontImage("wdztggt", root + "fonts/wdztggt.ttf"));
+			fonts.put("jdzytj", createFontImage("jdzytj", root + "fonts/jdzytj.ttf"));
+			fonts.put("mnjhpt", createFontImage("mnjhpt", root + "fonts/mnjhpt.ttf"));
+//			fonts.put("jmgyftbz", createFontImage("jmgyftbz", root + "fonts/jmgyftbz.ttf"));
+			fonts.put("mnjjz", createFontImage("mnjjz", root + "fonts/mnjjz.ttf"));
 		} catch (FontFormatException e) {
 			_log.log(Level.SEVERE, "", e);
 		} catch (IOException e) {
@@ -67,7 +73,7 @@ public class FontProvider {
 		Font f = Font.createFont(Font.TRUETYPE_FONT, new File(path));
 		fontImage.setName(name);
 		fontImage.setFont(f);
-		fontImage.setImage(createTextLabel("热卖", f));
+		fontImage.setImage(createTextLabel(TextLabel.DEFAULT_TEXT, f));
 		return fontImage;
 	}
 	
@@ -84,16 +90,17 @@ public class FontProvider {
 		_log.info("text.size: " + width + ", " + height);
 		image = ImageUtils.resize(image, width, height);
 		image = ImageUtils.pressText(image, text, font, 
-				Color.blue, null, TextLabel.LINE_NONE, null, 0, 0, 0, 1F);
+				Color.blue, null, TextLabel.LINE_NONE, null, 0, 0, 0, 1F, false);
 		return image;
 	}
 
-	public BufferedImage createText(String text, String font, String color, String backColor, int style, int line, int borderWidth, int angle) throws IOException
+	public BufferedImage createText(String text, String font, String color, String backColor, int style, int line, int borderWidth, int angle, boolean isVertical) throws IOException
 	{
-		return createText(text, getFont(font), color, backColor, style, line, borderWidth, angle);
+		_log.info("iiiiiiiiiiiiiiiiisvertical:" + isVertical);
+		return createText(text, getFont(font), color, backColor, style, line, borderWidth, angle, isVertical);
 	}
 	
-	public BufferedImage createText(String text, Font font, String color, String backColor, int style, int line, int borderWidth, int angle) throws IOException
+	public BufferedImage createText(String text, Font font, String color, String backColor, int style, int line, int borderWidth, int angle, boolean isVertical) throws IOException
 	{
 		BufferedImage image = getCanvas();
 		font = font.deriveFont(style, 72);
@@ -112,7 +119,7 @@ public class FontProvider {
 		_log.info("text.size: " + width + ", " + height);
 		image = ImageUtils.resize(image, width, height);
 		image = ImageUtils.pressText(image, text, font, 
-				foreground, background, line, foreground, borderWidth, 0, 0, 1F);
+				foreground, background, line, foreground, borderWidth, 0, 0, 1F, isVertical);
 		if (angle != 0)
 		{
 			if (angle < 0)
