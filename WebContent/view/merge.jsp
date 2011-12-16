@@ -81,6 +81,15 @@
 					<td><label>边框粗细：</label></td>
 					<td><div id='border-width'></div></td>
 					</tr>
+					<s:if test='#session.admin'>
+						<tr>
+							<td><label>方向：</label></td>
+							<td><div id='direction'>
+								<input id='direct-h' name='vertical' type='radio' value='false' checked='checked' /><label for='direct-h'>横向</label>
+								<input id='direct-v' name='vertical' type='radio' value='true' /><label for='direct-v'>纵向</label>
+							</div></td>
+						</tr>
+					</s:if>
 					<tr>
 					<td><label>角度：</label></td>
 					<td><div id='angle'></div></td>
@@ -123,19 +132,25 @@
 	});
 	
 	$("#border-width").slider({
-		max: 10
+		max: 10,
+		change: function(event, ui) {
+			$(this).attr('title', ui.value);
+		}
 	});
 	
 	$("#angle").slider({
 		min:-90,
 		max: 90,
-		value: 0
+		value: 0,
+		change: function(event, ui) {
+			$(this).attr('title', ui.value);
+		}
 	});
 	
 	$("#opacity,#text-opacity").slider({
 		value: 100,
 		change: function(event, ui) {
-			var value = $(this).slider('value');
+			var value = ui.value;
 			var $label = $( "#main-pic .ui-selected" );
 			$label.data('option').opacity = value;
 			$label.css({
