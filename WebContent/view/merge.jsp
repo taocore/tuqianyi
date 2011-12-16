@@ -47,7 +47,7 @@
 					<tr>
 					<td><label>文字颜色：</label></td>
 					<td>
-					<input id='fore-color' type='text' class='color' value='#ff0000'/>
+					<input id='fore-color' type='text' class='color' value='<%=TextLabel.DEFAULT_COLOR%>'/>
 					</td>
 					</tr>
 					<tr>
