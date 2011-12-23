@@ -6,7 +6,7 @@ import java.awt.Font;
 public class TextLabel extends Label{
 	
 	public static final String DEFAULT_TEXT = "狂销";
-	public static final String DEFAULT_COLOR = "#800080";
+	public static final String DEFAULT_COLOR = "#ff0000";
 	
 	private static final String TOKEN_PRICE = "#价格#";
 	public static final int LINE_NONE = 0;
@@ -91,7 +91,9 @@ public class TextLabel extends Label{
 	
 	public String getParseText(String price)
 	{
-		String text = this.text.replace(TOKEN_PRICE, price);
+		float fPrice = Float.parseFloat(price);
+		String trunkPrice = String.valueOf(Math.round(fPrice));
+		String text = this.text.replace(TOKEN_PRICE, trunkPrice);
 		String[] tmp = text.split("#", 3);
 		if (tmp.length != 3)
 		{
@@ -101,7 +103,7 @@ public class TextLabel extends Label{
 		try
 		{
 			float off = Float.parseFloat(token);
-			double offPrice = Double.parseDouble(price) * off * 0.1;
+			double offPrice = fPrice * off * 0.1;
 			long round = Math.round(offPrice);
 			String s = String.valueOf(round);
 			text  = tmp[0] + s + tmp[2];
