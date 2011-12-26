@@ -74,9 +74,11 @@
 			<span><a target='_blank' href='http://amos.im.alisoft.com/msg.aw?v=2&uid=%E8%B5%A4%E7%8F%A0%E5%AD%90&site=cntaobao&s=1&charset=utf-8'><img border='0' src='http://amos.im.alisoft.com/online.aw?v=2&uid=%E8%B5%A4%E7%8F%A0%E5%AD%90&site=cntaobao&s=1&charset=utf-8' alt='联系作者' /></a></span>
 		</div>
 	</div>
-	<!-- div class="span-23 last notice">
-		【公告】服务到期后，已贴标签的宝贝并不会自动恢复。如果到期后不想继续使用此服务，请在到期前自己恢复所有已贴标签的宝贝，否则，将永远无法恢复。
-	</div -->
+	<s:if test="%{#session.VERSION == 0}">
+	<div class="span-23 last notice">
+		【体验版】升级到其他版本，请先到<a href='http://fuwu.taobao.com/serv/manage_service.htm?service_id=6371' target='_blank'>【管理图签易】</a>将体验版关闭，再到<a href='http://fuwu.taobao.com/serv/detail.htm?service_id=6371' target='_blank'>【订购页面】</a>订购。
+	</div>
+	</s:if>
 	<div id="tabs" class="span-24 last">
 		<ul>
 			<s:url action="items_selector" var="itemSelectorLink"></s:url>
