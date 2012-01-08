@@ -43,6 +43,12 @@ public class PagingResult<T> {
 	
 	public int getTotalPages()
 	{
-		return (int)(total / option.getLimit() + 1);
+//		return (int)(total / option.getLimit() + 1);
+		return getPageCount(total, option.getLimit());
+	}
+	
+	public static int getPageCount(long total, int pageSize)
+	{
+		return (int)(total / pageSize + (total % pageSize == 0 ? 0 : 1));
 	}
 }
