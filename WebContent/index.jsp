@@ -30,6 +30,14 @@
 
 	<script type="text/javascript">
 		$(function() {
+			$('#upgrade').click(function(){
+				var version = parseInt($('#header').attr('version'));
+				if (version == 0)
+				{
+					$('#info-upgrade').hide().fadeIn('slow');
+					return false;
+				}
+			});
 			$( "#tabs" ).tabs({
 				cache: true,
 				spinner: '载入中...'
@@ -50,7 +58,7 @@
 
 <body <s:if test='!#session.admin'> oncontextmenu="return false;"</s:if>>
 <div class="container">
-	<div id="header" class="span-24 last append-bottom">
+	<div id="header" class="span-24 last append-bottom" version="<s:property value='#session.VERSION'/>">
 		<div class="left logo">
 		<img src="images/logo.png"></img>
 		<s:if test="%{#session.VERSION == 1}">
@@ -74,11 +82,9 @@
 			<span><a target='_blank' href='http://amos.im.alisoft.com/msg.aw?v=2&uid=%E8%B5%A4%E7%8F%A0%E5%AD%90&site=cntaobao&s=1&charset=utf-8'><img border='0' src='http://amos.im.alisoft.com/online.aw?v=2&uid=%E8%B5%A4%E7%8F%A0%E5%AD%90&site=cntaobao&s=1&charset=utf-8' alt='联系作者' /></a></span>
 		</div>
 	</div>
-	<s:if test="%{#session.VERSION == 0}">
-	<div class="span-23 last notice">
-		【体验版】升级到其他版本，请先到<a href='http://fuwu.taobao.com/serv/manage_service.htm?service_id=6371' target='_blank'>【管理图签易】</a>将体验版关闭，再到<a href='http://fuwu.taobao.com/serv/detail.htm?service_id=6371' target='_blank'>【订购页面】</a>订购。
+	<div id='info-upgrade' class="span-23 last notice hide">
+		【体验版】升级到其他版本，请先到<a href='http://fuwu.taobao.com/serv/manage_service.htm?service_id=6371' target='_blank'>【图签易 - 管理】</a>将体验版关闭，再到<a href='http://fuwu.taobao.com/serv/detail.htm?service_id=6371' target='_blank'>【订购页面】</a>订购。
 	</div>
-	</s:if>
 	<div id="tabs" class="span-24 last">
 		<ul>
 			<s:url action="items_selector" var="itemSelectorLink"></s:url>
