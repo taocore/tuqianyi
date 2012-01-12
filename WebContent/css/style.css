@@ -6,6 +6,8 @@ body {background-color:rgb(195, 217, 255);}
 #nick {font-weight:bold;}
 #upgrade {font-weight:bold;}
 .logo {margin-top: 10px;}
+.toolbar {border:1px solid #ddd;padding:0 10px;margin-bottom:10px;}
+#batch-add-label,#batch-recover {margin-top:0.5em;}
 tbody tr.row-selected, tbody tr.row-selected td {background:rgb(255, 255, 150);}
 .ui-widget-content a {color:#06C;text-decoration:underline;}
 .selection {background:rgb(255, 255, 150);}
