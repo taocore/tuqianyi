@@ -28,7 +28,7 @@
 </div>
 <s:url action="sync" var="syncLink"></s:url>
 <div>
-	已贴标签宝贝<span class='large strong'><s:property value="mergedItemsCount"/></span>件。如有出入，请<span class='large'><a href="${syncLink}">点此同步</a></span>。
+	已贴标签宝贝<span class='large strong'><s:property value="mergedItemsCount"/></span>件。如有出入，请<span class='large'><a id='sync-link' href="${syncLink}">点此同步</a></span>。
 </div>
 <div>
 	此服务将于<span class='large strong'><s:date name="serviceEnd" format="yyyy年M月d日"/></span>（还有<span class='large strong'><s:property value="left"/></span>天）到期，如需继续使用，请及时续订。
@@ -39,4 +39,13 @@
 </body>
 <script type="text/javascript">
 $('#upgrade-link').button();
+$('#sync-link').click(function(){
+	$.ajax({
+		url: "${syncLink}",
+		success: function() {
+			$( "#tabs" ).tabs('load', 2);
+		}
+	});
+	return false;
+})
 </script>
