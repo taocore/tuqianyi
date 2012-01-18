@@ -48,7 +48,7 @@
 			$("#bottom").click(function(){
 				$(window).scrollTop($(document).height());
 			});
-			$("#old-edition").click(function(){
+			$(".old-edition").click(function(){
 				//location.href = location.href.replace(location.host + '/tuqianyi3/', 'taocore.w44.mc-test.com/tuqianyi/Tuqianyi.html');
 				location.href = location.href.replace('/tuqianyi3/', '/tuqianyi/Tuqianyi.html');
 			});
@@ -75,10 +75,10 @@
 		</s:elseif>
 		</div>
 		<div class="right" style="margin-top: 5px;">
-			<span style='color:red;'>IE6用户请使用旧版</span><span class="quiet separator">|</span>
+			<span style='color:red;'>IE6用户请使用<a class='old-edition' href="#">旧版</a>，搜狗浏览器请使用【高速模式】</span><span class="quiet separator">|</span>
 			您好，<span id="nick"><s:property value="#session.USER"/></span><span class="quiet separator">|</span>
 			<span id='upgrade'><a href="http://fuwu.taobao.com/using/serv_upgrade.htm?service_id=6371" target="_blank">升级</a></span><span class="quiet separator">|</span>
-			<span id='old-edition'><a href="#">返回旧版</a></span><span class="quiet separator">|</span>
+			<!-- span class='old-edition'><a href="#">返回旧版</a></span><span class="quiet separator">|</span-->
 			<span><a target='_blank' href='http://amos.im.alisoft.com/msg.aw?v=2&uid=%E8%B5%A4%E7%8F%A0%E5%AD%90&site=cntaobao&s=1&charset=utf-8'><img border='0' src='http://amos.im.alisoft.com/online.aw?v=2&uid=%E8%B5%A4%E7%8F%A0%E5%AD%90&site=cntaobao&s=1&charset=utf-8' alt='联系作者' /></a></span>
 		</div>
 	</div>
