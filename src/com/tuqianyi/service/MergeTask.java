@@ -268,7 +268,7 @@ public class MergeTask implements Runnable
 				String text = textLabel.getParseText(item.getPrice());
 				String color = textLabel.getColor();
 				String backColor = textLabel.getBackground();
-				return FontProvider.getInstance().createText(text, textLabel.getFont(), color, backColor, textLabel.getStyle(), textLabel.getLine(), textLabel.getBorderWidth(), textLabel.getAngle());
+				return FontProvider.getInstance().createText(text, textLabel.getFont(), color, backColor, textLabel.getStyle(), textLabel.getLine(), textLabel.getBorderWidth(), textLabel.getAngle(), textLabel.isVertical());
 			}
 			else
 			{

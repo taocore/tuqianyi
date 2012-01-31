@@ -1,6 +1,7 @@
 package com.tuqianyi.action;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang.time.DateUtils;
 
@@ -16,10 +17,24 @@ public class ServiceInfoAction extends ActionBase{
 	public String execute() throws Exception
 	{
 		mergedItemsCount = Dao.INSTANCE.getMergedItemsCount(getUser());
-		ArticleUserSubscribe sub = (ArticleUserSubscribe)ActionContext.getContext().getSession().get(SUBSCRIPTION);
-		if (sub != null)
+		List<ArticleUserSubscribe> subs = (List<ArticleUserSubscribe>)ActionContext.getContext().getSession().get(SUBSCRIPTION);
+		if (subs != null)
 		{
-			serviceEnd = sub.getDeadline();
+			for (ArticleUserSubscribe sub : subs)
+			{
+				Date deadline = sub.getDeadline();
+				if (serviceEnd == null)
+				{
+					serviceEnd = deadline;
+				}
+				else
+				{
+					if (deadline.after(serviceEnd))
+					{
+						serviceEnd = deadline;
+					}
+				}
+			}
 		}
 		return SUCCESS;
 	}

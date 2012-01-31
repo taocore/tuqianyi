@@ -1,11 +1,13 @@
 package com.tuqianyi.taobao;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang.time.DateUtils;
 
 import com.taobao.api.ApiException;
 import com.taobao.api.DefaultTaobaoClient;
@@ -20,6 +22,7 @@ import com.taobao.api.request.ItemsInventoryGetRequest;
 import com.taobao.api.request.ItemsOnsaleGetRequest;
 import com.taobao.api.request.SellercatsListGetRequest;
 import com.taobao.api.request.UserGetRequest;
+import com.taobao.api.request.VasOrderSearchRequest;
 import com.taobao.api.request.VasSubscribeGetRequest;
 import com.taobao.api.response.ItemGetResponse;
 import com.taobao.api.response.ItemUpdateListingResponse;
@@ -28,6 +31,7 @@ import com.taobao.api.response.ItemsInventoryGetResponse;
 import com.taobao.api.response.ItemsOnsaleGetResponse;
 import com.taobao.api.response.SellercatsListGetResponse;
 import com.taobao.api.response.UserGetResponse;
+import com.taobao.api.response.VasOrderSearchResponse;
 import com.taobao.api.response.VasSubscribeGetResponse;
 import com.tuqianyi.Constants;
 
@@ -130,7 +134,6 @@ public class TaobaoProxy implements Constants
 	{
 		SellercatsListGetRequest req = new SellercatsListGetRequest();
 		req.setNick(nick);
-		req.setFields("cid, parent_cid, name, pic_url, sort_order");
 
 		SellercatsListGetResponse rsp = taobaoClient.execute(req);
 		return rsp;
@@ -208,23 +211,20 @@ public class TaobaoProxy implements Constants
 		return sign != null && sign.equals(s.toUpperCase());
     }
 	
-	public static ArticleUserSubscribe verifySubscription(String nick, String itemCode)
+	public static VasOrderSearchResponse getOrders(String nick, String articleCode) throws ApiException
     {
+		TaobaoClient client = new DefaultTaobaoClient(getApiUrl(), getAppKey(), getAppSecret());
+		VasOrderSearchRequest req = new VasOrderSearchRequest();
+		req.setNick(nick);
+		req.setArticleCode(articleCode);
+		String[] patterns = {"yyyy-MM-dd"};
+		Date from = null;
 		try {
-			List<ArticleUserSubscribe> subscriptions = getSubscription(nick, ARTICLE_CODE);
-			if (subscriptions != null)
-			{
-				for (ArticleUserSubscribe sub : subscriptions)
-				{
-					if (itemCode.equals(sub.getItemCode()) && new Date().before(sub.getDeadline()))
-					{
-						return sub;
-					}
-				}
-			}
-		} catch (ApiException e) {
+			from = DateUtils.parseDate("2010-12-01", patterns);
+		} catch (ParseException e) {
 			_log.log(Level.SEVERE, "", e);
 		}
-		return null;
+		req.setStartCreated(from);
+		return client.execute(req);
     }
 }
