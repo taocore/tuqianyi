@@ -1,5 +1,7 @@
 package com.tuqianyi.model;
 
+import java.util.Date;
+
 
 public class Item extends com.taobao.api.domain.Item{
 	public static final short STATUS_ALL = -1;
@@ -17,6 +19,7 @@ public class Item extends com.taobao.api.domain.Item{
 	private short status = STATUS_NORMAL;
 	private String errorMsg;
 	private String errorCode;
+	private Date lastUpdate;
 	
 	public Item()
 	{
@@ -89,5 +92,13 @@ public class Item extends com.taobao.api.domain.Item{
 
 	public String getErrorCode() {
 		return errorCode;
+	}
+
+	public void setLastUpdate(Date lastUpdate) {
+		this.lastUpdate = lastUpdate;
+	}
+
+	public Date getLastUpdate() {
+		return lastUpdate;
 	}
 }

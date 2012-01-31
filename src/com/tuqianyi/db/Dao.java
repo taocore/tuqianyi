@@ -600,7 +600,7 @@ public class Dao {
 		return null;
 	}
 	
-	public List<User> getUsers() throws NamingException, SQLException
+	public long getUsers(int offset, int limit, List<User> users) throws NamingException, SQLException
 	{
 		Connection conn = null;
 		PreparedStatement statement = null;
@@ -608,10 +608,11 @@ public class Dao {
 		try
 		{
 			conn = DBUtils.getConnection();
-			String sql = "select * from user_t order by last_login_c limit 50 offset 0";
+			String sql = "select * from user_t order by last_login_c limit ? offset ?";
 			statement = conn.prepareStatement(sql);
+			statement.setInt(1, limit);
+			statement.setInt(2, offset);
 			rs = statement.executeQuery();
-			List<User> users = new ArrayList<User>();
 			while (rs.next())
 			{
 				User user = new User();
@@ -619,7 +620,7 @@ public class Dao {
 				user.setLastLogin(rs.getDate("last_login_c"));
 				users.add(user);
 			}
-			return users;
+			return 100;
 		}
 		finally
 		{
@@ -732,5 +733,44 @@ public class Dao {
 			DBUtils.close(null, statement, null);
 		}
 		return null;
+	}
+	
+	public long getHistoryItems(int offset, int limit, List<Item> container) throws Exception
+	{
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		try
+		{
+			conn = DBUtils.getConnection();
+			String sql = "SELECT num_iid_c, owner_c, last_update_c " +
+					"FROM merged_item_t m " +
+					"where last_update_c is not null " +
+					"group by owner_c " +
+					"order by last_update_c";
+			String countSql = "select count(num_iid_c) from (" + sql + ") t";
+			if (offset != -1 && limit != -1)
+			{
+				sql = sql + " limit " + limit + " offset " + offset;
+			}
+			statement = conn.prepareStatement(sql);
+			rs = statement.executeQuery();
+			while (rs.next())
+			{
+				Item item = new Item();
+				item.setNumIid(rs.getLong("num_iid_c"));
+				item.setNick(rs.getString("owner_c"));
+				item.setLastUpdate(rs.getDate("last_update_c"));
+				container.add(item);
+			}
+			statement = conn.prepareStatement(countSql);
+			rs = statement.executeQuery();
+			rs.next();
+			return rs.getLong(1);
+		}
+		finally
+		{
+			DBUtils.close(conn, statement, rs);
+		}
 	}
 }
