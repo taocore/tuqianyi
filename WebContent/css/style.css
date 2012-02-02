@@ -6,8 +6,9 @@ body {background-color:rgb(195, 217, 255);}
 #nick {font-weight:bold;}
 #upgrade {font-weight:bold;}
 .logo {margin-top: 10px;}
-.toolbar {border:1px solid #ddd;padding:0 10px;margin-bottom:10px;}
+.toolbar {border:1px solid #ddd;padding:0 10px;margin-bottom:10px;background:#f6f6f6;}
 #batch-add-label,#batch-recover {margin-top:0.5em;}
+#items-table {border:1px solid #ddd;}
 tbody tr.row-selected, tbody tr.row-selected td {background:rgb(255, 255, 150);}
 .ui-widget-content a {color:#06C;text-decoration:underline;}
 .selection {background:rgb(255, 255, 150);}
@@ -20,7 +21,7 @@ td.op {width:70px;}
 #options table tr td {background-color:white;}
 #options table tr td:first-child {width:70px;}
 #options input[type='text'] {width:150px;}
-#fixed-tools {position:fixed;right:50px;top:300px;cursor:pointer}
+#fixed-tools {position:fixed;right:50px;top:300px;cursor:pointer;}
 #top {margin-bottom:5px;}
 #merging-left {width:330px;}
 #image-table {display:table-cell;width:330px;height:330px;text-align:center;overflow:hidden;}
