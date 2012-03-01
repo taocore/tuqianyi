@@ -15,7 +15,14 @@ public class ActionBase extends ActionSupport implements Constants{
 	
 	protected static void error(TaobaoResponse rsp)
 	{
-		_log.info(rsp.getErrorCode() + " - " + rsp.getMsg() + " - " + rsp.getSubCode() + " - " + rsp.getSubMsg());
+		if (rsp != null)
+		{
+			_log.info(rsp.getErrorCode() + " - " + rsp.getMsg() + " - " + rsp.getSubCode() + " - " + rsp.getSubMsg());
+		}
+		else
+		{
+			_log.info("NULL RSP");
+		}
 	}
 	
 	protected static void error(Throwable e)
