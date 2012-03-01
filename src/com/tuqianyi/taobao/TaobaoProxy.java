@@ -13,6 +13,7 @@ import com.taobao.api.ApiException;
 import com.taobao.api.DefaultTaobaoClient;
 import com.taobao.api.FileItem;
 import com.taobao.api.TaobaoClient;
+import com.taobao.api.TaobaoResponse;
 import com.taobao.api.domain.ArticleUserSubscribe;
 import com.taobao.api.domain.User;
 import com.taobao.api.request.ItemGetRequest;
@@ -61,6 +62,11 @@ public class TaobaoProxy implements Constants
 	public static TaobaoClient getClient()
 	{
 		return taobaoClient;
+	}
+	
+	public static TaobaoClient createClient()
+	{
+		return new DefaultTaobaoClient(getApiUrl(), getAppKey(), getAppSecret());
 	}
 	
 	public static User getUser(String session) throws ApiException
@@ -146,7 +152,7 @@ public class TaobaoProxy implements Constants
 		FileItem image = new FileItem(numIid + ".jpg", data);
 		req.setImage(image);
 		 
-		ItemUpdateResponse rsp = taobaoClient.execute(req, sessionKey);
+		ItemUpdateResponse rsp = createClient().execute(req, sessionKey);
 		return rsp;
 	}
 	
@@ -162,7 +168,7 @@ public class TaobaoProxy implements Constants
 	
 	public static String updateListing(long numIid, long num, String sessionKey) throws ApiException
 	{
-		TaobaoClient client = new DefaultTaobaoClient(getApiUrl(), getAppKey(), getAppSecret());
+		TaobaoClient client = createClient();
 		ItemUpdateListingRequest req = new ItemUpdateListingRequest();
 		req.setNumIid(numIid);
 		req.setNum(num);
@@ -173,7 +179,7 @@ public class TaobaoProxy implements Constants
 	
 	public static String getUserInfo(String nick) throws ApiException
 	{
-		TaobaoClient client = new DefaultTaobaoClient(getApiUrl(), getAppKey(), getAppSecret());
+		TaobaoClient client = createClient();
 		UserGetRequest req = new UserGetRequest();
 		req.setNick(nick);
 		req.setFields("alipay_account");
@@ -184,7 +190,7 @@ public class TaobaoProxy implements Constants
 	
 	public static List<ArticleUserSubscribe> getSubscription(String nick, String articleCode) throws ApiException
 	{
-		TaobaoClient client = new DefaultTaobaoClient(getApiUrl(), getAppKey(), getAppSecret());
+		TaobaoClient client = createClient();
 		VasSubscribeGetRequest req = new VasSubscribeGetRequest();
 		req.setNick(nick);
 		req.setArticleCode(articleCode);
@@ -213,7 +219,7 @@ public class TaobaoProxy implements Constants
 	
 	public static VasOrderSearchResponse getOrders(String nick, String articleCode) throws ApiException
     {
-		TaobaoClient client = new DefaultTaobaoClient(getApiUrl(), getAppKey(), getAppSecret());
+		TaobaoClient client = createClient();
 		VasOrderSearchRequest req = new VasOrderSearchRequest();
 		req.setNick(nick);
 		req.setArticleCode(articleCode);
@@ -227,4 +233,10 @@ public class TaobaoProxy implements Constants
 		req.setStartCreated(from);
 		return client.execute(req);
     }
+	
+	public static String getError(TaobaoResponse response)
+	{
+		return response.getErrorCode() + " - " + response.getMsg() 
+			+ " - " + response.getSubCode() + " - " + response.getSubMsg();
+	}
 }
