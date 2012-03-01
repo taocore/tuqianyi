@@ -13,11 +13,12 @@ import javax.imageio.ImageIO;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
-import com.taobao.api.response.ItemUpdateResponse;
+import com.taobao.api.TaobaoResponse;
 import com.tuqianyi.db.DBUtils;
 import com.tuqianyi.db.Dao;
 import com.tuqianyi.image.ImageUtils;
 import com.tuqianyi.model.Item;
+import com.tuqianyi.service.RecoverService;
 import com.tuqianyi.taobao.TaobaoProxy;
 
 public class RecoverAction extends ActionBase{
@@ -109,7 +110,7 @@ public class RecoverAction extends ActionBase{
 					URL oldUrl = new URL(oldPicUrl);
 					byte[] data = IOUtils.toByteArray(oldUrl.openStream());
 					_log.info("data.length: " + data.length);
-					ItemUpdateResponse response;
+					TaobaoResponse response = null;
 					if (data.length > 524288)
 					{
 						_log.info("recovering by picPath...");
@@ -126,7 +127,7 @@ public class RecoverAction extends ActionBase{
 					else
 					{
 						_log.info("recovering by data...");
-						response = TaobaoProxy.updateMainPic(topSession, item.getNumIid(), data);
+						response = RecoverService.updateMainPic(topSession, item.getNumIid(), data);
 						if (!response.isSuccess())
 						{
 							error(response);
@@ -154,7 +155,7 @@ public class RecoverAction extends ActionBase{
 						};
 						if (tmp != null)
 						{
-							response = TaobaoProxy.updateMainPic(topSession, item.getNumIid(), tmp);
+							response = RecoverService.updateMainPic(topSession, item.getNumIid(), tmp);
 						}
 					}
 					
