@@ -102,6 +102,7 @@
 					</div>
 					<div class='button-bar'>
 						<button id='merge-changed' class='right'>确定修改</button>
+						<div class='clear'></div>
 					</div>
 				</fieldset>
 			</div>
