@@ -5,27 +5,10 @@
 			var labelId = $(this).attr('label_id');
 			var $label = $(".label", this);
 			var src = $label.attr('src');
-			$label.removeAttr('width').removeAttr('height');
-			var w = $label.width();
-			var h = $label.height();
-			$label.attr('width', '100%').attr('height', '100%');
-			var width;
-			var height;
-			if (w >= h)
-			{
-				width = 100;
-				height = h * 100 / w;
-			}
-			else
-			{
-				height = 100;
-				width = w * 100 / h;
-			}
-			var $labelItem = $("<div class='merge'><img src='" + src + "' width='100%' height='100%'/></div>");
+			var $labelItem = $("<div class='merge'><img src='" + src + "' width='100%'/></div>");
 			$labelItem.appendTo("#main-pic")
 			.css({
-				width: width,
-				height: height,
+				width: 100,
 				position: 'absolute',
 				top: 0,
 				left: 0
@@ -61,6 +44,10 @@
 				var opacity = $(this).data('option').opacity;
 				$('#opacity').slider('value', opacity);
 			}).trigger('mousedown');
+			$('img', $labelItem).load(function(){
+				$labelItem.height($(this).height());
+			});
+			
 			if (labelId)
 			{
 				$labelItem.data('id', labelId);
