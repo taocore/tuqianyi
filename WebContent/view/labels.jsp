@@ -2,15 +2,16 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-<div id="labels">
+<div id="labels" style='position:relative;'>
 	<s:iterator value="labelCategories">
 		<h3><a href="#"><s:property value="name" /></a></h3>
-		<div class="labels-panel">
+		<div class="labels-panel" style='padding:0;'>
 			<s:iterator value="labels">
 				<div class="label-item" title="单击将标签添加到主图" label_id='<s:property value="id"/>'>
 					<img class='label' src='<s:property value="src"/>' width="100%" height="100%" />
 				</div>
 			</s:iterator>
+			<div class='clear'></div>
 		</div>
 	</s:iterator>
 </div>
