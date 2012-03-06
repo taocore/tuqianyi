@@ -1,6 +1,7 @@
 package com.tuqianyi.service;
 
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.taobao.api.ApiException;
@@ -44,7 +45,12 @@ public class RecoverService {
 			uploadReq.setIsMajor(true);
 			FileItem image = new FileItem(numIid + ".jpg", data);
 			uploadReq.setImage(image);
+			taobaoClient = TaobaoProxy.createClient();
 			return taobaoClient.execute(uploadReq, sessionKey);
+		}
+		else
+		{
+			_log.info(TaobaoProxy.getError(rsp));
 		}
 		return rsp;
 	}
