@@ -20,6 +20,7 @@ public class TextAction extends ActionBase {
 	public String execute() throws Exception
 	{ 
 		_log.info("label: " + label);
+		//set encoding by Connector attribute URIEncoding="UTF-8" in server.xml 
 //		label.setText(new String(label.getText().getBytes("ISO-8859-1"),"UTF-8"));
 //		_log.info("fixed: " + label.getText());
 		try
