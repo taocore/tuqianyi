@@ -25,7 +25,7 @@ public class RecoverService {
 		req.setNumIid(numIid);
 		req.setFields("item_img");
 		TaobaoClient taobaoClient = TaobaoProxy.createClient();
-		ItemGetResponse rsp = taobaoClient.execute(req);
+		ItemGetResponse rsp = taobaoClient.execute(req, sessionKey);
 		if (rsp.isSuccess())
 		{
 			Item item = rsp.getItem();

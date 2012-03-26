@@ -78,15 +78,7 @@ public class TaobaoProxy implements Constants
 		req.setNumIid(numIid);
 		return createClient().execute(req, session);
 	}
-	
-	public static ItemGetResponse getItem(long numIid) throws ApiException
-	{
-		ItemGetRequest req = new ItemGetRequest();
-		req.setFields("num_iid");
-		req.setNumIid(numIid);
-		return createClient().execute(req);
-	}
-	
+		
 	public static ItemsOnsaleGetResponse getOnSales(String session, long pageNumber, long pageSize, String sellerCids, String keyWord) throws ApiException
 	{
 		ItemsOnsaleGetRequest req = new ItemsOnsaleGetRequest();

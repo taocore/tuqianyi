@@ -48,7 +48,7 @@ public class DBUtils
             {
                 statement.close();
             }
-            if(conn != null)
+            if(conn != null && !conn.isClosed())
             {
                 conn.close();
             }

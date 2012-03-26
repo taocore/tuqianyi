@@ -20,13 +20,14 @@ public class SyncAction extends ActionBase{
 	private void sync(String user)
 	{
 		_log.info("syncing");
+		String session = getSessionId();
 		Connection conn = null;
 		try {
 			conn = DBUtils.getConnection();
 			List<Long> ids = Dao.INSTANCE.getMergedItemIds(user, conn);
 			for (long id : ids)
 			{
-				ItemGetResponse response = TaobaoProxy.getItem(id);
+				ItemGetResponse response = TaobaoProxy.getItem(session, id);
 				if (!response.isSuccess())
 				{
 					_log.info(response.getErrorCode() + ": " +response.getMsg() + ", " + response.getSubCode() + ": " + response.getSubMsg());
