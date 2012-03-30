@@ -6,7 +6,6 @@
 <script type="text/javascript">
 	var selectedItems = [];
 	var mid = 0;
-	var maxBatch = 100;
 </script>
 
 <div id='items-selector'>

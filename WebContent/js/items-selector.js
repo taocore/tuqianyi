@@ -1,4 +1,5 @@
 (function() {
+	var maxBatch = 100;
 	var $content = $('#items-selector');
 	var $table = $('table', $content);
 		
