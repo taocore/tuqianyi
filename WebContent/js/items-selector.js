@@ -255,4 +255,6 @@
 		});
 		return false;
 	});
+	
+	window.utils.reload = reload;
 })();
