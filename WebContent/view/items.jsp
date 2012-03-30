@@ -95,7 +95,7 @@
 							alert("未改变原图。");
 							return false;
 						}
-						showProcessingDialog();
+						window.utils.showProcessingDialog();
 						var url = 'merge.action';
 						var q = 'numIids=' + currentItem + merges;
 						$.ajax({
@@ -103,7 +103,7 @@
 							data: q,
 							type: 'POST',
 							success: function(data){
-								hideProcessingDialog();
+								window.utils.hideProcessingDialog();
 								if ((data == 'ok'))
 								{
 									$dialog.dialog('close');
@@ -147,7 +147,7 @@
 							alert("未改变原图。");
 							return false;
 						}
-						showProcessingDialog();
+						window.utils.showProcessingDialog();
 						var url = 'change-label.action';
 						var q = 'numIids=' + currentItem + merges;
 						$.ajax({
@@ -155,7 +155,7 @@
 							data: q,
 							type: 'POST',
 							success: function(data){
-								hideProcessingDialog();
+								window.utils.hideProcessingDialog();
 								if ((data == 'ok'))
 								{
 									$dialog.dialog('close');
@@ -181,13 +181,13 @@
 	});
 	
 	$(".recover-link").click(function(){
-		showProcessingDialog();
+		window.utils.showProcessingDialog();
 		var numIid = $(this).closest("tr").attr("num_iid");
 		var url = "recover.action?numIids=" + numIid;
 		$.ajax({
 			url: url,
 			success: function(data) {
-				hideProcessingDialog();
+				window.utils.hideProcessingDialog();
 				reload();
 			}
 		});
