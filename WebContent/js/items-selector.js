@@ -18,7 +18,7 @@
 	
 	function clearSelection()
 	{
-		selectedItems = new Array();
+		selectedItems = [];
 		checkSelection();
 	}
 	
@@ -91,7 +91,7 @@
 		var isOpen = $dialog.dialog( "isOpen" );
 		if (!isOpen)
 		{
-			clearTimeout($dialog.data('timer'));
+			window.clearInterval($dialog.data('timer'));
 			return;
 		}
 		$.ajax({
@@ -100,14 +100,14 @@
 				  $dialog.html(data);
 			  }
 		});
-		var t = setTimeout(updateStatus, 2000);
-		$dialog.data('timer', t);
 	}
 	
 	function showProgressDialog()
 	{
-		$("#progress-dialog").dialog("open");
-		updateStatus();
+		var $dialog = $("#progress-dialog");
+		$dialog.dialog("open");
+		var t = window.setInterval(updateStatus, 2000);
+		$dialog.data('timer', t);
 	}
 	
 	function hideProgressDialog()
@@ -190,10 +190,9 @@
 		}
 		var $dialog = $("#label-dialog");
 		var numIids = selectedItems.join();
-		var q = "numIids=" + numIids;
 		$.ajax({
 			url: "merging.action",
-			data: q,
+			data: {numIids: numIids},
 			type: 'POST',
 			success: function(data) {
 				$dialog.html(data);
@@ -215,7 +214,7 @@
 							success: function(data){
 								hideProgressDialog();
 								//hideProcessingDialog();
-								if ((data == 'ok'))
+								if (data == 'ok')
 								{
 									$dialog.dialog('close');
 									reload();
