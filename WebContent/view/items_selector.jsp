@@ -146,6 +146,7 @@
 								else
 								{
 									alert(data);
+									$( "#tabs" ).tabs('select', 2);
 								}
 							}
 						});
