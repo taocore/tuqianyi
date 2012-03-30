@@ -6,9 +6,9 @@
 	response.setHeader("Cache-Control","no-cache"); 
 	response.setDateHeader("Expires", 0); 
 %>
-<div style='height:500px;'>
+<div id='service-info' style='height:500px;'>
 <div class="notice">
-	服务到期后，已贴标签的宝贝并不会自动恢复。
+	服务到期后，宝贝上的标签不会消失。如需恢复，请订购免费体验版。
 </div>
 
 <div>
@@ -36,10 +36,11 @@
 
 <div><a id='upgrade-link' href="http://fuwu.taobao.com/using/serv_upgrade.htm?service_id=6371" target='_blank'>升级</a></div>
 </div>
-</body>
+
 <script type="text/javascript">
 $('#upgrade-link').button();
 $('#sync-link').click(function(){
+	$("#service-info").html("<img src='images/loading.gif'/>");
 	$.ajax({
 		url: "${syncLink}",
 		success: function() {
