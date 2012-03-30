@@ -26,7 +26,8 @@
 	<script type="text/javascript" src="js/jquery-ui-timepicker-zh-CN.js"></script -->
 	<script type="text/javascript" src="js/jquery.pager.js" ></script>
 	<script type="text/javascript" src="js/jquery.colorPicker.js" ></script>
-	<script type="text/javascript" src="js/jquery.mytable.js" ></script> 
+	<script type="text/javascript" src="js/jquery.mytable.js" ></script>
+	<script type="text/javascript" src='js/index.js'></script> 
 </head>
 
 <body <s:if test='!#session.admin'> oncontextmenu="return false;"</s:if>>
@@ -86,7 +87,7 @@
 		<img src="images/processing.gif" alt="processing" /><span>正在处理，请稍等...</span>
 	</div>
 </div>
-<script type="text/javascript" src='js/index.js'></script>
+
 <!-- JiaThis Button BEGIN --> 
 <script type="text/javascript"> 
 var jiathis_config = { 
