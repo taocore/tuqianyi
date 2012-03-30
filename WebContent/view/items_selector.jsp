@@ -54,12 +54,6 @@
 	<s:include value="merge.jsp"/>
 </div>
 
-<div id="processing-dialog" title="正在处理...">
-	<div class="info">
-		<img src="images/processing.gif" alt="processing" /><span>正在处理，请稍等...</span>
-	</div>
-</div>
-
 <div id='progress-dialog' title='正在处理...'>
 </div>
 
@@ -79,14 +73,6 @@
 		},
 		close: function(event, ui){
 			$("#search-form select").show();
-		}
-	});
-	$("#processing-dialog").dialog({
-		autoOpen: false,
-		modal: true,
-		resizable: false,
-		open: function(event, ui) { 
-			$(".ui-dialog-titlebar-close").hide(); 
 		}
 	});
 	
@@ -300,16 +286,6 @@
 	{
 		var i = parseInt($("#items-table").attr("pageIndex"));
 		loadPage(i+1, callback);
-	}
-	
-	function showProcessingDialog()
-	{
-		$("#processing-dialog").dialog("open");
-	}
-	
-	function hideProcessingDialog()
-	{
-		$("#processing-dialog").dialog("close");
 	}
 	
 	function showProgressDialog()

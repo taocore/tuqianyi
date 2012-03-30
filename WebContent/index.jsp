@@ -81,6 +81,11 @@
 		<div id="bottom"><img src="images/bottom.png" /></div>
 	</div>
 </div>
+<div id="processing-dialog" title="正在处理...">
+	<div class="info">
+		<img src="images/processing.gif" alt="processing" /><span>正在处理，请稍等...</span>
+	</div>
+</div>
 <script type="text/javascript" src='js/index.js'></script>
 <!-- JiaThis Button BEGIN --> 
 <script type="text/javascript"> 
