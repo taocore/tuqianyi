@@ -3,7 +3,10 @@
 
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<table id="items-table" pages='<s:property value="pagingItems.totalPages" />' pageIndex='<s:property value="pagingItems.currentPage" />'>
+<table id="items-table" 
+		pageSize='<s:property value="option.limit" />'
+		pages='<s:property value="pagingItems.totalPages" />' 
+		pageIndex='<s:property value="pagingItems.currentPage" />'>
 	<thead>
 		<tr>
 			<th><input type="checkbox" class="selector"></input>
