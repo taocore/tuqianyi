@@ -204,20 +204,20 @@
 							alert("未改变原图。");
 							return false;
 						}
-						showProgressDialog();
-						//showProcessingDialog();
+//						showProgressDialog();
+						window.utils.showProcessingDialog();
 						var q = 'numIids=' + numIids + merges;
 						$.ajax({
 							url: 'merge.action',
 							data: q,
 							type: 'POST',
 							success: function(data){
-								hideProgressDialog();
-								//hideProcessingDialog();
+//								hideProgressDialog();
+								window.utils.hideProcessingDialog();
 								if (data == 'ok')
 								{
 									$dialog.dialog('close');
-									reload();
+									reload(clearSelection);
 								}
 								else
 								{

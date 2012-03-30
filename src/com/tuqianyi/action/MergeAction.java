@@ -16,6 +16,7 @@ import com.tuqianyi.db.Dao;
 import com.tuqianyi.model.ImageLabel;
 import com.tuqianyi.model.Item;
 import com.tuqianyi.model.Merge;
+import com.tuqianyi.service.MainService;
 import com.tuqianyi.service.MergeTask;
 import com.tuqianyi.taobao.TaobaoProxy;
 
@@ -116,6 +117,7 @@ public class MergeAction extends ActionBase {
 	{
 		int count = items.size();
 		updateProgress(count, 0);
+		MainService service = new MainService();
 		for (final Item item : items)
 		{
 			if (item.getStatus() != Item.STATUS_NORMAL)
@@ -124,8 +126,8 @@ public class MergeAction extends ActionBase {
 				continue;
 			}
 			Runnable task = new MergeTask(item, frame, merges, getSession());
-//			executeInPool(task);
-			task.run();
+			service.executeInPool(task);
+//			task.run();
 			increaseProgress();
 		}
 		return null;
