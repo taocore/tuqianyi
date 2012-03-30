@@ -96,11 +96,10 @@
 			return false;
 		}
 		var $dialog = $("#label-dialog");
-		var url = "merging.action";
 		var numIids = selectedItems.join();
 		var q = "numIids=" + numIids;
 		$.ajax({
-			url: url,
+			url: "merging.action",
 			data: q,
 			type: 'POST',
 			success: function(data) {
@@ -115,10 +114,9 @@
 						}
 						showProgressDialog();
 						//showProcessingDialog();
-						var url = 'merge.action';
 						var q = 'numIids=' + numIids + merges;
 						$.ajax({
-							url: url,
+							url: 'merge.action',
 							data: q,
 							type: 'POST',
 							success: function(data){
@@ -132,7 +130,6 @@
 								else
 								{
 									alert(data);
-									$( "#tabs" ).tabs('select', 2);
 								}
 							}
 						});
@@ -156,9 +153,9 @@
 			return false;
 		}
 		showProgressDialog();
-		var url = "recover.action?numIids=" + selectedItems.join();
 		$.ajax({
-			url: url,
+			url: "recover.action",
+			data: {numIids: selectedItems.join()},
 			success: function(data) {
 				hideProgressDialog();
 				reload(clearSelection);
@@ -259,9 +256,8 @@
         var limit = <s:property value="pagingItems.option.limit"/>;
         var offset = (number - 1) * limit;
         var q = $("#items").data('q') + "&option.limit=" + limit + "&option.offset=" + offset;
-        var url = "items.action";
 		$.ajax({
-			url: url,
+			url: "items.action",
 			data: q,
 			type: 'POST',
 			success: function(data) {
