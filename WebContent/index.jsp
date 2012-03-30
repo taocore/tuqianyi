@@ -27,33 +27,6 @@
 	<script type="text/javascript" src="js/jquery.pager.js" ></script>
 	<script type="text/javascript" src="js/jquery.colorPicker.js" ></script>
 	<script type="text/javascript" src="js/jquery.mytable.js" ></script> 
-
-	<script type="text/javascript">
-		$(function() {
-			$('#upgrade').click(function(){
-				var version = parseInt($('#header').attr('version'));
-				if (version == 0)
-				{
-					$('#info-upgrade').hide().fadeIn('slow');
-					return false;
-				}
-			});
-			$( "#tabs" ).tabs({
-				cache: true,
-				spinner: '载入中...'
-			});
-			$("#top").click(function(){
-				$(window).scrollTop(0);
-			});
-			$("#bottom").click(function(){
-				$(window).scrollTop($(document).height());
-			});
-			$(".old-edition").click(function(){
-				//location.href = location.href.replace(location.host + '/tuqianyi3/', 'taocore.w44.mc-test.com/tuqianyi/Tuqianyi.html');
-				location.href = location.href.replace('/tuqianyi3/', '/tuqianyi/Tuqianyi.html');
-			});
-		});
-	</script>     
 </head>
 
 <body <s:if test='!#session.admin'> oncontextmenu="return false;"</s:if>>
@@ -94,7 +67,7 @@
 			<li><a href='${serviceInfoLink}'>服务信息</a></li>
 			<s:if test='#session.admin'>
 				<s:url action="op-by-categories" var="opByCategoriesLink"></s:url>
-				<li><a href="${opByCategoriesLink}">快速操作</a></li>
+				<li><a href="${opByCategoriesLink}">快捷操作</a></li>
 				<s:url action="admin" var="adminLink"></s:url>
 				<li><a href="${adminLink}">Admin</a></li>
 			</s:if>
@@ -108,6 +81,7 @@
 		<div id="bottom"><img src="images/bottom.png" /></div>
 	</div>
 </div>
+<script type="text/javascript" src='js/index.js'></script>
 <!-- JiaThis Button BEGIN --> 
 <script type="text/javascript"> 
 var jiathis_config = { 
