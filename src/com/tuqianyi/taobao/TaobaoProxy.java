@@ -115,7 +115,7 @@ public class TaobaoProxy implements Constants
 		}
 		req.setOrderBy("list_time:desc");
 		req.setPageNo(pageNumber);//default 1
-		req.setPageSize(pageSize);// default 200
+		req.setPageSize(pageSize);// default 40, max 200
 		 
 		ItemsInventoryGetResponse rsp = createClient().execute(req, sessionKey);
 		return rsp;

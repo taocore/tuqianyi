@@ -50,6 +50,11 @@
             <result name="out_of_allowed_items">/view/over_items.jsp</result>
         </action>
         
+        <action name="merge-by-categories" class="com.tuqianyi.action.MergeByCategoriesAction" method="execute">
+            <result name="success">/view/ok.jsp</result>
+            <result name="out_of_allowed_items">/view/over_items.jsp</result>
+        </action>
+        
         <action name="change-label" class="com.tuqianyi.action.ChangeLabelAction" method="execute">
             <result name="success">/view/ok.jsp</result>
             <result name="out_of_allowed_items">/view/over_items.jsp</result>
@@ -103,8 +108,24 @@
             <result name="success">/view/merge.jsp</result>
         </action>
         
-        <action name="admin">
-            <result name="success">/view/manage/main.jsp</result>
+        <action name="admin" class="com.tuqianyi.action.admin.UsersAction" method="execute">
+            <result name="success">/view/manage/users-wrapper.jsp</result>
+        </action>
+        
+        <action name="users" class="com.tuqianyi.action.admin.UsersAction" method="execute">
+            <result name="success">/view/manage/users.jsp</result>
+        </action>
+        
+        <action name="orders" class="com.tuqianyi.action.admin.OrdersAction" method="execute">
+            <result name="success">/view/manage/orders.jsp</result>
+        </action>
+        
+        <action name="user-items-wrapper" class="com.tuqianyi.action.admin.UserItemsAction" method="execute">
+            <result name="success">/view/manage/items-wrapper.jsp</result>
+        </action>
+        
+        <action name="user-items" class="com.tuqianyi.action.admin.UserItemsAction" method="execute">
+            <result name="success">/view/manage/items.jsp</result>
         </action>
 
 	</package>
