@@ -23,7 +23,7 @@
 					success: function(data) {
 						if (data == 'ok')
 						{
-							hideProcessingDialog();
+							window.utils.hideProcessingDialog();
 							$label.closest('.custom-label-item').remove();
 						}
 						else

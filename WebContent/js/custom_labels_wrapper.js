@@ -19,7 +19,7 @@
 					alert('错误的网络地址。');
 					return false;
 				}
-				showProcessingDialog();
+				window.utils.showProcessingDialog();
 				var url = "add_label.action";
 				var q = "label.src=" + labelUrl;
 				$.ajax({
@@ -27,7 +27,7 @@
 					data: q,
 					type: 'POST',
 					success: function(data) {
-						hideProcessingDialog();
+						window.utils.hideProcessingDialog();
 						$("#add-label-dialog").dialog( "close" );
 						$("#custom-labels").html(data);
 					}
