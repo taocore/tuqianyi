@@ -132,7 +132,7 @@ public class MergeAction extends ActionBase {
 		}
 		return null;
 	}
-
+	
 	private boolean checkItemsCount(int processingItemsCount)
 	{
 		long processedItemsCount;

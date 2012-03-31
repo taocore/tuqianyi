@@ -19,13 +19,13 @@
 					'margin-left:20px;'
 				</s:if>
 				<s:else>'margin-left:10px;'</s:else>>
-				<input type='checkbox'></input>
 				<s:if test="%{parentCid != 0}">└</s:if>
+				<input type='checkbox'></input>
 				<s:property value="name" />
 			</div>
 		</s:iterator>
 	</div>
 	<button id='merge-by-category' style="margin: 0.5em 0;">贴标签</button>
-	<button id='recover-by-category' style="margin: 0.5em 0;">恢复</button>
+	<!-- button id='recover-by-category' style="margin: 0.5em 0;">恢复</button -->
 </form>
 <script type="text/javascript" src='js/op_by_categories.js'></script>

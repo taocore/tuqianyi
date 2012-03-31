@@ -44,7 +44,7 @@ $('#sync-link').click(function(){
 	$.ajax({
 		url: "${syncLink}",
 		success: function() {
-			$( "#tabs" ).tabs('load', 2);
+			$( "#tabs" ).tabs('load', 3);
 		}
 	});
 	return false;

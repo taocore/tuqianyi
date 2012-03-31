@@ -1,11 +1,12 @@
 (function() {
-	function getFilterParameters()
+	var $form = $('#categories-form');
+	
+	function getFilter()
 	{
-		var $form = $("#categories-form");
 		var saleStatus = $("select[name='filter.saleStatus']", $form).val();
 		var banner = $("select[name='filter.saleStatus'] option:selected", $form).attr('banner');
 		var cids = null;
-		var checkboxes = $("div[name='filter.sellerCids'] input[checked='checked']", $form);
+		var checkboxes = $("div[name='filter.sellerCids'] input:checked", $form);
 		if (checkboxes)
 		{
 			cids = [];
@@ -16,16 +17,21 @@
 		
 		var q = 'filter.saleStatus=' + saleStatus;
 		q += '&filter.banner=' + banner;
-		if (cids)
+		if (cids && cids.length > 0)
 		{
 			q += '&filter.sellerCids=' + cids;
+		}
+		else
+		{
+			alert('未选择分类。');
+			return false;
 		}
 		return q;
 	}
 	
-	$('#categories-form button').button();
+	$('button', $form).button();
 	
-	$('input[type="checkbox"]').change(function(){
+	$('input[type="checkbox"]', $form).change(function(){
 		var cid = $(this).parent().attr('value');
 		var pid = $(this).parent().attr('parent');
 		if (parseInt(pid) == 0)
@@ -42,23 +48,15 @@
 		}
 	});
 
-	$("#merge-by-category").click(function(){
-		try
+	$("#merge-by-category", $form).click(function(){
+		var filter = getFilter();
+		if (!filter)
 		{
-			alert(getFilterParameters());
+			return false;
 		}
-		catch (error)
-		{
-			alert(error);
-		}
-		return false;
 		var $dialog = $("#label-dialog");
-		var url = "merging-category.action";
-		var numIids = selectedItems.join();
-		var q = "numIids=" + numIids;
 		$.ajax({
-			url: url,
-			data: q,
+			url: "merging.action",
 			type: 'POST',
 			success: function(data) {
 				$dialog.html(data);
@@ -70,21 +68,20 @@
 							alert("未改变原图。");
 							return false;
 						}
-						showProgressDialog();
-						//showProcessingDialog();
-						var url = 'merge.action';
-						var q = 'numIids=' + numIids + merges;
+//						showProgressDialog();
+						window.utils.showProcessingDialog();
+						var q = filter + merges;
 						$.ajax({
-							url: url,
+							url: 'merge-by-categories.action',
 							data: q,
 							type: 'POST',
 							success: function(data){
-								hideProgressDialog();
-								//hideProcessingDialog();
-								if ((data == 'ok'))
+//								hideProgressDialog();
+								window.utils.hideProcessingDialog();
+								if (data == 'ok')
 								{
 									$dialog.dialog('close');
-									reload();
+									alert("已加入处理队列。");
 								}
 								else
 								{
@@ -105,16 +102,16 @@
 		return false;
 	});
 
-	$("#recover-by-category").click(function(){
-		showProgressDialog();
-		var url = "recover.action?numIids=" + selectedItems.join();
-		$.ajax({
-			url: url,
-			success: function(data) {
-				hideProgressDialog();
-				reload(clearSelection);
-			}
-		});
-		return false;
-	});
+//	$("#recover-by-category", $form).click(function(){
+//		showProgressDialog();
+//		var url = "recover.action?numIids=" + selectedItems.join();
+//		$.ajax({
+//			url: url,
+//			success: function(data) {
+//				hideProgressDialog();
+//				alert("完成。");
+//			}
+//		});
+//		return false;
+//	});
 })();

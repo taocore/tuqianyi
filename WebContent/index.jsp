@@ -63,12 +63,12 @@
 		<ul>
 			<s:url action="items_selector" var="itemSelectorLink"></s:url>
 			<li><a href="${itemSelectorLink}">图签易</a></li>
+			<s:url action="op-by-categories" var="opByCategoriesLink"></s:url>
+			<li><a href="${opByCategoriesLink}">快捷操作</a></li>
 			<li><a href="faq.html">常见问题</a></li>
 			<s:url action="service_info" var="serviceInfoLink"></s:url>
 			<li><a href='${serviceInfoLink}'>服务信息</a></li>
 			<s:if test='#session.admin'>
-				<s:url action="op-by-categories" var="opByCategoriesLink"></s:url>
-				<li><a href="${opByCategoriesLink}">快捷操作</a></li>
 				<s:url action="admin" var="adminLink"></s:url>
 				<li><a href="${adminLink}">Admin</a></li>
 			</s:if>

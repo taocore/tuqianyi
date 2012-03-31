@@ -8,6 +8,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.taobao.api.TaobaoResponse;
 import com.tuqianyi.Constants;
+import com.tuqianyi.service.MergeService;
 
 public class ActionBase extends ActionSupport implements Constants{
 	
@@ -88,25 +89,7 @@ public class ActionBase extends ActionSupport implements Constants{
 	{
 		String version = getVersion();
 		_log.info("version: " + version);
-		return getAllowedItems(version);
-	}
-	
-	private int getAllowedItems(String version)
-	{
-		int allowedItemsCount = ALLOWED_ITEMS_FREE;
-		if ("1".equals(version))
-		{
-			allowedItemsCount = ALLOWED_ITEMS_V1;
-		}
-		else if ("2".equals(version))
-		{
-			allowedItemsCount = ALLOWED_ITEMS_V2;
-		}
-		else if ("3".equals(version))
-		{
-			allowedItemsCount = ALLOWED_ITEMS_V3;
-		}
-		return allowedItemsCount;
+		return new MergeService().getAllowedItems(version);
 	}
 	
 	public boolean isAdmin()
