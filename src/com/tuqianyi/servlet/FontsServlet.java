@@ -4,6 +4,8 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServlet;
 
+import com.tuqianyi.service.MainService;
+
 public class FontsServlet extends HttpServlet{
 
 	static Logger _log = Logger.getLogger(FontsServlet.class.getName());
@@ -18,5 +20,10 @@ public class FontsServlet extends HttpServlet{
 	public static String getRootPath()
 	{
 		return root;
+	}
+	
+	public void destroy()
+	{
+		MainService.shutdown();
 	}
 }

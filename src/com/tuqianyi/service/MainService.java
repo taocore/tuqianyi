@@ -11,4 +11,9 @@ public class MainService {
 	{
 		THREAD_POOL.execute(task);
 	}
+	
+	public static void shutdown()
+	{
+		THREAD_POOL.shutdown();
+	}
 }

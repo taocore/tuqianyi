@@ -56,17 +56,24 @@ public class MergeTask implements Runnable
 			merge(item, frame, merges, topSession, conn);
 			String sUserId = (String)session.get(Constants.USER_ID);
 			long userId = Long.parseLong(sUserId);
-			for (Merge m : merges)
+			if (merges != null)
 			{
-				ImageLabel label = m.getImageLabel();
-				if (label != null && label.getId() > 0)
+				for (Merge m : merges)
 				{
-					try {
-						Dao.INSTANCE.addRecentLabel(label, userId, conn);
-					} catch (Exception e) {
-						_log.log(Level.SEVERE, "", e);
+					ImageLabel label = m.getImageLabel();
+					if (label != null && label.getId() > 0)
+					{
+						try {
+							Dao.INSTANCE.addRecentLabel(label, userId, conn);
+						} catch (Exception e) {
+							_log.log(Level.SEVERE, "", e);
+						}
 					}
 				}
+			}
+			else
+			{
+				_log.warning("merges is null");
 			}
 		}
 		catch (Exception e)
