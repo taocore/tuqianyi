@@ -69,8 +69,17 @@
 			success: function(data) {
 				$("#items").html(data);
 				checkSelection();
+				$table = $('table', $content);
 				var pageCount = parseInt($table.attr("pages"));
-				$("#pager").pager({ pagenumber: number, pagecount: pageCount, buttonClickCallback: loadPage, firstLabel: "首页", prevLabel: "前一页", nextLabel: "下一页", lastLabel: "末页" });
+				$("#pager").pager({ 
+					pagenumber: number, 
+					pagecount: pageCount, 
+					buttonClickCallback: loadPage, 
+					firstLabel: "首页", 
+					prevLabel: "前一页", 
+					nextLabel: "下一页", 
+					lastLabel: "末页" 
+				});
 				if (callback)
 				{
 					callback();
