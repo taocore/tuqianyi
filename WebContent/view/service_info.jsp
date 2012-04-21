@@ -34,7 +34,10 @@
 	此服务将于<span class='large strong'><s:date name="serviceEnd" format="yyyy年M月d日"/></span>（还有<span class='large strong'><s:property value="left"/></span>天）到期，如需继续使用，请及时续订。
 </div>
 
-<div><a id='upgrade-link' href="http://fuwu.taobao.com/using/serv_upgrade.htm?service_id=6371" target='_blank'>升级</a></div>
+	<div>
+		<a id='upgrade-link' href="http://fuwu.taobao.com/using/serv_upgrade.htm?service_id=6371" target='_blank'>升级</a>
+		<a class='strong' style='color:red;' href="http://seller.taobao.com/fuwu/shopshow/shop_index.htm?page_id=95889&isv_id=62112477&page_rank=2&tab_type=1" target="_blank">推荐</a>
+	</div>
 </div>
 
 <script type="text/javascript">
