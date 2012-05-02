@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.net.URL;
 import java.sql.Connection;
+import java.util.Date;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -14,6 +15,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
 import com.taobao.api.TaobaoResponse;
+import com.taobao.api.response.ItemImgUploadResponse;
 import com.tuqianyi.db.DBUtils;
 import com.tuqianyi.db.Dao;
 import com.tuqianyi.image.ImageUtils;
@@ -131,6 +133,16 @@ public class RecoverAction extends ActionBase{
 						if (!response.isSuccess())
 						{
 							error(response);
+						}
+						else
+						{
+							if (response instanceof ItemImgUploadResponse)
+							{
+								ItemImgUploadResponse rsp = (ItemImgUploadResponse)response;
+								String url = rsp.getItemImg().getUrl();
+								Date modified = rsp.getItemImg().getCreated();
+								_log.info("recovered...url: " + url + "; modified: " + modified);
+							}
 						}
 					}
 					

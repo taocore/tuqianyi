@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Connection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -15,8 +16,9 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 import com.taobao.api.ApiException;
+import com.taobao.api.TaobaoResponse;
 import com.taobao.api.response.ItemGetResponse;
-import com.taobao.api.response.ItemUpdateResponse;
+import com.taobao.api.response.ItemImgUploadResponse;
 import com.tuqianyi.Constants;
 import com.tuqianyi.action.MergeAction;
 import com.tuqianyi.db.DBUtils;
@@ -124,12 +126,20 @@ public class MergeTask implements Runnable
 					ImageUtils.writeImage(image, "jpg", 512000F/size, out2);
 				}
 				_log.info("size: " + out2.size());
-				ItemUpdateResponse response = TaobaoProxy.updateMainPic(topSession, item.getNumIid(), out2.toByteArray());
+				//ItemUpdateResponse response = TaobaoProxy.updateMainPic(topSession, item.getNumIid(), out2.toByteArray());
+				TaobaoResponse response = RecoverService.updateMainPic(topSession, item.getNumIid(), out2.toByteArray());
 				if (response.isSuccess())
 				{
-					com.taobao.api.domain.Item updatedItem = response.getItem();
-					updatedItem.setPicUrl(getNewPicUrl(topSession, item.getNumIid()));
-					Dao.INSTANCE.merged(item.getNumIid(), updatedItem.getPicUrl(), updatedItem.getModified(), Item.STATUS_OK, null, null, conn);
+//					com.taobao.api.domain.Item updatedItem = response.getItem();
+//					updatedItem.setPicUrl(getNewPicUrl(topSession, item.getNumIid()));
+//					Dao.INSTANCE.merged(item.getNumIid(), updatedItem.getPicUrl(), updatedItem.getModified(), Item.STATUS_OK, null, null, conn);
+					if (response instanceof ItemImgUploadResponse)
+					{
+						ItemImgUploadResponse rsp = (ItemImgUploadResponse)response;
+						String url = rsp.getItemImg().getUrl();
+						Date modified = rsp.getItemImg().getCreated();
+						Dao.INSTANCE.merged(item.getNumIid(), url, modified, Item.STATUS_OK, null, null, conn);
+					}
 				}
 				else
 				{
@@ -219,6 +229,7 @@ public class MergeTask implements Runnable
 	private BufferedImage addFrame(BufferedImage image, String rootPath) throws IOException
 	{
 		File f = new File(rootPath + frame.getSrc());
+		_log.info("frame file: " + f.getAbsolutePath());
 		BufferedImage frameImage = ImageIO.read(f);
 		return ImageUtils.composite(image, frameImage, 0, 0, image.getWidth(), image.getHeight(), 1F);
 	}
