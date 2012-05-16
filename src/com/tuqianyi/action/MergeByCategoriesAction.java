@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.taobao.api.response.ItemsInventoryGetResponse;
 import com.taobao.api.response.ItemsOnsaleGetResponse;
 import com.tuqianyi.Constants;
@@ -33,73 +35,77 @@ public class MergeByCategoriesAction extends ActionBase{
 		}
 		_log.info("filter: " + filter);
 		String topSession = getSessionId();
-		List<com.taobao.api.domain.Item> taobaoItems = null;
-		List<Item> resultItems = null;
-		long total = 0;
-		if (filter.getStatus() == Item.STATUS_ALL)
+		String[] sellerCids = StringUtils.split(filter.getSellerCids(), ",");
+		for (String cid : sellerCids)
 		{
-			if (filter.getSaleStatus() == ItemsFilter.STATUS_INVENTORY)
+			List<com.taobao.api.domain.Item> taobaoItems = null;
+			List<Item> resultItems = null;
+			long total = 0;
+			if (filter.getStatus() == Item.STATUS_ALL)
 			{
-				ItemsInventoryGetResponse rsp = TaobaoProxy.getInventory(topSession, 1, 200, filter.getBanner(), filter.getSellerCids(), filter.getKeyWord());
-				if (rsp.isSuccess())
+				if (filter.getSaleStatus() == ItemsFilter.STATUS_INVENTORY)
 				{
-					taobaoItems = rsp.getItems();
-					if (taobaoItems != null)
+					ItemsInventoryGetResponse rsp = TaobaoProxy.getInventory(topSession, 1, 200, filter.getBanner(), cid, filter.getKeyWord());
+					if (rsp.isSuccess())
 					{
-						total = rsp.getTotalResults();
+						taobaoItems = rsp.getItems();
+						if (taobaoItems != null)
+						{
+							total = rsp.getTotalResults();
+						}
+					}
+					else
+					{
+						error(rsp);
 					}
 				}
 				else
 				{
-					error(rsp);
+					ItemsOnsaleGetResponse rsp = TaobaoProxy.getOnSales(topSession, 1, 200, cid, filter.getKeyWord());
+					if (rsp.isSuccess())
+					{
+						taobaoItems = rsp.getItems();
+						if (taobaoItems != null)
+						{
+							total = rsp.getTotalResults();
+						}
+					}
+					else
+					{
+						error(rsp);
+					}
 				}
+				_log.info("taobao items: " + (taobaoItems == null ? null : taobaoItems.size()));
+				resultItems = getItems(taobaoItems, filter);
 			}
 			else
 			{
-				ItemsOnsaleGetResponse rsp = TaobaoProxy.getOnSales(topSession, 1, 200, filter.getSellerCids(), filter.getKeyWord());
-				if (rsp.isSuccess())
+				resultItems = new ArrayList<Item>();
+				total = Dao.INSTANCE.getMergedItems(getUser(), filter.getStatus(), 0, 200, resultItems);
+			}
+			_log.info("result items: " + resultItems.size());
+			_log.info("total: " + total);
+			if (resultItems != null)
+			{
+				if (!checkItemsCount(resultItems.size()))
 				{
-					taobaoItems = rsp.getItems();
-					if (taobaoItems != null)
-					{
-						total = rsp.getTotalResults();
-					}
+					return Constants.OUT_OF_ALLOWED_ITEMS;
 				}
-				else
+				Connection conn = null;
+				try
 				{
-					error(rsp);
+					conn = DBUtils.getConnection();
+					merging(resultItems, conn);
+					merge(resultItems, frame, merges);
 				}
-			}
-			_log.info("taobao items: " + (taobaoItems == null ? null : taobaoItems.size()));
-			resultItems = getItems(taobaoItems, filter);
-		}
-		else
-		{
-			resultItems = new ArrayList<Item>();
-			total = Dao.INSTANCE.getMergedItems(getUser(), filter.getStatus(), 0, 200, resultItems);
-		}
-		_log.info("result items: " + resultItems.size());
-		_log.info("total: " + total);
-		if (resultItems != null)
-		{
-			if (!checkItemsCount(resultItems.size()))
-			{
-				return Constants.OUT_OF_ALLOWED_ITEMS;
-			}
-			Connection conn = null;
-			try
-			{
-				conn = DBUtils.getConnection();
-				merging(resultItems, conn);
-				merge(resultItems, frame, merges);
-			}
-			catch (Exception e)
-			{
-				error(e);
-			}
-			finally
-			{
-				DBUtils.close(conn, null, null);
+				catch (Exception e)
+				{
+					error(e);
+				}
+				finally
+				{
+					DBUtils.close(conn, null, null);
+				}
 			}
 		}
 		return SUCCESS;
