@@ -12,7 +12,7 @@ public interface Constants {
 	
 	int ALLOWED_ITEMS_V1 = 300;
 	int ALLOWED_ITEMS_V2 = 1000;
-	int ALLOWED_ITEMS_V3 = 2500;
+	int ALLOWED_ITEMS_V3 = 3000;
 	int ALLOWED_ITEMS_FREE = 10;
 	
 	String ENTRY = "http://fuwu.taobao.com/using/app_ins_processor.htm?service_id=6371";//"http://container.open.taobao.com/container?appkey=" + APP_KEY;
