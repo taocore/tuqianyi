@@ -5,7 +5,7 @@
 
 <struts>
 
-	<constant name="struts.devMode" value="true" />
+	<constant name="struts.devMode" value="false" />
 
 	<package name="tuqianyi" extends="struts-default">
 
@@ -90,6 +90,9 @@
         
         <action name="progress" class="com.tuqianyi.action.ProgressAction" method="execute">
             <result name="success">/view/progress.jsp</result>
+            <result name="finish" type="httpheader">
+			  	<param name="headers.status">finish</param>
+			</result>
         </action>
         
         <action name="service_info" class="com.tuqianyi.action.ServiceInfoAction" method="execute">

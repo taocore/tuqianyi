@@ -105,7 +105,17 @@
 		}
 		$.ajax({
 			  url: 'progress.action',
-			  success: function( data ) {
+			  success: function( data, textStatus, jqXHR ) {
+				  if (jqXHR)
+				  {
+					  var msg = jqXHR.getResponseHeader('status');
+					  if ('finish' == msg)
+					  {
+						  hideProgressDialog();
+						  reload(clearSelection);
+						  return;
+					  }
+				  }
 				  $dialog.html(data);
 			  }
 		});
