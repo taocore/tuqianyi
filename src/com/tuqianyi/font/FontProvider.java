@@ -30,31 +30,34 @@ public class FontProvider {
 	private FontProvider()
 	{
 		String root = FontsServlet.getRootPath();
+		String fontDir = root + "fonts/";
 		_log.info("root: " + root);
 		fonts = new HashMap<String, FontImage>();
 		try {
-			fonts.put("simhei", createFontImage("simhei", root + "fonts/simhei.ttf"));
-			fonts.put("simkai", createFontImage("simkai", root + "fonts/simkai.ttf"));
-//			fonts.put("simsun", createFontImage("simsun", root + "fonts/simsun.ttc"));
-//			fonts.put("msyh", createFontImage("msyh", root + "fonts/msyh.ttf"));
-			fonts.put("hkst", createFontImage("hkst", root + "fonts/hkst.ttf"));
-			fonts.put("mnjccy", createFontImage("mnjccy", root + "fonts/mnjccy.ttf"));
-			fonts.put("mnjdh", createFontImage("mnjdh", root + "fonts/mnjdh.ttf"));
-			fonts.put("mnxf", createFontImage("mnxf", root + "fonts/mnxf.ttf"));
-			fonts.put("mshkj", createFontImage("mshkj", root + "fonts/mshkj.ttf"));
-			fonts.put("hdzb_46", createFontImage("hdzb_46", root + "fonts/hdzb_46.ttf"));
-			fonts.put("stliti", createFontImage("stliti", root + "fonts/stliti.ttf"));
-			fonts.put("jdjykd", createFontImage("jdjykd", root + "fonts/jdjykd.ttf"));
-			fonts.put("sszhjt", createFontImage("sszhjt", root + "fonts/sszhjt.ttf"));
-			fonts.put("ygyxsziti", createFontImage("ygyxsziti", root + "fonts/ygyxsziti.ttf"));
-			fonts.put("mnjzy", createFontImage("mnjzy", root + "fonts/mnjzy.ttf"));
-//			fonts.put("stfajcgbxs", createFontImage("stfajcgbxs", root + "fonts/stfajcgbxs.ttf"));
-			fonts.put("mnjpl", createFontImage("mnjpl", root + "fonts/mnjpl.ttf"));
-//			fonts.put("wdztggt", createFontImage("wdztggt", root + "fonts/wdztggt.ttf"));
-			fonts.put("jdzytj", createFontImage("jdzytj", root + "fonts/jdzytj.ttf"));
-			fonts.put("mnjhpt", createFontImage("mnjhpt", root + "fonts/mnjhpt.ttf"));
-//			fonts.put("jmgyftbz", createFontImage("jmgyftbz", root + "fonts/jmgyftbz.ttf"));
-			fonts.put("mnjjz", createFontImage("mnjjz", root + "fonts/mnjjz.ttf"));
+			fonts.put("simhei", createFontImage("simhei", fontDir + "simhei.ttf"));
+			fonts.put("simkai", createFontImage("simkai", fontDir + "simkai.ttf"));
+//			fonts.put("simsun", createFontImage("simsun", fontDir + "simsun.ttc"));
+//			fonts.put("msyh", createFontImage("msyh", fontDir + "msyh.ttf"));
+			fonts.put("hkst", createFontImage("hkst", fontDir + "hkst.ttf"));
+			fonts.put("mnjccy", createFontImage("mnjccy", fontDir + "mnjccy.ttf"));
+			fonts.put("mnjdh", createFontImage("mnjdh", fontDir + "mnjdh.ttf"));
+			fonts.put("mnxf", createFontImage("mnxf", fontDir + "mnxf.ttf"));
+			fonts.put("mshkj", createFontImage("mshkj", fontDir + "mshkj.ttf"));
+			fonts.put("hdzb_46", createFontImage("hdzb_46", fontDir + "hdzb_46.ttf"));
+			fonts.put("stliti", createFontImage("stliti", fontDir + "stliti.ttf"));
+			fonts.put("jdjykd", createFontImage("jdjykd", fontDir + "jdjykd.ttf"));
+			fonts.put("sszhjt", createFontImage("sszhjt", fontDir + "sszhjt.ttf"));
+			fonts.put("ygyxsziti", createFontImage("ygyxsziti", fontDir + "ygyxsziti.ttf"));
+			fonts.put("mnjzy", createFontImage("mnjzy", fontDir + "mnjzy.ttf"));
+//			fonts.put("stfajcgbxs", createFontImage("stfajcgbxs", fontDir + "stfajcgbxs.ttf"));
+			fonts.put("mnjpl", createFontImage("mnjpl", fontDir + "mnjpl.ttf"));
+//			fonts.put("wdztggt", createFontImage("wdztggt", fontDir + "wdztggt.ttf"));
+			fonts.put("jdzytj", createFontImage("jdzytj", fontDir + "jdzytj.ttf"));
+			fonts.put("mnjhpt", createFontImage("mnjhpt", fontDir + "mnjhpt.ttf"));
+//			fonts.put("jmgyftbz", createFontImage("jmgyftbz", fontDir + "jmgyftbz.ttf"));
+			fonts.put("mnjjz", createFontImage("mnjjz", fontDir + "mnjjz.ttf"));
+			fonts.put("sxsrst", createFontImage("sxsrst", fontDir + "sxsrst.ttf"));
+			fonts.put("fzmwt", createFontImage("fzmwt", fontDir + "fzmwt.ttf"));
 		} catch (FontFormatException e) {
 			_log.log(Level.SEVERE, "", e);
 		} catch (IOException e) {
