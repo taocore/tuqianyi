@@ -35,7 +35,7 @@
 				</td>
 				<td class="item-details">
 					<div><s:property value="title"/></div>
-					<div><span class="strong">￥</span><s:property value="price"/></div>
+					<div><span class="rmb">￥</span><s:property value="price"/></div>
 				</td>
 				<td class='error-msg'>
 					<s:if test="%{status == 3}">
