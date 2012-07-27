@@ -58,6 +58,10 @@ public class FontProvider {
 			fonts.put("mnjjz", createFontImage("mnjjz", fontDir + "mnjjz.ttf"));
 			fonts.put("sxsrst", createFontImage("sxsrst", fontDir + "sxsrst.ttf"));
 			fonts.put("fzmwt", createFontImage("fzmwt", fontDir + "fzmwt.ttf"));
+			fonts.put("mnjcd", createFontImage("mnjcd", fontDir + "mnjcd.ttf"));
+			fonts.put("mnjbaiqi", createFontImage("mnjbaiqi", fontDir + "mnjbaiqi.ttf"));
+			fonts.put("mnjboqing", createFontImage("mnjboqing", fontDir + "mnjboqing.ttf"));
+			fonts.put("mnjbwks", createFontImage("mnjbwks", fontDir + "mnjbwks.ttf"));
 		} catch (FontFormatException e) {
 			_log.log(Level.SEVERE, "", e);
 		} catch (IOException e) {
