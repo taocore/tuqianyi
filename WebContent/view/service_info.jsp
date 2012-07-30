@@ -14,24 +14,24 @@
 <div>
 	您现在使用的是【图签易】
 	<s:if test="%{#session.VERSION == 0}">
-	   	<span class='large strong'>体验版</span>，支持宝贝<span class='large strong'><s:property value="allowedItems"/></span>件
+	   	<span class='large strong blue'>体验版</span>，支持宝贝<span class='large strong blue'><s:property value="allowedItems"/></span>件
 	</s:if>
 	<s:elseif test="%{#session.VERSION == 1}">
-	   	<span class='large strong'>初级版</span>，支持宝贝<span class='large strong'><s:property value="allowedItems"/></span>件
+	   	<span class='large strong blue'>初级版</span>，支持宝贝<span class='large strong blue'><s:property value="allowedItems"/></span>件
 	</s:elseif>
 	<s:elseif test="%{#session.VERSION == 2}">
-    	<span class='large strong'>中级版</span>，支持宝贝<span class='large strong'><s:property value="allowedItems"/></span>件
+    	<span class='large strong blue'>中级版</span>，支持宝贝<span class='large strong blue'><s:property value="allowedItems"/></span>件
 	</s:elseif>
 	<s:elseif test="%{#session.VERSION == 3}">
-    	<span class='large strong'>高级版</span>，支持宝贝<span class='large strong'><s:property value="allowedItems"/></span>件
+    	<span class='large strong blue'>高级版</span>，支持宝贝<span class='large strong blue'><s:property value="allowedItems"/></span>件
 	</s:elseif>。
 </div>
 <s:url action="sync" var="syncLink"></s:url>
 <div>
-	已贴标签宝贝<span class='large strong'><s:property value="mergedItemsCount"/></span>件。如有出入，请<span class='large'><a id='sync-link' href="${syncLink}">点此同步</a></span>。
+	已贴标签宝贝<span class='large strong blue'><s:property value="mergedItemsCount"/></span>件。如有出入，请<span class='large'><a id='sync-link' href="${syncLink}">点此同步</a></span>。
 </div>
 <div>
-	此服务将于<span class='large strong'><s:date name="serviceEnd" format="yyyy年M月d日"/></span>（还有<span class='large strong'><s:property value="left"/></span>天）到期，如需继续使用，请及时续订。
+	此服务将于<span class='large strong blue'><s:date name="serviceEnd" format="yyyy年M月d日"/></span>（还有<span class='large strong blue'><s:property value="left"/></span>天）到期，如需继续使用，请及时续订。
 </div>
 
 	<div>
