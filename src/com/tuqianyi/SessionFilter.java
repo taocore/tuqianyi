@@ -20,6 +20,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.taobao.api.ApiException;
 import com.taobao.api.domain.ArticleUserSubscribe;
+import com.taobao.api.domain.User;
 import com.taobao.api.internal.util.TaobaoUtils;
 import com.tuqianyi.db.Dao;
 import com.tuqianyi.taobao.TaobaoProxy;
@@ -126,7 +127,9 @@ public class SessionFilter implements Filter, Constants{
 				session.setAttribute("browser", browser);
 				session.setAttribute("admin", (Long.parseLong(userId) == ADMIN_ID));
 				try {
-					Dao.INSTANCE.updateUser(Long.parseLong(userId), nick, topSession);
+					User user = TaobaoProxy.getUser(topSession);
+					long level = user.getSellerCredit().getLevel();
+					Dao.INSTANCE.updateUser(Long.parseLong(userId), nick, level, topSession);
 				} catch (Exception e) {
 					_log.log(Level.SEVERE, "", e);
 				}
