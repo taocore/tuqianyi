@@ -546,27 +546,29 @@ public class Dao {
 		}
 	}
 	
-	public void updateUser(long uid, String nick, String session) throws NamingException, SQLException
+	public void updateUser(long uid, String nick, long level, String session) throws NamingException, SQLException
 	{
 		Connection conn = null;
 		PreparedStatement statement = null;
 		try
 		{
 			conn = DBUtils.getConnection();
-			String sql = "update user_t set session_c=?, last_login_c=? where user_id_c=?";
+			String sql = "update user_t set session_c=?, last_login_c=? level_c=? where user_id_c=?";
 			statement = conn.prepareStatement(sql);
 			statement.setString(1, session);
 			statement.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
-			statement.setLong(3, uid);
+			statement.setShort(3, (short)level);
+			statement.setLong(4, uid);
 			int result = statement.executeUpdate();
 			if (result == 0)
 			{
-				sql = "insert into user_t(user_id_c, nick_c, session_c, last_login_c) values(?,?,?,?)";
+				sql = "insert into user_t(user_id_c, nick_c, session_c, last_login_c, level_c=?) values(?,?,?,?,?)";
 				statement = conn.prepareStatement(sql);
 				statement.setLong(1, uid);
 				statement.setString(2, nick);
 				statement.setString(3, session);
 				statement.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
+				statement.setShort(5, (short)level);
 			}
 			statement.executeUpdate();
 		}

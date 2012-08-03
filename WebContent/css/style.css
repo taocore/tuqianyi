@@ -1,6 +1,7 @@
 body {background-color:#F9F9EF;}
 #footer {text-align:center;}
 .separator {padding-left:10px;padding-right:10px;}
+#header{position:relative;}
 #header>div.left>span:first-of-type {font-family:SimHei;font-size:18pt;color:gray;}
 #header>div.left>span:nth-of-type(2) {margin-left: 5px;color:blue;}
 #nick {font-weight:bold;}

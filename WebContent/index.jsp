@@ -49,12 +49,11 @@
 		</s:elseif>
 		</div>
 		<div class="right" style="margin-top: 5px;">
-			<span style='color:red;'>IE6用户请使用<a class='old-edition' href="#">旧版</a>，搜狗浏览器请使用【高速模式】</span><span class="quiet separator">|</span>
+			<span style='color:red;'>搜狗浏览器请使用【高速模式】</span><span class="quiet separator">|</span>
 			您好，<span id="nick"><s:property value="#session.USER"/></span><span class="quiet separator">|</span>
-			<span id='upgrade'><a href="http://fuwu.taobao.com/using/serv_upgrade.htm?service_id=6371" target="_blank">升级</a></span><span class="quiet separator">|</span>
-			<span><a class='recommend' href="http://seller.taobao.com/fuwu/shopshow/shop_index.htm?page_id=95889&isv_id=62112477&page_rank=2&tab_type=1" target="_blank">推荐</a></span><span class="quiet separator">|</span>
-			<span><a target='_blank' href='http://amos.im.alisoft.com/msg.aw?v=2&uid=%E8%B5%A4%E7%8F%A0%E5%AD%90&site=cntaobao&s=1&charset=utf-8'><img border='0' src='http://amos.im.alisoft.com/online.aw?v=2&uid=%E8%B5%A4%E7%8F%A0%E5%AD%90&site=cntaobao&s=1&charset=utf-8' alt='联系作者' /></a></span>
+			<a href='<s:url action="logout"></s:url>'>退出</a>
 		</div>
+		<div style="position:absolute;bottom:0;right:0;"><span id='upgrade'><a href="http://fuwu.taobao.com/using/serv_upgrade.htm?service_id=6371" target="_blank">升级</a></span><span class="quiet separator">|</span><span class="strong">客服：</span><a target='_blank' href='http://amos.im.alisoft.com/msg.aw?v=2&uid=%E8%B5%A4%E7%8F%A0%E5%AD%90&site=cntaobao&s=1&charset=utf-8'><img border='0' src='http://amos.im.alisoft.com/online.aw?v=2&uid=%E8%B5%A4%E7%8F%A0%E5%AD%90&site=cntaobao&s=1&charset=utf-8' alt='联系作者' /></a></div>
 	</div>
 	<div id='info-upgrade' class="span-23 last notice hide">
 		【体验版】升级到其他版本，请先到<a href='http://fuwu.taobao.com/serv/manage_service.htm?service_id=6371' target='_blank'>【图签易 - 管理】</a>将体验版关闭，再到<a href='http://fuwu.taobao.com/serv/detail.htm?service_id=6371' target='_blank'>【订购页面】</a>订购。
