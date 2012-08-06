@@ -553,7 +553,7 @@ public class Dao {
 		try
 		{
 			conn = DBUtils.getConnection();
-			String sql = "update user_t set session_c=?, last_login_c=? level_c=? where user_id_c=?";
+			String sql = "update user_t set session_c=?, last_login_c=?, level_c=? where user_id_c=?";
 			statement = conn.prepareStatement(sql);
 			statement.setString(1, session);
 			statement.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
@@ -562,7 +562,7 @@ public class Dao {
 			int result = statement.executeUpdate();
 			if (result == 0)
 			{
-				sql = "insert into user_t(user_id_c, nick_c, session_c, last_login_c, level_c=?) values(?,?,?,?,?)";
+				sql = "insert into user_t(user_id_c, nick_c, session_c, last_login_c, level_c) values(?,?,?,?,?)";
 				statement = conn.prepareStatement(sql);
 				statement.setLong(1, uid);
 				statement.setString(2, nick);
