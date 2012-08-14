@@ -188,16 +188,17 @@ public class Dao {
 		return null;
 	}
 	
-	public String merged(long numIid, String newUrl, Date modified, short status, String msg, String errorCode, Connection conn) throws Exception
+	public String merged(long numIid, String newUrl, String md5, Date modified, short status, String msg, String errorCode, Connection conn) throws Exception
 	{
-		String sql = "update merged_item_t set new_pic_url_c=?, last_update_c=?, status_c=?, msg_c=?, error_code_c=? where num_iid_c=?";
+		String sql = "update merged_item_t set new_pic_url_c=?, last_update_c=?, status_c=?, msg_c=?, error_code_c=?, new_pic_md5_c=? where num_iid_c=?";
 		PreparedStatement statement = conn.prepareStatement(sql);
 		statement.setString(1, newUrl);
 		statement.setTimestamp(2, modified == null ? null : new Timestamp(modified.getTime()));
 		statement.setShort(3, status);
 		statement.setString(4, msg);
 		statement.setString(5, errorCode);
-		statement.setLong(6, numIid);
+		statement.setString(6, md5);
+		statement.setLong(7, numIid);
 		statement.executeUpdate();
 		statement.close();
 		return null;
@@ -465,6 +466,7 @@ public class Dao {
 			item.setErrorCode(rs.getString("error_code_c"));
 			item.setTitle(rs.getString("title_c"));
 			item.setPrice(rs.getString("price_c"));
+			item.setNewPicMD5(rs.getString("new_pic_md5_c"));
 			DBUtils.close(null, statement, rs);
 			return item;
 		}

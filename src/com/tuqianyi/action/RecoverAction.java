@@ -11,10 +11,12 @@ import java.util.logging.Level;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
 import com.taobao.api.TaobaoResponse;
+import com.taobao.api.response.ItemGetResponse;
 import com.taobao.api.response.ItemImgUploadResponse;
 import com.tuqianyi.db.DBUtils;
 import com.tuqianyi.db.Dao;
@@ -106,14 +108,38 @@ public class RecoverAction extends ActionBase{
 			{
 				if (item.getOldPicUrl() != null)
 				{
+					String newPicMD5 = item.getNewPicMD5();
+					if (newPicMD5 != null)
+					{
+						ItemGetResponse iRsp = TaobaoProxy.getItem(topSession, Long.parseLong(numIid));
+						if (iRsp.isSuccess())
+						{
+							com.taobao.api.domain.Item i = iRsp.getItem();
+							String iPicUrl = i.getPicUrl();
+							URL iUrl = new URL(iPicUrl);
+							byte[] iPicData = IOUtils.toByteArray(iUrl.openStream());
+							String md5 = DigestUtils.md5Hex(iPicData);
+							if (!md5.equals(newPicMD5))
+							{
+								_log.info("user changed main pic after merged. ");
+								Dao.INSTANCE.unmerged(item.getNumIid(), true, null, conn);
+								return;
+							}
+						}
+						else
+						{
+							error(iRsp);
+							return;
+						}
+					}
 					String oldPicUrl = item.getOldPicUrl();
 					String user = (String)session.get(USER);
 					_log.info("nick: " + user + " num_iid:" + item.getNumIid() + " old: " + oldPicUrl);
 					URL oldUrl = new URL(oldPicUrl);
-					byte[] data = IOUtils.toByteArray(oldUrl.openStream());
-					_log.info("data.length: " + data.length);
+					byte[] oldPicData = IOUtils.toByteArray(oldUrl.openStream());
+					_log.info("data.length: " + oldPicData.length);
 					TaobaoResponse response = null;
-					if (data.length > 524288)
+					if (oldPicData.length > 524288)
 					{
 						_log.info("recovering by picPath...");
 						String key = "bao/uploaded/";
@@ -129,7 +155,7 @@ public class RecoverAction extends ActionBase{
 					else
 					{
 						_log.info("recovering by data...");
-						response = RecoverService.updateMainPic(topSession, item.getNumIid(), data);
+						response = RecoverService.updateMainPic(topSession, item.getNumIid(), oldPicData);
 						if (!response.isSuccess())
 						{
 							error(response);
@@ -146,12 +172,12 @@ public class RecoverAction extends ActionBase{
 						}
 					}
 					
-					if (!response.isSuccess() && data.length > 500000)
+					if (!response.isSuccess() && oldPicData.length > 500000)
 					{
 						_log.info("recovering by reduced data...");
 						float quality = 0.9F;
 						byte[] tmp = null;
-						ByteArrayInputStream in = new ByteArrayInputStream(data);
+						ByteArrayInputStream in = new ByteArrayInputStream(oldPicData);
 						BufferedImage image = ImageIO.read(in);
 						for (int i = 0; i < 5; i++)
 						{

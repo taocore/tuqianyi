@@ -20,6 +20,7 @@ public class Item extends com.taobao.api.domain.Item{
 	private String errorMsg;
 	private String errorCode;
 	private Date lastUpdate;
+	private String newPicMD5;
 	
 	public Item()
 	{
@@ -100,5 +101,13 @@ public class Item extends com.taobao.api.domain.Item{
 
 	public Date getLastUpdate() {
 		return lastUpdate;
+	}
+
+	public void setNewPicMD5(String newPicMD5) {
+		this.newPicMD5 = newPicMD5;
+	}
+
+	public String getNewPicMD5() {
+		return newPicMD5;
 	}
 }

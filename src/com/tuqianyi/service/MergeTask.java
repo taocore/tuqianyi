@@ -15,6 +15,9 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.IOUtils;
+
 import com.taobao.api.ApiException;
 import com.taobao.api.TaobaoResponse;
 import com.taobao.api.response.ItemGetResponse;
@@ -127,7 +130,8 @@ public class MergeTask implements Runnable
 				}
 				_log.info("size: " + out2.size());
 				//ItemUpdateResponse response = TaobaoProxy.updateMainPic(topSession, item.getNumIid(), out2.toByteArray());
-				TaobaoResponse response = RecoverService.updateMainPic(topSession, item.getNumIid(), out2.toByteArray());
+				byte[] newPicData = out2.toByteArray();
+				TaobaoResponse response = RecoverService.updateMainPic(topSession, item.getNumIid(), newPicData);
 				if (response.isSuccess())
 				{
 //					com.taobao.api.domain.Item updatedItem = response.getItem();
@@ -138,7 +142,9 @@ public class MergeTask implements Runnable
 						ItemImgUploadResponse rsp = (ItemImgUploadResponse)response;
 						String url = rsp.getItemImg().getUrl();
 						Date modified = rsp.getItemImg().getCreated();
-						Dao.INSTANCE.merged(item.getNumIid(), url, modified, Item.STATUS_OK, null, null, conn);
+						URL iUrl = new URL(url);
+						byte[] iPicData = IOUtils.toByteArray(iUrl.openStream());
+						Dao.INSTANCE.merged(item.getNumIid(), url, DigestUtils.md5Hex(iPicData), modified, Item.STATUS_OK, null, null, conn);
 					}
 				}
 				else
@@ -155,7 +161,7 @@ public class MergeTask implements Runnable
 						{
 							errorMsg = "合成后的图像文件大小超过淘宝限制的最大值500K";
 						}
-						Dao.INSTANCE.merged(item.getNumIid(), null, null, Item.STATUS_FAILED, errorMsg, response.getSubCode(), conn);
+						Dao.INSTANCE.merged(item.getNumIid(), null, null, null, Item.STATUS_FAILED, errorMsg, response.getSubCode(), conn);
 					}
 				}
 			} 
@@ -166,7 +172,7 @@ public class MergeTask implements Runnable
 			{
 				_log.log(Level.SEVERE, "", e);
 				try {
-					Dao.INSTANCE.merged(item.getNumIid(), null, null, Item.STATUS_FAILED, e.getMessage(), "unknown", conn);
+					Dao.INSTANCE.merged(item.getNumIid(), null, null, null, Item.STATUS_FAILED, e.getMessage(), "unknown", conn);
 				} catch (Exception e1) {
 					_log.log(Level.SEVERE, "", e1);
 				}
@@ -178,14 +184,14 @@ public class MergeTask implements Runnable
 		} catch (MalformedURLException e) {
 			_log.log(Level.SEVERE, "", e);
 			try {
-				Dao.INSTANCE.merged(item.getNumIid(), null, null, Item.STATUS_FAILED, e.getMessage(), "unknown", conn);
+				Dao.INSTANCE.merged(item.getNumIid(), null, null, null, Item.STATUS_FAILED, e.getMessage(), "unknown", conn);
 			} catch (Exception e1) {
 				_log.log(Level.SEVERE, "", e1);
 			}
 		} catch (IOException e) {
 			_log.log(Level.SEVERE, "", e);
 			try {
-				Dao.INSTANCE.merged(item.getNumIid(), null, null, Item.STATUS_FAILED, e.getMessage(), "unknown", conn);
+				Dao.INSTANCE.merged(item.getNumIid(), null, null, null, Item.STATUS_FAILED, e.getMessage(), "unknown", conn);
 			} catch (Exception e1) {
 				_log.log(Level.SEVERE, "", e1);
 			}
