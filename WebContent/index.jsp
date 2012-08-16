@@ -58,9 +58,9 @@
 	<div id='info-upgrade' class="span-23 last notice hide">
 		【体验版】升级到其他版本，请先到<a href='http://fuwu.taobao.com/serv/manage_service.htm?service_id=6371' target='_blank'>【图签易 - 管理】</a>将体验版关闭，再到<a href='http://fuwu.taobao.com/serv/detail.htm?service_id=6371' target='_blank'>【订购页面】</a>订购。
 	</div>
-	<div class="span-23 last notice">
+	<!--div class="span-23 last notice">
 		如果你要在淘宝后台编辑更换宝贝主图，请保证要修改的宝贝在图签易中处于未贴标签状态，已贴标签的请先恢复，否则你的劳动成果可能瞬间化为乌有。
-	</div>
+	</div-->
 	<div id="tabs" class="span-24 last">
 		<ul>
 			<s:url action="items_selector" var="itemSelectorLink"></s:url>
