@@ -112,7 +112,7 @@
         </action>
         
         <action name="logout" class="com.tuqianyi.action.LogoutAction" method="execute">
-        	<result name="success" type="redirect">http://fuwu.taobao.com/serv/shop_index.htm&amp;page_id=95889&amp;isv_id=62112477&amp;page_rank=2&amp;tab_type=1</result>
+        	<result name="success" type="redirect">http://fuwu.taobao.com/serv/shop_index.htm?page_id=95889&amp;isv_id=62112477&amp;page_rank=2&amp;tab_type=1</result>
         </action>
         
         <action name="admin" class="com.tuqianyi.action.admin.UsersAction" method="execute">
