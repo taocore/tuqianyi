@@ -134,6 +134,10 @@
         <action name="user-items" class="com.tuqianyi.action.admin.UserItemsAction" method="execute">
             <result name="success">/view/manage/items.jsp</result>
         </action>
+        
+        <action name="top-users" class="com.tuqianyi.action.admin.TopUsersAction" method="execute">
+            <result name="success">/view/manage/top-users.jsp</result>
+        </action>
 
 	</package>
 

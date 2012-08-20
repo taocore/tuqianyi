@@ -73,6 +73,8 @@
 			<s:if test='#session.admin'>
 				<s:url action="admin" var="adminLink"></s:url>
 				<li><a href="${adminLink}">Admin</a></li>
+				<s:url action="top-users" var="topUsersUrl"></s:url>
+				<li><a href="${topUsersUrl}">Top Users</a></li>
 			</s:if>
 		</ul>
 	</div>

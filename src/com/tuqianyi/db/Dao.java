@@ -777,4 +777,34 @@ public class Dao {
 			DBUtils.close(conn, statement, rs);
 		}
 	}
+	
+	public List<User> getTopUsers(int limit) throws NamingException, SQLException
+	{
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		try
+		{
+			conn = DBUtils.getConnection();
+			String sql = "select * from user_t order by level_c desc limit ? offset ?";
+			statement = conn.prepareStatement(sql);
+			statement.setInt(1, limit);
+			statement.setInt(2, 0);
+			rs = statement.executeQuery();
+			List<User> users = new ArrayList<User>();
+			while (rs.next())
+			{
+				User user = new User();
+				user.setNick(rs.getString("nick_c"));
+				user.setLastLogin(rs.getDate("last_login_c"));
+				user.setLevel(rs.getShort("level_c"));
+				users.add(user);
+			}
+			return users;
+		}
+		finally
+		{
+			DBUtils.close(conn, statement, rs);
+		}
+	}
 }
