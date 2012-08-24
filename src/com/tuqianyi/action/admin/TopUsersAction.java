@@ -15,12 +15,13 @@ public class TopUsersAction extends ActionBase{
 
 	static Logger _log = Logger.getLogger(TopUsersAction.class.getName());
 	
+	private int limit = 27;
 	private List<User> users;
 	
 	public String execute()
 	{
 		try {
-			users = Dao.INSTANCE.getTopUsers(25);
+			users = Dao.INSTANCE.getTopUsers(limit);
 			return SUCCESS;
 		} catch (NamingException e) {
 			_log.log(Level.SEVERE, "", e);
@@ -36,5 +37,13 @@ public class TopUsersAction extends ActionBase{
 
 	public List<User> getUsers() {
 		return users;
+	}
+
+	public void setLimit(int limit) {
+		this.limit = limit;
+	}
+
+	public int getLimit() {
+		return limit;
 	}
 }
