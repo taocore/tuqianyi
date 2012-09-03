@@ -202,10 +202,14 @@
 			var $this = $(this);
 			var m = '&merges[' + i + '].';
 			var pos = $this.position();
-			q = q + m + 'x=' + pos.left
-			 + m + 'y=' + pos.top
-			 + m + 'width=' + $this.width()
-			 + m + 'height=' + $this.height()
+			var x = pos.left <= 2 ? 0 : pos.left;
+			var y = pos.top <= 2 ? 0 : pos.top;
+			var width = $this.width() >= 306 ? 310 : $this.width();
+			var height = $this.height() >= 306 ? 310 : $this.height();
+			q = q + m + 'x=' + x
+			 + m + 'y=' + y
+			 + m + 'width=' + width
+			 + m + 'height=' + height
 			 + m + 'opacity=' + $this.data('option').opacity;;
 			if ($this.hasClass('t'))
 			{
