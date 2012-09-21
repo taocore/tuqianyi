@@ -74,7 +74,7 @@
 				<s:url action="admin" var="adminLink"></s:url>
 				<li><a href="${adminLink}">Admin</a></li>
 				<s:url action="top-users" var="topUsersUrl">
-					<s:param name="limit">36</s:param>
+					<s:param name="limit">60</s:param>
 				</s:url>
 				<li><a href="${topUsersUrl}">Top Users</a></li>
 			</s:if>
