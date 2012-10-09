@@ -65,7 +65,7 @@ public class TaobaoProxy implements Constants
 	public static User getUser(String session) throws ApiException
 	{
 		UserGetRequest req = new UserGetRequest();
-		req.setFields("user_id,uid,nick,seller_credit");
+		req.setFields("user_id,uid,nick,seller_credit,type");
 		//req.setNick(nick);
 		UserGetResponse rsp = createClient().execute(req, session);
 		return rsp.getUser();

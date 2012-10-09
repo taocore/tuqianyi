@@ -14,8 +14,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.awt.image.ConvolveOp;
-import java.awt.image.Kernel;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.AttributedString;
@@ -27,6 +25,9 @@ import javax.imageio.ImageTypeSpecifier;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGEncodeParam;
+import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import com.tuqianyi.model.TextLabel;
 
 public class ImageUtils {
@@ -285,6 +286,15 @@ public class ImageUtils {
 		IIOImage iioImage = new IIOImage(image, null, null);//writer.getDefaultImageMetadata(type, param));
         writer.write(writer.getDefaultImageMetadata(type, param), iioImage, param);
         writer.dispose();
+	}
+	
+	public static void writeHighQualityImage(BufferedImage image, float quality, OutputStream out) throws IOException
+	{
+		System.out.println("WriteHighQualityImage");
+		JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
+        JPEGEncodeParam jep = JPEGCodec.getDefaultJPEGEncodeParam(image);
+        jep.setQuality(quality, true);
+        encoder.encode(image, jep);
 	}
 	
 	/** 

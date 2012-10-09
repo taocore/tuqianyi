@@ -91,6 +91,16 @@ public class MergeTask implements Runnable
 		}
 	}
 	
+	private boolean isAdmin()
+	{
+		Object admin = session.get("admin");
+		if (admin != null)
+		{
+			return (Boolean) admin;
+		}
+		return false;
+	}
+	
 	private void merge(Item item, ImageLabel frame, List<Merge> merges, String topSession, Connection conn)
 	{
 		try {
@@ -121,12 +131,27 @@ public class MergeTask implements Runnable
 			ByteArrayOutputStream out2 = new ByteArrayOutputStream();
 			try
 			{
-				ImageUtils.writeImage(image, "jpg", 1, out2);
+
+//				if (isAdmin())
+//				{
+//					ImageUtils.writeHighQualityImage(image, 1, out2);
+//				}
+//				else
+//				{
+					ImageUtils.writeImage(image, "jpg", 1, out2);
+//				}
 				int size = out2.size();
 				if (size > 512000)
 				{
 					out2 = new ByteArrayOutputStream();
-					ImageUtils.writeImage(image, "jpg", 512000F/size, out2);
+//					if (isAdmin())
+//					{
+//						ImageUtils.writeHighQualityImage(image, 1, out2);
+//					}
+//					else
+//					{
+						ImageUtils.writeImage(image, "jpg", 512000F/size, out2);
+//					}
 				}
 				_log.info("size: " + out2.size());
 				//ItemUpdateResponse response = TaobaoProxy.updateMainPic(topSession, item.getNumIid(), out2.toByteArray());
