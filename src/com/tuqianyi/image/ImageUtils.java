@@ -223,8 +223,9 @@ public class ImageUtils {
 		Graphics2D g = backImage.createGraphics();
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 	              RenderingHints.VALUE_ANTIALIAS_ON);
-		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, alpha));
 		g.drawImage(frontImage, x, y, frontWidth, frontHeight, null);
+		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
 		g.dispose();
 		return backImage;
 	}
@@ -280,7 +281,7 @@ public class ImageUtils {
 		Iterator<ImageWriter> iter = ImageIO.getImageWriters(type, format);
 		ImageWriter writer = (ImageWriter)iter.next();
 		ImageWriteParam param = writer.getDefaultWriteParam();
-		param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+		param.setCompressionMode(ImageWriteParam.MODE_DEFAULT);
 		param.setCompressionQuality(quality);
 		writer.setOutput(ImageIO.createImageOutputStream(out));
 		IIOImage iioImage = new IIOImage(image, null, null);//writer.getDefaultImageMetadata(type, param));
