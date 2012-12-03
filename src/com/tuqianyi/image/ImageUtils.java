@@ -281,7 +281,7 @@ public class ImageUtils {
 		Iterator<ImageWriter> iter = ImageIO.getImageWriters(type, format);
 		ImageWriter writer = (ImageWriter)iter.next();
 		ImageWriteParam param = writer.getDefaultWriteParam();
-		param.setCompressionMode(ImageWriteParam.MODE_DEFAULT);
+		param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
 		param.setCompressionQuality(quality);
 		writer.setOutput(ImageIO.createImageOutputStream(out));
 		IIOImage iioImage = new IIOImage(image, null, null);//writer.getDefaultImageMetadata(type, param));
