@@ -104,6 +104,5 @@ var jiathis_config = {
 </script> 
 <script src="http://v2.jiathis.com/code/jiathis_r.js?move=0"></script> 
 <!-- JiaThis Button END -->
-<script type="text/javascript" src="http://toptrace.taobao.com/assets/getAppKey.js" topappkey="12184977"></script>
 </body>
 </html>
