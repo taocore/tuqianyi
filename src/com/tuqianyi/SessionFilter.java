@@ -69,6 +69,8 @@ public class SessionFilter implements Filter, Constants{
 			_log.warning("parsed top params: " + topMap);
 			String userId = topMap.get("visitor_id");
 			String nick = topMap.get("visitor_nick");
+			String subVisitorId = req.getParameter("sub_visitor_id");
+			String subNick = req.getParameter("sub_taobao_user_nick");
 			_log.info("uid: " + userId);
 			_log.info("session: " + topSession);
 			_log.info("itemCode: " + itemCode);
@@ -119,7 +121,7 @@ public class SessionFilter implements Filter, Constants{
 			{
 				session = ((HttpServletRequest)req).getSession(true);
 				session.setAttribute(TOP_SESSION, topSession);
-				session.setAttribute(USER, nick);
+				session.setAttribute(USER, nick == null ? subNick : nick);
 				session.setAttribute(USER_ID, userId);
 				session.setAttribute(VERSION, version);
 				session.setAttribute(SUBSCRIPTION, subscriptions);
