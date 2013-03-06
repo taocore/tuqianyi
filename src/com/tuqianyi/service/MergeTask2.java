@@ -1,5 +1,6 @@
 package com.tuqianyi.service;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -14,13 +15,15 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.imageio.ImageIO;
+
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.im4java.core.CompositeCmd;
 import org.im4java.core.ConvertCmd;
 import org.im4java.core.GMOperation;
 import org.im4java.core.IM4JavaException;
-import org.im4java.core.Info;
 
 import com.taobao.api.ApiException;
 import com.taobao.api.TaobaoResponse;
@@ -108,10 +111,15 @@ public class MergeTask2 implements Runnable{
 			_log.info("no pic: " + item.getNumIid());
 			return null;
 		}
-		String localPath = getLocalDir() + uid++ + ".jpg";
+		String localDir = getLocalDir();
+		File f = new File(localDir);
+		f.mkdirs();
+		String localPath = localDir + uid++ + ".jpg";
 		InputStream in = new URL(picUrl).openStream();
 		FileOutputStream out = new FileOutputStream(localPath);
 		IOUtils.copy(in, out);
+		out.close();
+		in.close();
 		return localPath;
 	}
 	
@@ -120,6 +128,7 @@ public class MergeTask2 implements Runnable{
 		try {
 			_log.info("merging..." + item.getNumIid());
 			String localPath = saveImage2Local(item);
+			_log.info("image saved to: " + localPath);
 			String rootPath = FontsServlet.getRootPath();
 			String resultPath = localPath;
 			if (frame != null)
@@ -213,6 +222,14 @@ public class MergeTask2 implements Runnable{
 				_log.log(Level.SEVERE, "", e1);
 			}
 		}
+		finally
+		{
+			try {
+				FileUtils.deleteDirectory(new File(getLocalDir()));
+			} catch (IOException e) {
+				_log.log(Level.SEVERE, "", e);
+			}
+		}
 	}
 	
 	private String mergeImage(String image, Merge m, Item item) throws IOException, InterruptedException, IM4JavaException
@@ -235,19 +252,21 @@ public class MergeTask2 implements Runnable{
 			labelImage = opacityPath;
 		}
 		
-		Info imageInfo = new Info(image);
-		float orignal2PreviewRatio = getOriginal2PreviewRatio(imageInfo.getImageWidth(), imageInfo.getImageHeight());
+		BufferedImage bi = ImageIO.read(new File(image));
+		int width = bi.getWidth();
+		int height = bi.getHeight();
+		float orignal2PreviewRatio = getOriginal2PreviewRatio(width, height);
 		int newWidth = Math.round(m.getWidth() * orignal2PreviewRatio);
 		int newHeight = Math.round(m.getHeight() * orignal2PreviewRatio);
 		int newX = Math.round(m.getX() * orignal2PreviewRatio);
 		int newY = Math.round(m.getY() * orignal2PreviewRatio);
-		if (newX + newWidth > imageInfo.getImageWidth())
+		if (newX + newWidth > width)
 		{
-			newX = imageInfo.getImageWidth() - newWidth;
+			newX = width - newWidth;
 		}
-		if (newY + newHeight > imageInfo.getImageHeight())
+		if (newY + newHeight > height)
 		{
-			newY = imageInfo.getImageHeight() - newHeight;
+			newY = height - newHeight;
 		}
 		if (newY < 0)
 		{
@@ -266,12 +285,14 @@ public class MergeTask2 implements Runnable{
 	
 	private String addFrame(String imagePath, String rootPath) throws IOException, InterruptedException, IM4JavaException
 	{
-		Info imageInfo = new Info(imagePath);
+		BufferedImage bi = ImageIO.read(new File(imagePath));
+		int width = bi.getWidth();
+		int height = bi.getHeight();
 		File f = new File(rootPath + frame.getSrc());
 		_log.info("frame file: " + f.getAbsolutePath());
 		String framePath = f.getAbsolutePath();
 		GMOperation op = new GMOperation();
-		op.geometry(imageInfo.getImageWidth(), imageInfo.getImageHeight(), 0, 0);
+		op.geometry(width, height, 0, 0);
 		CompositeCmd cmd = new CompositeCmd(true);
 		String resultPath = getLocalDir() + uid++ + ".jpg";
 		cmd.run(op, framePath, imagePath, resultPath);
@@ -295,7 +316,11 @@ public class MergeTask2 implements Runnable{
 			{
 				URL labelUrl = new URL(imageLabel.getSrc());
 				String localPath = getLocalDir() + uid++ + ".png";
-				IOUtils.copy(labelUrl.openStream(), new FileOutputStream(localPath));
+				InputStream in = labelUrl.openStream();
+				FileOutputStream out = new FileOutputStream(localPath);
+				IOUtils.copy(in, out);
+				out.close();
+				in.close();
 				return localPath;
 			}
 		}
