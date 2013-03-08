@@ -16,6 +16,7 @@ import com.tuqianyi.model.ImageLabel;
 import com.tuqianyi.model.Item;
 import com.tuqianyi.model.Merge;
 import com.tuqianyi.service.MergeTask;
+import com.tuqianyi.service.MergeTask2;
 import com.tuqianyi.taobao.TaobaoProxy;
 
 public class ChangeLabelAction extends ActionBase{
@@ -122,7 +123,7 @@ public class ChangeLabelAction extends ActionBase{
 //				increaseProgress();
 //				continue;
 //			}
-			Runnable task = new MergeTask(item, frame, merges, getSession());
+			Runnable task = new MergeTask2(item, frame, merges, getSession());
 //			executeInPool(task);
 			task.run();
 			increaseProgress();

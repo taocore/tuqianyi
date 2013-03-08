@@ -1,6 +1,7 @@
 package com.tuqianyi.service;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -32,6 +33,8 @@ import com.tuqianyi.Constants;
 import com.tuqianyi.action.MergeAction;
 import com.tuqianyi.db.DBUtils;
 import com.tuqianyi.db.Dao;
+import com.tuqianyi.font.FontProvider;
+import com.tuqianyi.image.ImageUtils;
 import com.tuqianyi.model.ImageLabel;
 import com.tuqianyi.model.Item;
 import com.tuqianyi.model.Merge;
@@ -144,6 +147,19 @@ public class MergeTask2 implements Runnable{
 			}
 			FileInputStream in = new FileInputStream(resultPath);
 			byte[] newPicData = IOUtils.toByteArray(in);
+			if (newPicData.length > 512000)
+			{
+				String tmp = getLocalDir() + uid++ + ".jpg";
+				GMOperation op = new GMOperation();
+				op.quality(Double.valueOf(100 * 512000F/newPicData.length));
+				op.addImage(2);
+				ConvertCmd cmd = new ConvertCmd(true);
+				cmd.run(op, resultPath, tmp);
+				resultPath = tmp;
+				in.close();
+				in = new FileInputStream(resultPath);
+				newPicData = IOUtils.toByteArray(in);
+			}
 			try
 			{
 				TaobaoResponse response = RecoverService.updateMainPic(topSession, item.getNumIid(), newPicData);
@@ -240,17 +256,18 @@ public class MergeTask2 implements Runnable{
 			_log.warning("No label image was found.");
 			return image;
 		}
+		/*
 		if (m.getOpacity() < 100)
 		{
 			String opacityPath = getLocalDir() + uid++ + ".png";
 			GMOperation op = new GMOperation();
 			op.operator("Opacity", "Assign", new Double(m.getOpacity()/100f));
-			op.addImage();
-			op.addImage();
+			op.quality(Double.valueOf(100));
+			op.addImage(2);
 			ConvertCmd cmd = new ConvertCmd(true);
 			cmd.run(op, labelImage, opacityPath);
 			labelImage = opacityPath;
-		}
+		}*/
 		
 		BufferedImage bi = ImageIO.read(new File(image));
 		int width = bi.getWidth();
@@ -277,6 +294,11 @@ public class MergeTask2 implements Runnable{
 		String resultPath = getLocalDir() + uid++ + ".jpg";
 		GMOperation op = new GMOperation();
 		op.geometry(newWidth, newHeight, newX, newY);
+		if (m.getOpacity() < 100)
+		{
+			op.addRawArgs("-dissolve", String.valueOf(m.getOpacity()));
+		}
+		op.quality(Double.valueOf(100));
 		op.addImage(3);
 		CompositeCmd cmd = new CompositeCmd(true);
 		cmd.run(op, labelImage, image, resultPath);
@@ -293,6 +315,8 @@ public class MergeTask2 implements Runnable{
 		String framePath = f.getAbsolutePath();
 		GMOperation op = new GMOperation();
 		op.geometry(width, height, 0, 0);
+		op.quality(Double.valueOf(100));
+		op.addImage(3);
 		CompositeCmd cmd = new CompositeCmd(true);
 		String resultPath = getLocalDir() + uid++ + ".jpg";
 		cmd.run(op, framePath, imagePath, resultPath);
@@ -325,19 +349,25 @@ public class MergeTask2 implements Runnable{
 			}
 		}
 		else if (textLabel != null)
-		{/*
+		{
+			BufferedImage textImage;
 			if (textLabel.hasToken())
 			{
 				String text = textLabel.getParseText(item.getPrice());
 				String color = textLabel.getColor();
 				String backColor = textLabel.getBackground();
-				return FontProvider.getInstance().createText(text, textLabel.getFont(), color, backColor, textLabel.getStyle(), textLabel.getLine(), textLabel.getBorderWidth(), textLabel.getAngle(), textLabel.isVertical());
+				textImage = FontProvider.getInstance().createText(text, textLabel.getFont(), color, backColor, textLabel.getStyle(), textLabel.getLine(), textLabel.getBorderWidth(), textLabel.getAngle(), textLabel.isVertical());
 			}
 			else
 			{
-				return (BufferedImage)session.get(textLabel.getId());
+				textImage = (BufferedImage)session.get(textLabel.getId());
 			}
-		*/}
+			String localPath = getLocalDir() + uid++ + ".png";
+			FileOutputStream out = new FileOutputStream(localPath);
+			//ImageUtils.writeImage(textImage, "png", 1, out);
+			ImageIO.write(textImage, "png", out);
+			return localPath;
+		}
 		return null;
 	}
 	

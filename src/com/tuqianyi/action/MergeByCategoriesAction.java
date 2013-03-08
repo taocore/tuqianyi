@@ -19,6 +19,7 @@ import com.tuqianyi.model.ItemsFilter;
 import com.tuqianyi.model.Merge;
 import com.tuqianyi.service.MainService;
 import com.tuqianyi.service.MergeTask;
+import com.tuqianyi.service.MergeTask2;
 import com.tuqianyi.taobao.TaobaoProxy;
 
 public class MergeByCategoriesAction extends ActionBase{
@@ -177,7 +178,7 @@ public class MergeByCategoriesAction extends ActionBase{
 //				increaseProgress();
 				continue;
 			}
-			Runnable task = new MergeTask(item, frame, merges, getSession());
+			Runnable task = new MergeTask2(item, frame, merges, getSession());
 			service.executeInPool(task);
 //			task.run();
 //			increaseProgress();
