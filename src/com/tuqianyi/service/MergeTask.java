@@ -53,6 +53,7 @@ public class MergeTask implements Runnable
 	}
 
 	public void run() {
+		_log.info("enter merge task");
 		Connection conn = null;
 		try
 		{
@@ -214,6 +215,14 @@ public class MergeTask implements Runnable
 				_log.log(Level.SEVERE, "", e1);
 			}
 		} catch (IOException e) {
+			_log.log(Level.SEVERE, "", e);
+			try {
+				Dao.INSTANCE.merged(item.getNumIid(), null, null, null, Item.STATUS_FAILED, e.getMessage(), "unknown", conn);
+			} catch (Exception e1) {
+				_log.log(Level.SEVERE, "", e1);
+			}
+		}
+		catch (Throwable e) {
 			_log.log(Level.SEVERE, "", e);
 			try {
 				Dao.INSTANCE.merged(item.getNumIid(), null, null, null, Item.STATUS_FAILED, e.getMessage(), "unknown", conn);
