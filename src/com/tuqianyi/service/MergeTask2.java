@@ -238,6 +238,14 @@ public class MergeTask2 implements Runnable{
 				_log.log(Level.SEVERE, "", e1);
 			}
 		}
+		catch (Throwable e) {
+			_log.log(Level.SEVERE, "", e);
+			try {
+				Dao.INSTANCE.merged(item.getNumIid(), null, null, null, Item.STATUS_FAILED, e.getMessage(), "unknown", conn);
+			} catch (Exception e1) {
+				_log.log(Level.SEVERE, "", e1);
+			}
+		}
 		finally
 		{
 			try {
